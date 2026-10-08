@@ -5,8 +5,26 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/together.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/lines02.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/squares01.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/triangles01.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/lines01.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/sea02.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/tiles05.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/Degrade01transparent.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/kaleidoscope03.png</File>
+    <File>C:/Users/alumno.ET26/Desktop/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/weird03.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

@@ -79,3 +79,13 @@ C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\re
 C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\game.pdb
 C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\game.genruntimeconfig.cache
 C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\ref\game.dll
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\game.sourcelink.json
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\geometry\lines02.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\geometry\squares01.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\geometry\triangles01.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\ondulate\lines01.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\ondulate\sea02.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\ondulate\tiles05.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\psycho\Degrade01transparent.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\psycho\kaleidoscope03.xnb
+C:\Users\alumno.ET26\Desktop\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\psycho\weird03.xnb

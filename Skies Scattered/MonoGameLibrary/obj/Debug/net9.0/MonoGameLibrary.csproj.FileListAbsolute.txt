@@ -22,3 +22,4 @@ C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\Mo
 C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\refint\MonoGameLibrary.dll
 C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.pdb
 C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\ref\MonoGameLibrary.dll
+C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.sourcelink.json

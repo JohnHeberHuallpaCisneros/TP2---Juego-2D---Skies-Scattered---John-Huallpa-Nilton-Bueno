@@ -118,7 +118,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.1
-/processorParam:ColorKeyEnabled=False
 /build:Image/backgrounds_battle/psycho/Degrade01transparent.png
 
 #begin Image/backgrounds_battle/psycho/kaleidoscope03.png
@@ -133,6 +132,11 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/psycho/kaleidoscope03.png
+
+#begin BattleBackground.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/build:BattleBackground.fx
 
 #begin Image/backgrounds_battle/psycho/weird03.png
 /importer:TextureImporter

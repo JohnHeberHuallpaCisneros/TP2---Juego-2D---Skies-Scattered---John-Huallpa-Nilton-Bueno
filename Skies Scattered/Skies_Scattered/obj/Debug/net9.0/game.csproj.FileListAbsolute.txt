@@ -141,3 +141,4 @@ C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\Skies_Scattered\obj\Debug\net9
 C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\game.pdb
 C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\game.genruntimeconfig.cache
 C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\ref\game.dll
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\game.sourcelink.json

@@ -1,3 +1,4 @@
+
 #if OPENGL
     #define SV_POSITION POSITION
     #define VS_SHADERMODEL vs_3_0
@@ -11,7 +12,9 @@ float Time;
 float Strength;
 float Frequency;
 
-float4 Tint;
+float4 PaletteDark;
+float4 PaletteLight;
+float PaletteStrength;
 
 Texture2D SpriteTexture;
 
@@ -38,9 +41,26 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
     uv.x += sin(uv.y * Frequency + Time) * Strength;
 
-    float4 textureColor = tex2D(SpriteTextureSampler, uv);
+    float4 original = tex2D(SpriteTextureSampler, uv);
 
-    return textureColor * input.Color * Tint;
+float brightness = dot(original.rgb, float3(0.299, 0.587, 0.114));
+
+    float3 paletteColor = lerp(
+        PaletteDark.rgb,
+        PaletteLight.rgb,
+        brightness
+    );
+
+    float3 finalColor = lerp(
+        original.rgb,
+        paletteColor,
+        PaletteStrength
+    );
+
+    return float4(
+        finalColor * input.Color.rgb,
+        original.a * input.Color.a
+    );
 }
 
 technique SpriteDrawing

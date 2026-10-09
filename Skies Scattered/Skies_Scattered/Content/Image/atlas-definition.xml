@@ -2,8 +2,8 @@
 <TextureAtlas>
     <Texture>Image/together</Texture>
     <Regions>
-        <Region name="yoko-1" x="32" y="0" width="32" height="32" />
-        <Region name="yoko-2" x="32" y="32" width="32" height="32" />
+        <Region name="yoko-1" x="0" y="0" width="32" height="32" />
+        <Region name="yoko-2" x="0" y="32" width="32" height="32" />
         <Region name="kyoko-1" x="0" y="64" width="32" height="32" />
         <Region name="kyoko-2" x="0" y="96" width="32" height="32" />
     </Regions>

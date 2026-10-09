@@ -23,3 +23,15 @@ C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\re
 C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.pdb
 C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\ref\MonoGameLibrary.dll
 C:\Users\alumno.ET26\Desktop\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.sourcelink.json
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.deps.json
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.dll
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.pdb
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.csproj.AssemblyReference.cache
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.AssemblyInfoInputs.cache
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.AssemblyInfo.cs
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.csproj.CoreCompileInputs.cache
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.dll
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\refint\MonoGameLibrary.dll
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.pdb
+C:\Users\John\OneDrive\Desktop\SS\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\ref\MonoGameLibrary.dll

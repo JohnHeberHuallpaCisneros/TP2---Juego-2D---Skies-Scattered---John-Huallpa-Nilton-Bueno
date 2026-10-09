@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\John\\OneDrive\\Desktop\\SS\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
+    "C:\\Users\\alumno.ET26\\Desktop\\Skies Scattered\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\John\\OneDrive\\Desktop\\SS\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {
+    "C:\\Users\\alumno.ET26\\Desktop\\Skies Scattered\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\John\\OneDrive\\Desktop\\SS\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\alumno.ET26\\Desktop\\Skies Scattered\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
         "projectName": "MonoGameLibrary",
-        "projectPath": "C:\\Users\\John\\OneDrive\\Desktop\\SS\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
-        "packagesPath": "C:\\Users\\John\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\John\\OneDrive\\Desktop\\SS\\Skies Scattered\\MonoGameLibrary\\obj\\",
+        "projectPath": "C:\\Users\\alumno.ET26\\Desktop\\Skies Scattered\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "packagesPath": "C:\\Users\\alumno.ET26\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alumno.ET26\\Desktop\\Skies Scattered\\Skies Scattered\\MonoGameLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\John\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alumno.ET26\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

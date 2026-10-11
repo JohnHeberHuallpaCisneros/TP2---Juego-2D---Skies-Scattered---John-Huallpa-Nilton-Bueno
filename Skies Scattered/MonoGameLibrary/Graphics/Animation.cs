@@ -22,7 +22,7 @@ public TimeSpan Delay { get; set; }
 public Animation()
 {
     Frames = new List<TextureRegion>();
-    Delay = TimeSpan.FromMilliseconds(100);
+    Delay = TimeSpan.FromMilliseconds(160);
 }
 
 /// <summary>

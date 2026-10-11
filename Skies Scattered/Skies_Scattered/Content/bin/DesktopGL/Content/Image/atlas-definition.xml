@@ -2,19 +2,89 @@
 <TextureAtlas>
     <Texture>Image/together</Texture>
     <Regions>
-        <Region name="yoko-1" x="32" y="0" width="32" height="32" />
-        <Region name="yoko-2" x="32" y="32" width="32" height="32" />
-        <Region name="kyoko-1" x="32" y="64" width="32" height="32" />
-        <Region name="kyoko-2" x="32" y="96" width="32" height="32" />
+        <Region name="yoko-1" x="0" y="0" width="32" height="32" />
+        <Region name="yoko-2" x="0" y="32" width="32" height="32" />
+        <Region name="yoko-3" x="32" y="0" width="32" height="32" />
+        <Region name="yoko-4" x="32" y="32" width="32" height="32" />
+        <Region name="yoko-5" x="64" y="0" width="32" height="32" />
+        <Region name="yoko-6" x="96" y="0" width="32" height="32" />
+        <Region name="yoko-7" x="64" y="32" width="32" height="32" />
+        <Region name="yoko-8" x="96" y="32" width="32" height="32" />
+        <Region name="yoko-9" x="128" y="0" width="32" height="32" />
+        <Region name="yoko-10" x="160" y="0" width="32" height="32" />
+        <Region name="yoko-11" x="128" y="32" width="32" height="32" />
+        <Region name="yoko-12" x="160" y="32" width="32" height="32" />
+        <Region name="yoko-13" x="192" y="0" width="32" height="32" />
+        <Region name="yoko-14" x="224" y="0" width="32" height="32" />
+        <Region name="yoko-15" x="192" y="32" width="32" height="32" />
+        <Region name="yoko-16" x="224" y="32" width="32" height="32" />
+        
+        
+
+
+        
+        <Region name="kyoko-1" x="0" y="64" width="32" height="32" />
+        <Region name="kyoko-2" x="0" y="96" width="32" height="32" />
+        <Region name="kyoko-3" x="32" y="64" width="32" height="32" />
+        <Region name="kyoko-4" x="32" y="96" width="32" height="32" />
+        <Region name="kyoko-5" x="64" y="64" width="32" height="32" />
+        <Region name="kyoko-6" x="96" y="64" width="32" height="32" />
+        <Region name="kyoko-7" x="64" y="96" width="32" height="32" />
+        <Region name="kyoko-8" x="96" y="96" width="32" height="32" />
+    
     </Regions>
     <Animations>
         <Animation name="yoko-animation" delay="500">
             <Frame region="yoko-1" />
             <Frame region="yoko-2" />
         </Animation>
-        <Animation name="kyoko-animation" delay="500">
+        <Animation name="yoko-atras-animation" delay="500">
+        <Frame region="yoko-3" />
+        <Frame region="yoko-4" />
+    </Animation>
+    <Animation name="yoko-lado-animation" delay="500">
+        <Frame region="yoko-5" />
+        <Frame region="yoko-6" />
+    </Animation>
+    <Animation name="yoko-izquierda-animation" delay="500">
+        <Frame region="yoko-7" />
+        <Frame region="yoko-8" />
+    </Animation>
+    <Animation name="yoko-izquierdaFrente-animation" delay="500">
+        <Frame region="yoko-9" />
+        <Frame region="yoko-10" />
+    </Animation>
+    <Animation name="yoko-izquierdaAtras-animation" delay="500">
+        <Frame region="yoko-11" />
+        <Frame region="yoko-12" />
+    </Animation>
+    <Animation name="yoko-DerechaFrente-animation" delay="500   ">
+        <Frame region="yoko-13" />
+        <Frame region="yoko-14" />
+    </Animation>
+    <Animation name="yoko-DerechaAtras-animation" delay="500">
+        <Frame region="yoko-15" />
+        <Frame region="yoko-16" />
+    </Animation>    
+        
+        
+        <Animation name="kyoko-Frente-animation" delay="500">
             <Frame region="kyoko-1" />
             <Frame region="kyoko-2" />
         </Animation>
+        <Animation name="kyoko-atras-animation" delay="500">
+            <Frame region="kyoko-3" />
+            <Frame region="kyoko-4" />
+        </Animation>
+        <Animation name="kyoko-lado-animation" delay="500">
+            <Frame region="kyoko-5" />
+            <Frame region="kyoko-6" />
+        </Animation>
+        <Animation name="kyoko-izquierda-animation" delay="500">
+            <Frame region="kyoko-7" />
+            <Frame region="kyoko-8" />
+        </Animation>
+        
     </Animations>
 </TextureAtlas>
+

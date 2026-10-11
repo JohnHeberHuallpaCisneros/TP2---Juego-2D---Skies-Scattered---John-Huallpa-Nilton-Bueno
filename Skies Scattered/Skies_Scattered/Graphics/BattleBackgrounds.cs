@@ -59,7 +59,9 @@ public class BattleBackground
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(
+        SpriteBatch spriteBatch,
+        GraphicsDevice graphicsDevice)
     {
         Color darkRed = new Color(22, 0, 10);
         Color darkBlue = new Color(0, 3, 28);
@@ -73,20 +75,27 @@ public class BattleBackground
         Color lightPalette =
             Color.Lerp(lightRed, lightBlue, _paletteMix);
 
+        // Obtener la resolución actual del área de dibujo.
+        int ancho = graphicsDevice.Viewport.Width;
+        int alto = graphicsDevice.Viewport.Height;
+
         DrawLayer(
             spriteBatch, _background1,
             _time * 20f, _time,
-            0.015f, 8f, Color.White);
+            0.015f, 8f, Color.White,
+            ancho, alto);
 
         DrawLayer(
             spriteBatch, _background2,
             _time * -35f, _time * 1.2f,
-            0.025f, 10f, Color.White * 0.5f);
+            0.025f, 10f, Color.White * 0.5f,
+            ancho, alto);
 
         DrawLayer(
             spriteBatch, _background3,
             _time * 50f, _time * 1.8f,
             0.040f, 14f, Color.White * 0.4f,
+            ancho, alto,
             darkPalette, lightPalette);
     }
 
@@ -98,6 +107,8 @@ public class BattleBackground
         float strength,
         float frequency,
         Color color,
+        int ancho,
+        int alto,
         Color? darkPalette = null,
         Color? lightPalette = null)
     {
@@ -105,7 +116,6 @@ public class BattleBackground
         _battleEffect.Parameters["Strength"].SetValue(strength);
         _battleEffect.Parameters["Frequency"].SetValue(frequency);
 
-        // Si no se especifica una paleta, usa la actual igualmente.
         if (darkPalette.HasValue && lightPalette.HasValue)
         {
             _battleEffect.Parameters["PaletteDark"]
@@ -122,10 +132,12 @@ public class BattleBackground
             Color lightBlue = new Color(22, 65, 150);
 
             _battleEffect.Parameters["PaletteDark"].SetValue(
-                Color.Lerp(darkRed, darkBlue, _paletteMix).ToVector4());
+                Color.Lerp(
+                    darkRed, darkBlue, _paletteMix).ToVector4());
 
             _battleEffect.Parameters["PaletteLight"].SetValue(
-                Color.Lerp(lightRed, lightBlue, _paletteMix).ToVector4());
+                Color.Lerp(
+                    lightRed, lightBlue, _paletteMix).ToVector4());
         }
 
         _battleEffect.Parameters["PaletteStrength"].SetValue(0.70f);
@@ -134,7 +146,8 @@ public class BattleBackground
             samplerState: SamplerState.PointWrap,
             effect: _battleEffect);
 
-        DrawTiledBackground(spriteBatch, texture, offsetX, color);
+        DrawTiledBackground(
+            spriteBatch, texture, offsetX, color, ancho, alto);
 
         spriteBatch.End();
     }
@@ -143,17 +156,21 @@ public class BattleBackground
         SpriteBatch spriteBatch,
         Texture2D texture,
         float offsetX,
-        Color color)
+        Color color,
+        int ancho,
+        int alto)
     {
         int textureWidth = texture.Width * 4;
         int textureHeight = texture.Height * 4;
 
         offsetX %= textureWidth;
 
-        for (int y = 0; y < 720 + textureHeight; y += textureHeight)
+        for (int y = -textureHeight;
+            y < alto + textureHeight;
+            y += textureHeight)
         {
             for (int x = -textureWidth;
-                x < 1280 + textureWidth;
+                x < ancho + textureWidth;
                 x += textureWidth)
             {
                 spriteBatch.Draw(

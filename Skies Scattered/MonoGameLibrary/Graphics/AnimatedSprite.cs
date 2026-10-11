@@ -57,5 +57,11 @@ public void Update(GameTime gameTime)
         Region = _animation.Frames[_currentFrame];
     }
 }
+public void Reset()
+{
+    _currentFrame = 0;
+    _elapsed = TimeSpan.Zero;
+    Region = _animation.Frames[0];
+}
 
 }

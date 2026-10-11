@@ -34,35 +34,35 @@
     
     </Regions>
     <Animations>
-        <Animation name="yoko-animation" delay="350">
+        <Animation name="yoko-animation" delay="500">
             <Frame region="yoko-1" />
             <Frame region="yoko-2" />
         </Animation>
-        <Animation name="yoko-atras-animation" delay="350">
+        <Animation name="yoko-atras-animation" delay="500">
         <Frame region="yoko-3" />
         <Frame region="yoko-4" />
     </Animation>
-    <Animation name="yoko-lado-animation" delay="350">
+    <Animation name="yoko-lado-animation" delay="500">
         <Frame region="yoko-5" />
         <Frame region="yoko-6" />
     </Animation>
-    <Animation name="yoko-izquierda-animation" delay="350">
+    <Animation name="yoko-izquierda-animation" delay="500">
         <Frame region="yoko-7" />
         <Frame region="yoko-8" />
     </Animation>
-    <Animation name="yoko-izquierdaFrente-animation" delay="350">
+    <Animation name="yoko-izquierdaFrente-animation" delay="500">
         <Frame region="yoko-9" />
         <Frame region="yoko-10" />
     </Animation>
-    <Animation name="yoko-izquierdaAtras-animation" delay="350">
+    <Animation name="yoko-izquierdaAtras-animation" delay="500">
         <Frame region="yoko-11" />
         <Frame region="yoko-12" />
     </Animation>
-    <Animation name="yoko-DerechaFrente-animation" delay="350">
+    <Animation name="yoko-DerechaFrente-animation" delay="500   ">
         <Frame region="yoko-13" />
         <Frame region="yoko-14" />
     </Animation>
-    <Animation name="yoko-DerechaAtras-animation" delay="350">
+    <Animation name="yoko-DerechaAtras-animation" delay="500">
         <Frame region="yoko-15" />
         <Frame region="yoko-16" />
     </Animation>    

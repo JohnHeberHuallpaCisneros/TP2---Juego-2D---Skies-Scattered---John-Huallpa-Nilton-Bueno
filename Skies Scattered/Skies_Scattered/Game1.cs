@@ -1,3 +1,4 @@
+﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,6 +10,7 @@ namespace Skies_Scattered;
 
 public class Game1 : Core
 {
+    // Animaciones de Yoko.
     private AnimatedSprite _Yoko;
     private AnimatedSprite _yokoAtras;
     private AnimatedSprite _yokoFrente;
@@ -19,18 +21,21 @@ public class Game1 : Core
     private AnimatedSprite _yokoDerechaAbajo;
     private AnimatedSprite _yokoIzquierdaAbajo;
 
+    // Animaciones de Kyoko.
     private AnimatedSprite _Kyoko;
     private AnimatedSprite _kyokoAtras;
     private AnimatedSprite _kyokoFrente;
     private AnimatedSprite _kyokoLado;
     private AnimatedSprite _kyokoizquierda;
-    private Vector2 _direccion = Vector2.Zero;
-    private BattleBackground _battleBackground;
 
+    // Posiciones y fondo.
+    private Vector2 _direccion = Vector2.Zero;
     private Vector2 _yokoPosition = new Vector2(400, 300);
     private Vector2 _kyokoPosition = new Vector2(800, 300);
 
-    public Game1() : base("Skies Scattered", 1280, 720, false)
+    private BattleBackground _battleBackground;
+
+    public Game1() : base("Skies Scattered", 640, 480, false)
     {
     }
 
@@ -39,164 +44,202 @@ public class Game1 : Core
         base.Initialize();
     }
 
+    // Crea una animación y establece su escala.
+    private AnimatedSprite CrearAnimacion(
+        TextureAtlas atlas, string nombre)
+    {
+        AnimatedSprite animacion =
+            atlas.CreateAnimatedSprite(nombre);
+
+        animacion.Scale = new Vector2(3.0f, 3.0f);
+
+        return animacion;
+    }
+
     protected override void LoadContent()
     {
         TextureAtlas atlas = TextureAtlas.FromFile(
             Content,
             "Image/atlas-definition.xml");
 
-        _Yoko = atlas.CreateAnimatedSprite("yoko-animation");
-        _Yoko.Scale = new Vector2(4.0f, 4.0f);
-        _yokoFrente = atlas.CreateAnimatedSprite("yoko-animation");
-        _yokoFrente.Scale = new Vector2(4.0f, 4.0f);
-        _yokoAtras = atlas.CreateAnimatedSprite("yoko-atras-animation");
-        _yokoAtras.Scale = new Vector2(4.0f, 4.0f);
-        _yokoLado = atlas.CreateAnimatedSprite("yoko-lado-animation");
-        _yokoLado.Scale = new Vector2(4.0f, 4.0f);  
-        _yokoizquierda = atlas.CreateAnimatedSprite("yoko-izquierda-animation");
-        _yokoizquierda.Scale = new Vector2(4.0f, 4.0f);
-        _yokoDerechaArriba = atlas.CreateAnimatedSprite("yoko-DerechaFrente-animation");
-        _yokoDerechaArriba.Scale = new Vector2(4.0f, 4.0f);
-        _yokoIzquierdaArriba = atlas.CreateAnimatedSprite("yoko-izquierdaFrente-animation");
-        _yokoIzquierdaArriba.Scale = new Vector2(4.0f, 4.0f);
-        _yokoDerechaAbajo = atlas.CreateAnimatedSprite("yoko-DerechaAtras-animation");
-        _yokoDerechaAbajo.Scale = new Vector2(4.0f, 4.0f);
-        _yokoIzquierdaAbajo = atlas.CreateAnimatedSprite("yoko-izquierdaAtras-animation");
-        _yokoIzquierdaAbajo.Scale = new Vector2(4.0f, 4.0f);
+        // Animaciones de Yoko.
+        _Yoko = CrearAnimacion(atlas, "yoko-animation");
+        _yokoFrente = CrearAnimacion(atlas, "yoko-animation");
+        _yokoAtras = CrearAnimacion(atlas, "yoko-atras-animation");
+        _yokoLado = CrearAnimacion(atlas, "yoko-lado-animation");
+        _yokoizquierda = CrearAnimacion(atlas, "yoko-izquierda-animation");
 
+        _yokoDerechaArriba = CrearAnimacion(
+            atlas, "yoko-DerechaFrente-animation");
 
-        _Kyoko = atlas.CreateAnimatedSprite("kyoko-Frente-animation");
-        _Kyoko.Scale = new Vector2(4.0f, 4.0f);
-        _kyokoFrente = atlas.CreateAnimatedSprite("kyoko-Frente-animation");
-        _kyokoFrente.Scale = new Vector2(4.0f, 4.0f);
-        _kyokoAtras = atlas.CreateAnimatedSprite("kyoko-atras-animation");
-        _kyokoAtras.Scale = new Vector2(4.0f, 4.0f);
-        _kyokoLado = atlas.CreateAnimatedSprite("kyoko-lado-animation");
-        _kyokoLado.Scale = new Vector2(4.0f, 4.0f);
-        _kyokoizquierda = atlas.CreateAnimatedSprite("kyoko-izquierda-animation");
-        _kyokoizquierda.Scale = new Vector2(4.0f, 4.0f);
+        _yokoIzquierdaArriba = CrearAnimacion(
+            atlas, "yoko-izquierdaFrente-animation");
 
+        _yokoDerechaAbajo = CrearAnimacion(
+            atlas, "yoko-DerechaAtras-animation");
 
+        _yokoIzquierdaAbajo = CrearAnimacion(
+            atlas, "yoko-izquierdaAtras-animation");
+
+        // Animaciones de Kyoko.
+        _Kyoko = CrearAnimacion(atlas, "kyoko-Frente-animation");
+        _kyokoFrente = CrearAnimacion(atlas, "kyoko-Frente-animation");
+        _kyokoAtras = CrearAnimacion(atlas, "kyoko-atras-animation");
+        _kyokoLado = CrearAnimacion(atlas, "kyoko-lado-animation");
+        _kyokoizquierda = CrearAnimacion(atlas, "kyoko-izquierda-animation");
+
+        // Fondo de batalla.
         _battleBackground = new BattleBackground(Content);
         _battleBackground.LoadContent();
     }
 
     protected override void Update(GameTime gameTime)
     {
+        // Actualizar el teclado desde Core.
+        base.Update(gameTime);
+
+        // Actualizar animaciones y fondo.
         _Yoko.Update(gameTime);
         _Kyoko.Update(gameTime);
-
         _battleBackground.Update(gameTime);
+        bool yokoSeMovio = false;
+        bool kyokoSeMovio = false;
 
-        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+        // Alternar entre ventana y pantalla completa.
+        if (Input.IsKeyPressed(Keys.F11))
+        {
+            
+            Core.Graphics.IsFullScreen =
+                !Core.Graphics.IsFullScreen;
+
+            Core.Graphics.ApplyChanges();
+        }
+
+        // Cerrar el juego.
+        if (Input.IsKeyDown(Keys.Escape))
         {
             Exit();
         }
 
-             Vector2 NuevoDireccion = Vector2.Zero;
-        if (Keyboard.GetState().IsKeyDown(Keys.W))
+        // Movimiento de Yoko.
+        if (Input.IsKeyDown(Keys.W))
         {
+            yokoSeMovio = true;
             _yokoPosition.Y -= 5;
-            NuevoDireccion.Y -=1;
             _Yoko = _yokoAtras;
-
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.S))
+
+        if (Input.IsKeyDown(Keys.S))
         {
+            yokoSeMovio = true;
             _yokoPosition.Y += 5;
-            NuevoDireccion.Y +=1;
             _Yoko = _yokoFrente;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.A))
+
+        if (Input.IsKeyDown(Keys.A))
         {
+            yokoSeMovio = true;
             _yokoPosition.X -= 5;
-            _direccion.X -=1;
             _Yoko = _yokoLado;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.D))
+
+        if (Input.IsKeyDown(Keys.D))
         {
+            yokoSeMovio = true;
             _yokoPosition.X += 5;
-            NuevoDireccion.X +=1;
             _Yoko = _yokoizquierda;
         }
-//---------------------------------------------------------------------------------
-        if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.D))
+
+        // Movimientos diagonales de Yoko.
+        if (Input.IsKeyDown(Keys.W) &&
+            Input.IsKeyDown(Keys.D))
         {
+            yokoSeMovio = true;
             _yokoPosition.X += 1;
             _yokoPosition.Y -= 1;
             _Yoko = _yokoDerechaAbajo;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.A))
+
+        if (Input.IsKeyDown(Keys.W) &&
+            Input.IsKeyDown(Keys.A))
         {
+            yokoSeMovio = true;
             _yokoPosition.X -= 1;
             _yokoPosition.Y -= 1;
             _Yoko = _yokoDerechaArriba;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.D))
+
+        if (Input.IsKeyDown(Keys.S) &&
+            Input.IsKeyDown(Keys.D))
         {
+            yokoSeMovio = true;
             _yokoPosition.X += 1;
             _yokoPosition.Y += 1;
             _Yoko = _yokoIzquierdaAbajo;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.A))
+
+        if (Input.IsKeyDown(Keys.S) &&
+            Input.IsKeyDown(Keys.A))
         {
+            yokoSeMovio = true;
             _yokoPosition.X -= 1;
             _yokoPosition.Y += 1;
             _Yoko = _yokoIzquierdaArriba;
         }
+        if (!yokoSeMovio)
+{
+        _Yoko.Reset();
+}
 
-
-        if (NuevoDireccion != Vector2.Zero)
+        // Movimiento de Kyoko.
+        if (Input.IsKeyDown(Keys.Up))
         {
-            _direccion = NuevoDireccion;
-            _direccion.Normalize();
-        }
-//---------------------------------------------------------------------------------
-        
-        if (Keyboard.GetState().IsKeyDown(Keys.Up))
-        {
+            kyokoSeMovio = true;
+            
             _kyokoPosition.Y -= 5;
-            NuevoDireccion.Y -=1;
             _Kyoko = _kyokoAtras;
-
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.Down))
+
+        if (Input.IsKeyDown(Keys.Down))
         {
+            kyokoSeMovio = true;
             _kyokoPosition.Y += 5;
-            NuevoDireccion.Y +=1;
             _Kyoko = _kyokoFrente;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.Left))
+
+        if (Input.IsKeyDown(Keys.Left))
         {
+            kyokoSeMovio = true;
             _kyokoPosition.X -= 5;
-            _direccion.X -=1;
             _Kyoko = _kyokoLado;
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.Right))
+
+        if (Input.IsKeyDown(Keys.Right))
         {
-           _kyokoPosition.X += 5;
-            NuevoDireccion.X +=1;
+            kyokoSeMovio = true;
+            _kyokoPosition.X += 5;
             _Kyoko = _kyokoizquierda;
         }
 
+        if (!kyokoSeMovio)
+        {
+            _Kyoko.Reset();
+        }
 
+        _yokoPosition = LimitarPosicion(_yokoPosition, _Yoko);
+        _kyokoPosition = LimitarPosicion(_kyokoPosition, _Kyoko);
 
-
-
-
-
-        base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
 
-        // Primero dibujamos el fondo.
-        _battleBackground.Draw(SpriteBatch);
-
-        // Después dibujamos los personajes encima.
-        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        // Dibujar primero el fondo.
+        _battleBackground.Draw(SpriteBatch, GraphicsDevice);
+        // Dibujar después los personajes.
+        SpriteBatch.Begin(
+            samplerState: SamplerState.PointClamp);
 
         _Yoko.Draw(SpriteBatch, _yokoPosition);
         _Kyoko.Draw(SpriteBatch, _kyokoPosition);
@@ -205,4 +248,37 @@ public class Game1 : Core
 
         base.Draw(gameTime);
     }
+    
+
+
+
+private Vector2 LimitarPosicion(
+    Vector2 posicion,
+    AnimatedSprite personaje)
+{
+    float anchoPantalla = GraphicsDevice.Viewport.Width;
+    float altoPantalla = GraphicsDevice.Viewport.Height;
+
+    float ancho = personaje.Width;
+    float alto = personaje.Height;
+
+    float izquierda = personaje.Origin.X * personaje.Scale.X;
+    float arriba = personaje.Origin.Y * personaje.Scale.Y;
+
+    posicion.X = MathHelper.Clamp(
+        posicion.X,
+        izquierda,
+        anchoPantalla - ancho + izquierda);
+
+    posicion.Y = MathHelper.Clamp(
+        posicion.Y,
+        arriba,
+        altoPantalla - alto + arriba);
+
+    return posicion;
+}
+
+
+
+
 }

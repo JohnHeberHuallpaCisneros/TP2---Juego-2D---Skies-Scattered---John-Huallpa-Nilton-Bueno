@@ -13,21 +13,26 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BattleBackground.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:BattleBackground.fx
+
+#begin Fonts/8bitoperator_jve.ttf
+/importer:
+/processor:
+/build:Fonts/8bitoperator_jve.ttf
+
+#begin Fonts/RetroFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/RetroFont.spritefont
+
 #begin Image/atlas-definition.xml
 /copy:Image/atlas-definition.xml
-
-#begin Image/together.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/together.png
 
 #begin Image/backgrounds_battle/geometry/lines02.png
 /importer:TextureImporter
@@ -39,7 +44,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/geometry/lines02.png
 
 #begin Image/backgrounds_battle/geometry/squares01.png
@@ -52,7 +56,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/geometry/squares01.png
 
 #begin Image/backgrounds_battle/geometry/triangles01.png
@@ -65,7 +68,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/geometry/triangles01.png
 
 #begin Image/backgrounds_battle/ondulate/lines01.png
@@ -78,7 +80,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/ondulate/lines01.png
 
 #begin Image/backgrounds_battle/ondulate/sea02.png
@@ -91,7 +92,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/ondulate/sea02.png
 
 #begin Image/backgrounds_battle/ondulate/tiles05.png
@@ -104,7 +104,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/ondulate/tiles05.png
 
 #begin Image/backgrounds_battle/psycho/Degrade01transparent.png
@@ -117,7 +116,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/psycho/Degrade01transparent.png
 
 #begin Image/backgrounds_battle/psycho/kaleidoscope03.png
@@ -130,13 +128,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/psycho/kaleidoscope03.png
-
-#begin BattleBackground.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/build:BattleBackground.fx
 
 #begin Image/backgrounds_battle/psycho/weird03.png
 /importer:TextureImporter
@@ -148,5 +140,53 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/psycho/weird03.png
+
+#begin Image/Enemies/enemy_approaching.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Image/Enemies/enemy_approaching.png
+
+#begin Image/Pxiel Art UI borders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Image/Pxiel Art UI borders.png
+
+#begin Image/SNES - EarthBound - Miscellaneous - Battle HUD.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Image/SNES - EarthBound - Miscellaneous - Battle HUD.png
+
+#begin Image/together.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Image/together.png
+

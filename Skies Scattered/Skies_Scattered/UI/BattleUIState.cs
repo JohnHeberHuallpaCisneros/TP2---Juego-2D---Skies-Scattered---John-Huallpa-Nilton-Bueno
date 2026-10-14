@@ -4,7 +4,7 @@ namespace Skies_Scattered.UI
 {
     public class BattleUIState
     {
-        public string TopMessage { get; set; } = "¡Un enemigo salvaje apareció!";
+        public string TopMessage { get; set; } = "Here They Are";
         public List<string> CurrentMenuOptions { get; set; } = new List<string> { "Spell", "Z-Spell", "Items", "Act", "Auto", "Run" };
         public int SelectedOptionIndex { get; set; } = 0;
         public int SharedPP { get; set; } = 50;

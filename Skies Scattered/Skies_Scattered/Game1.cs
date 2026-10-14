@@ -74,7 +74,7 @@ public class Game1 : Core
 
         _battleState = new BattleUIState
         {
-            TopMessage = "¡Un enemigo salvaje apareció!",
+            TopMessage = "Here They Are",
             SharedPP = 50,
             PartyMembers = new System.Collections.Generic.List<CharacterStats>
             {

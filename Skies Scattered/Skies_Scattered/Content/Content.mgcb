@@ -19,10 +19,10 @@
 /processorParam:DebugMode=Auto
 /build:BattleBackground.fx
 
-#begin Fonts/8bitoperator_jve.ttf
+#begin Fonts/earthbound-beginnings.ttf
 /importer:
 /processor:
-/build:Fonts/8bitoperator_jve.ttf
+/build:Fonts/earthbound-beginnings.ttf
 
 #begin Fonts/RetroFont.spritefont
 /importer:FontDescriptionImporter

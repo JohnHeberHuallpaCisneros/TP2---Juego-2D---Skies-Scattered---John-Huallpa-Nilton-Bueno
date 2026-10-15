@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
+using MonoGameLibrary.Mecanicas;
 using Skies_Scattered.Graphics;
 using Skies_Scattered.UI;
 
@@ -11,7 +12,7 @@ namespace Skies_Scattered;
 public class Game1 : Core
 {
     // Animaciones de Yoko.
-    private AnimatedSprite _Yoko;
+    private Teclado _controlYoko;
     private AnimatedSprite _yokoAtras;
     private AnimatedSprite _yokoFrente;
     private AnimatedSprite _yokoLado;
@@ -22,15 +23,13 @@ public class Game1 : Core
     private AnimatedSprite _yokoIzquierdaAbajo;
 
     // Animaciones de Kyoko.
-    private AnimatedSprite _Kyoko;
+    private Teclado _controlKyoko;
     private AnimatedSprite _kyokoAtras;
     private AnimatedSprite _kyokoFrente;
     private AnimatedSprite _kyokoLado;
     private AnimatedSprite _kyokoizquierda;
 
     // Posiciones y fondo.
-    private Vector2 _yokoPosition = new Vector2(400, 300);
-    private Vector2 _kyokoPosition = new Vector2(800, 300);
 
     private BattleBackground _battleBackground;
     
@@ -39,7 +38,7 @@ public class Game1 : Core
     private Texture2D _enemyTexture;
     private Texture2D _earthboundHudTexture;
     private Texture2D _uiBordersTexture;
-    
+    private readonly Encuentro _encuentros = new Encuentro();
     private BattleUI _battleUI;
     private BattleUIState _battleState;
     
@@ -86,7 +85,6 @@ public class Game1 : Core
         TextureAtlas atlas = TextureAtlas.FromFile(Content, "Image/atlas-definition.xml");
 
         // Animaciones de Yoko.
-        _Yoko = CrearAnimacion(atlas, "yoko-animation");
         _yokoFrente = CrearAnimacion(atlas, "yoko-animation");
         _yokoAtras = CrearAnimacion(atlas, "yoko-atras-animation");
         _yokoLado = CrearAnimacion(atlas, "yoko-lado-animation");
@@ -97,7 +95,6 @@ public class Game1 : Core
         _yokoIzquierdaAbajo = CrearAnimacion(atlas, "yoko-izquierdaAtras-animation");
 
         // Animaciones de Kyoko.
-        _Kyoko = CrearAnimacion(atlas, "kyoko-Frente-animation");
         _kyokoFrente = CrearAnimacion(atlas, "kyoko-Frente-animation");
         _kyokoAtras = CrearAnimacion(atlas, "kyoko-atras-animation");
         _kyokoLado = CrearAnimacion(atlas, "kyoko-lado-animation");
@@ -106,6 +103,34 @@ public class Game1 : Core
         // Fondo de batalla.
         _battleBackground = new BattleBackground(Content);
         _battleBackground.LoadContent();
+        
+ _controlYoko = new Teclado(Keys.W, Keys.S, Keys.A, Keys.D)
+        {
+            Posicion = new Vector2(400, 300),
+            Actual = _yokoFrente,
+
+            AnimArriba = _yokoAtras,
+            AnimAbajo = _yokoFrente,
+            AnimIzquierda = _yokoLado,
+            AnimDerecha = _yokoizquierda,
+
+            AnimArribaDerecha = _yokoDerechaAbajo,
+            AnimArribaIzquierda = _yokoDerechaArriba,
+            AnimAbajoDerecha = _yokoIzquierdaAbajo,
+            AnimAbajoIzquierda = _yokoIzquierdaArriba
+        };
+
+        _controlKyoko = new Teclado(Keys.Up, Keys.Down, Keys.Left, Keys.Right)
+        {
+            Posicion = new Vector2(800, 300),
+            Actual = _kyokoFrente,
+
+            AnimArriba = _kyokoAtras,
+            AnimAbajo = _kyokoFrente,
+            AnimIzquierda = _kyokoLado,
+            AnimDerecha = _kyokoizquierda
+        };
+        
     }
 
     protected override void Update(GameTime gameTime)
@@ -113,12 +138,7 @@ public class Game1 : Core
         
         base.Update(gameTime);
 
-        _Yoko.Update(gameTime);
-        _Kyoko.Update(gameTime);
         _battleBackground.Update(gameTime);
-        
-        bool yokoSeMovio = false;
-        bool kyokoSeMovio = false;
 
         if (Input.IsKeyPressed(Keys.F11))
         {
@@ -126,29 +146,24 @@ public class Game1 : Core
             Core.Graphics.ApplyChanges();
         }
 
-        if (Input.IsKeyDown(Keys.Escape))
-        {
-            Exit();
-        }
+        if (!_encuentros.Activo)
+{
+    Vector2 posAntes = _controlYoko.Posicion;
 
-        // Movimiento de Yoko.
-        if (Input.IsKeyDown(Keys.W)) { yokoSeMovio = true; _yokoPosition.Y -= 5; _Yoko = _yokoAtras; }
-        if (Input.IsKeyDown(Keys.S)) { yokoSeMovio = true; _yokoPosition.Y += 5; _Yoko = _yokoFrente; }
-        if (Input.IsKeyDown(Keys.A)) { yokoSeMovio = true; _yokoPosition.X -= 5; _Yoko = _yokoLado; }
-        if (Input.IsKeyDown(Keys.D)) { yokoSeMovio = true; _yokoPosition.X += 5; _Yoko = _yokoizquierda; }
+    _controlYoko.Update(gameTime);
+    _controlKyoko.Update(gameTime);
 
-        if (!yokoSeMovio) { _Yoko.Reset(); }
+    _controlYoko.Posicion  = LimitarPosicion(_controlYoko.Posicion,  _controlYoko.Actual);
+    _controlKyoko.Posicion = LimitarPosicion(_controlKyoko.Posicion, _controlKyoko.Actual);
 
-        // Movimiento de Kyoko.
-        if (Input.IsKeyDown(Keys.Up)) { kyokoSeMovio = true; _kyokoPosition.Y -= 5; _Kyoko = _kyokoAtras; }
-        if (Input.IsKeyDown(Keys.Down)) { kyokoSeMovio = true; _kyokoPosition.Y += 5; _Kyoko = _kyokoFrente; }
-        if (Input.IsKeyDown(Keys.Left)) { kyokoSeMovio = true; _kyokoPosition.X -= 5; _Kyoko = _kyokoLado; }
-        if (Input.IsKeyDown(Keys.Right)) { kyokoSeMovio = true; _kyokoPosition.X += 5; _Kyoko = _kyokoizquierda; }
-
-        if (!kyokoSeMovio) { _Kyoko.Reset(); }
-
-        _yokoPosition = LimitarPosicion(_yokoPosition, _Yoko);
-        _kyokoPosition = LimitarPosicion(_kyokoPosition, _Kyoko);
+    float distancia = Vector2.Distance(posAntes, _controlYoko.Posicion);
+    _encuentros.Update(distancia);
+}
+else if (Input.IsKeyPressed(Keys.Enter))
+{
+    _encuentros.Reiniciar();   // por ahora, Enter "termina" el encuentro
+}
+    Window.Title = $"Probabilidad: {_encuentros.Probabilidad:P1}";
     }
 
     protected override void Draw(GameTime gameTime)
@@ -161,17 +176,17 @@ public class Game1 : Core
         // 2. Iniciar SpriteBatch para UI y personajes
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-        Vector2 screenSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-        if (_battleUI != null && _battleState != null)
+        if (_encuentros.Activo)
         {
+            Vector2 screenSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             _battleUI.Draw(SpriteBatch, _battleState, _enemyTexture, screenSize);
         }
-
-        _Yoko.Draw(SpriteBatch, _yokoPosition);
-        _Kyoko.Draw(SpriteBatch, _kyokoPosition);
-
+        else
+        {
+            _controlYoko.Actual.Draw(SpriteBatch, _controlYoko.Posicion);
+            _controlKyoko.Actual.Draw(SpriteBatch, _controlKyoko.Posicion);
+        }
         SpriteBatch.End();
-
         base.Draw(gameTime);
     }
 

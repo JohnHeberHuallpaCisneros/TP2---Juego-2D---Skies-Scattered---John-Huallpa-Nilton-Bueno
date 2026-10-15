@@ -1,1 +1,2 @@
 # TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno
+(nilton hace algo plis)

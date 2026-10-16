@@ -15,7 +15,6 @@ public class BattleState : IGameState
     private BattleUIState _battleState;
     private List<Enemy> _currentBattleEnemies;
     private Random _random;
-    
     public event Action OnBattleEnded;
 
     public class EnemyTemplate
@@ -70,12 +69,10 @@ public class BattleState : IGameState
 
     public void Update(GameTime gameTime)
     {
-        if (Input.IsKeyPressed(Keys.Z))
-        {
-            _battleState.IsActionMenuOpen = !_battleState.IsActionMenuOpen;
-        }
-
-        if (_battleState.IsActionMenuOpen && _battleState.CurrentMenuOptions.Count > 0)
+        if (_battleState.IsActionMenuOpen)
+    {
+        // --- MENÚ ABIERTO: Navegación y Confirmación ---
+        if (_battleState.CurrentMenuOptions.Count > 0)
         {
             if (Input.IsKeyPressed(Keys.Left) || Input.IsKeyPressed(Keys.A))
                 _battleState.SelectedOptionIndex = Math.Max(0, _battleState.SelectedOptionIndex - 1);
@@ -88,19 +85,85 @@ public class BattleState : IGameState
             
             if (Input.IsKeyPressed(Keys.Down) || Input.IsKeyPressed(Keys.S))
                 _battleState.SelectedOptionIndex = Math.Min(_battleState.CurrentMenuOptions.Count - 1, _battleState.SelectedOptionIndex + 2);
+                
 
-            if (Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
+            // Z, Enter o Espacio confirman la acción
+            if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
             {
                 string selectedAction = _battleState.CurrentMenuOptions[_battleState.SelectedOptionIndex];
-                _battleState.TopMessage = $"¡Yoko usó {selectedAction}!";
+                _battleState.IsActionMenuOpen = false; // Cierra el menú tras confirmar
+
+                if (selectedAction == "Bash")
+                {
+                    var Enemy = _currentBattleEnemies[0];
+                    Enemy.HP -= 10; // Daño fijo de 10 HP
+                    if (Enemy.HP <= 0)
+                    {
+                        _currentBattleEnemies.Remove(Enemy);
+                        _battleState.TopMessage = $"¡{Enemy.Name} fue derrotado!";
+                        
+                        if (_currentBattleEnemies.Count == 0)
+                        {
+                            _battleState.TopMessage = "¡Todos los enemigos han sido derrotados!";
+                            OnBattleEnded?.Invoke(); // Vuelve al mapa de exploración
+                        }
+                    }
+                    else
+                    {
+                        _battleState.TopMessage = $"¡Yoko atacó a {Enemy.Name}!";
+                    }
+                    
+                    
+                } 
+                else if (selectedAction == "Goods")
+                {
+                    _battleState.TopMessage = "¡Yoko usó un objeto!";
+                }
+                else if (selectedAction == "PSI")
+                {
+                    _battleState.TopMessage = "¡Yoko usó PSI!";
+                }
+                else if (selectedAction == "Defend")
+                {
+                    _battleState.TopMessage = "¡Yoko se defendió!";
+                }
+                
             }
+
         }
+
+        // Permitir cerrar/regresar el menú con Backspace o la tecla X
+        if (Input.IsKeyPressed(Keys.Back) || Input.IsKeyPressed(Keys.X))
+        {
+            _battleState.IsActionMenuOpen = false;
+            _battleState.TopMessage = $"¡Apareció un {_currentBattleEnemies[0].Name}!";
+        }
+    }
+    else
+    {
+        // --- MENÚ CERRADO: Abrir con Z ---
+        if (Input.IsKeyPressed(Keys.Z))
+        {
+            _battleState.IsActionMenuOpen = true;
+            _battleState.SelectedOptionIndex = 0;
+            _battleState.TopMessage = "¿Qué hará Yoko?";
+        }
+        
+        
 
         if (Input.IsKeyPressed(Keys.Back))
         {  
             OnBattleEnded?.Invoke(); // Vuelve al mapa de exploración
         }
     }
+    }
+
+    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    {
+        Vector2 screenSize = new Vector2(graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);  
+        _battleUI.Draw(spriteBatch, _battleState, _currentBattleEnemies, screenSize);  
+    }
+}
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {

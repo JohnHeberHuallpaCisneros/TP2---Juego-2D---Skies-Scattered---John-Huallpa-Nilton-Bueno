@@ -1,19 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 using MonoGameLibrary.Mecanicas;
+using Skies_Scattered.Entities;
 using Skies_Scattered.Graphics;
+using Skies_Scattered.States;
 using Skies_Scattered.UI;
 
 namespace Skies_Scattered;
 
 public class Game1 : Core  
 {  
+    // Jugadores con la nueva clase Player (en lugar de Teclado)
+    private Player _yoko;  
+    private Player _kyoko;
+
     // Animaciones de Yoko.  
-    private Teclado _controlYoko;  
     private AnimatedSprite _yokoAtras;  
     private AnimatedSprite _yokoFrente;  
     private AnimatedSprite _yokoLado;  
@@ -24,23 +30,24 @@ public class Game1 : Core
     private AnimatedSprite _yokoIzquierdaAbajo;
 
     // Animaciones de Kyoko.  
-    private Teclado _controlKyoko;  
     private AnimatedSprite _kyokoAtras;  
     private AnimatedSprite _kyokoFrente;  
     private AnimatedSprite _kyokoLado;  
     private AnimatedSprite _kyokoizquierda;
 
-    // Posiciones y fondo.
+    // Fondo de batalla.
     private BattleBackground _battleBackground;  
      
-    // Recursos de UI y Combate  
+    // Recursos generales y UI  
     private SpriteFont _retroFont;  
-    private Texture2D _enemyTexture;  
     private Texture2D _earthboundHudTexture;  
     private Texture2D _uiBordersTexture;  
+    
+    // Lista de plantillas de enemigos para el combate aleatorio
+    private List<BattleState.EnemyTemplate> _enemyTemplates;
+    
     private readonly Encuentro _encuentros = new Encuentro();  
-    private BattleUI _battleUI;  
-    private BattleUIState _battleState;  
+    private IGameState _currentState; // Estado activo (Exploración o Batalla)
 
     public Game1() : base("Skies Scattered", 640, 480, false)  
     {  
@@ -63,27 +70,19 @@ public class Game1 : Core
         _earthboundHudTexture = Content.Load<Texture2D>("Image/SNES - EarthBound - Miscellaneous - Battle HUD");  
         _uiBordersTexture = Content.Load<Texture2D>("Image/Pxiel Art UI borders");  
          
-        // Cargar fuente y enemigo
+        // Cargar fuente
         _retroFont = Content.Load<SpriteFont>("Fonts/RetroFont");  
-        _enemyTexture = Content.Load<Texture2D>("Image/Enemies/enemy_approaching"); 
 
-        // Inicializar la interfaz pasando las texturas al constructor
-        _battleUI = new BattleUI(_retroFont, _uiBordersTexture, _earthboundHudTexture);
-
-        _battleState = new BattleUIState  
-        {  
-            TopMessage = "Here They Are!",  
-            IsActionMenuOpen = false, // Comienza con el cuadro de descripción centrado
-            PartyMembers = new System.Collections.Generic.List<CharacterStats>  
-            {  
-                new CharacterStats { Name = "Yoko", AP = 10, HP = 50, CT = 5 },  
-                new CharacterStats { Name = "Kyoko", AP = 12, HP = 50, CT = 4 }  
-            },
-            CurrentMenuOptions = new System.Collections.Generic.List<string> 
-            { 
-                "Bash", "Goods", 
-                "PSI", "Defend" 
-            }
+        // Cargar todos los enemigos de la carpeta Enemies/
+        _enemyTemplates = new List<BattleState.EnemyTemplate>
+        {
+            new BattleState.EnemyTemplate { Name = "Black Eye", Texture = Content.Load<Texture2D>("Image/Enemies/black_eye"), HP = 40 },
+            new BattleState.EnemyTemplate { Name = "Caged", Texture = Content.Load<Texture2D>("Image/Enemies/caged"), HP = 55 },
+            new BattleState.EnemyTemplate { Name = "Crypted", Texture = Content.Load<Texture2D>("Image/Enemies/crypted"), HP = 50 },
+            new BattleState.EnemyTemplate { Name = "Mantle", Texture = Content.Load<Texture2D>("Image/Enemies/mantle"), HP = 70 },
+            new BattleState.EnemyTemplate { Name = "Mothshum", Texture = Content.Load<Texture2D>("Image/Enemies/mothshum"), HP = 35 },
+            new BattleState.EnemyTemplate { Name = "Reaper Blossom", Texture = Content.Load<Texture2D>("Image/Enemies/reaper_blossom"), HP = 60 },
+            new BattleState.EnemyTemplate { Name = "Snow Twins", Texture = Content.Load<Texture2D>("Image/Enemies/snow_twins"), HP = 45 }
         };
 
         TextureAtlas atlas = TextureAtlas.FromFile(Content, "Image/atlas-definition.xml");
@@ -107,30 +106,25 @@ public class Game1 : Core
         // Fondo de batalla  
         _battleBackground = new BattleBackground(Content);  
         _battleBackground.LoadContent();  
-         
-        _controlYoko = new Teclado(Keys.W, Keys.S, Keys.A, Keys.D)  
+        
+        // Inicializar a Yoko con la nueva clase Player
+        _yoko = new Player(Keys.W, Keys.S, Keys.A, Keys.D, new Vector2(400, 300))  
         {  
-            Posicion = new Vector2(400, 300),  
-            Actual = _yokoFrente,
-
-            AnimArriba = _yokoAtras,  
-            AnimAbajo = _yokoFrente,  
+            AnimFrente = _yokoFrente,  
+            AnimAtras = _yokoAtras,  
             AnimIzquierda = _yokoLado,  
             AnimDerecha = _yokoizquierda,  
-
             AnimArribaDerecha = _yokoDerechaAbajo,  
             AnimArribaIzquierda = _yokoDerechaArriba,  
             AnimAbajoDerecha = _yokoIzquierdaAbajo,  
             AnimAbajoIzquierda = _yokoIzquierdaArriba  
         };
 
-        _controlKyoko = new Teclado(Keys.Up, Keys.Down, Keys.Left, Keys.Right)  
+        // Inicializar a Kyoko con la nueva clase Player
+        _kyoko = new Player(Keys.Up, Keys.Down, Keys.Left, Keys.Right, new Vector2(800, 300))  
         {  
-            Posicion = new Vector2(800, 300),  
-            Actual = _kyokoFrente,
-
-            AnimArriba = _kyokoAtras,  
-            AnimAbajo = _kyokoFrente,  
+            AnimFrente = _kyokoFrente,  
+            AnimAtras = _kyokoAtras,  
             AnimIzquierda = _kyokoLado,  
             AnimDerecha = _kyokoizquierda  
         };     
@@ -138,8 +132,7 @@ public class Game1 : Core
 
     protected override void Update(GameTime gameTime)  
     {  
-        base.Update(gameTime);
-
+        base.Update(gameTime);  
         _battleBackground.Update(gameTime);
 
         if (Input.IsKeyPressed(Keys.F11))  
@@ -148,62 +141,36 @@ public class Game1 : Core
             Core.Graphics.ApplyChanges();  
         }
 
-        if (!_encuentros.Activo)  
+        if (_encuentros.Activo)  
         {  
-            Vector2 posAntes = _controlYoko.Posicion;
+            if (_currentState is not BattleState)
+            {
+                var battleState = new BattleState(_retroFont, _uiBordersTexture, _earthboundHudTexture, _enemyTemplates);
+                
+                battleState.OnBattleEnded += () => {
+                    _encuentros.Reiniciar();
+                    _currentState = null; 
+                };
 
-            _controlYoko.Update(gameTime);  
-            _controlKyoko.Update(gameTime);
+                _currentState = battleState;
+            }
 
-            _controlYoko.Posicion = LimitarPosicion(_controlYoko.Posicion, _controlYoko.Actual);  
-            _controlKyoko.Posicion = LimitarPosicion(_controlKyoko.Posicion, _controlKyoko.Actual);
+            _currentState.Update(gameTime);
+        }  
+        else  
+        {  
+            // Lógica de exploración del mapa con los nuevos objetos Player
+            Vector2 posAntes = _yoko.Position;
 
-            float distancia = Vector2.Distance(posAntes, _controlYoko.Posicion);  
+            _yoko.Update(gameTime);  
+            _kyoko.Update(gameTime);
+
+            _yoko.Position = LimitarPosicion(_yoko.Position, _yoko.CurrentAnimation);  
+            _kyoko.Position = LimitarPosicion(_kyoko.Position, _kyoko.CurrentAnimation);
+
+            float distancia = Vector2.Distance(posAntes, _yoko.Position);  
             _encuentros.Update(distancia);  
         }  
-        else 
-        {
-            // Presionar Z para alternar entre la descripción inicial y el menú de acciones
-            if (Input.IsKeyPressed(Keys.Z))
-            {
-                _battleState.IsActionMenuOpen = !_battleState.IsActionMenuOpen;
-            }
-
-            // Si el menú de acciones está visible, permitimos la navegación en la grilla de opciones
-            if (_battleState.IsActionMenuOpen && _battleState.CurrentMenuOptions.Count > 0)
-            {
-                if (Input.IsKeyPressed(Keys.Left) || Input.IsKeyPressed(Keys.A))
-                {
-                    _battleState.SelectedOptionIndex = Math.Max(0, _battleState.SelectedOptionIndex - 1);
-                }
-                if (Input.IsKeyPressed(Keys.Right) || Input.IsKeyPressed(Keys.D))
-                {
-                    _battleState.SelectedOptionIndex = Math.Min(_battleState.CurrentMenuOptions.Count - 1, _battleState.SelectedOptionIndex + 1);
-                }
-                if (Input.IsKeyPressed(Keys.Up) || Input.IsKeyPressed(Keys.W))
-                {
-                    _battleState.SelectedOptionIndex = Math.Max(0, _battleState.SelectedOptionIndex - 2);
-                }
-                if (Input.IsKeyPressed(Keys.Down) || Input.IsKeyPressed(Keys.S))
-                {
-                    _battleState.SelectedOptionIndex = Math.Min(_battleState.CurrentMenuOptions.Count - 1, _battleState.SelectedOptionIndex + 2);
-                }
-
-                if (Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
-                {
-                    string selectedAction = _battleState.CurrentMenuOptions[_battleState.SelectedOptionIndex];
-                    _battleState.TopMessage = $"Elegiste {selectedAction}!";
-                }
-            }
-
-            // Salir del encuentro con la tecla Borrar (Backspace)
-            if (Input.IsKeyPressed(Keys.Back))
-            {  
-                _encuentros.Reiniciar();   
-                _battleState.IsActionMenuOpen = false;
-                _battleState.TopMessage = "Here They Are!";
-            }
-        } 
 
         Window.Title = $"Probabilidad: {_encuentros.Probabilidad:P1}";
     }
@@ -215,18 +182,17 @@ public class Game1 : Core
         // 1. Dibujar fondo de batalla  
         _battleBackground.Draw(SpriteBatch, GraphicsDevice);
 
-        // 2. Dibujar UI y sprites  
+        // 2. Dibujar UI y sprites según el estado activo  
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-        if (_encuentros.Activo)  
+        if (_encuentros.Activo && _currentState != null)  
         {  
-            Vector2 screenSize = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);  
-            _battleUI.Draw(SpriteBatch, _battleState, _enemyTexture, screenSize);  
+            _currentState.Draw(SpriteBatch, GraphicsDevice);  
         }  
         else  
         {  
-            _controlYoko.Actual.Draw(SpriteBatch, _controlYoko.Posicion);  
-            _controlKyoko.Actual.Draw(SpriteBatch, _controlKyoko.Posicion);  
+            _yoko.CurrentAnimation?.Draw(SpriteBatch, _yoko.Position);  
+            _kyoko.CurrentAnimation?.Draw(SpriteBatch, _kyoko.Position);  
         }  
 
         SpriteBatch.End();  
@@ -235,6 +201,8 @@ public class Game1 : Core
 
     private Vector2 LimitarPosicion(Vector2 posicion, AnimatedSprite personaje)  
     {  
+        if (personaje == null) return posicion;
+
         float anchoPantalla = GraphicsDevice.Viewport.Width;  
         float altoPantalla = GraphicsDevice.Viewport.Height;
 

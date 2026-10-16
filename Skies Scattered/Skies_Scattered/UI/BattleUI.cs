@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGameLibrary.Graphics;
+using Skies_Scattered.Entities;
 
 namespace Skies_Scattered.UI
 {
@@ -9,6 +10,7 @@ namespace Skies_Scattered.UI
         private SpriteFont _font;
         private Texture2D _uiBordersTexture;
         private Texture2D _earthboundHudTexture;
+        private Texture2D _pixelTexture;
 
         public BattleUI(SpriteFont font, Texture2D uiBordersTexture, Texture2D earthboundHudTexture)
         {
@@ -17,71 +19,81 @@ namespace Skies_Scattered.UI
             _earthboundHudTexture = earthboundHudTexture;
         }
 
-        public void Draw(SpriteBatch spriteBatch, BattleUIState state, Texture2D enemyTexture, Vector2 screenSize)
+        public void Draw(SpriteBatch spriteBatch, BattleUIState state, List<Enemy> enemies, Vector2 screenSize)
         {
-            // 1. Dibujar el Enemigo centrado
-            if (enemyTexture != null)
+            if (_pixelTexture == null && spriteBatch.GraphicsDevice != null)
             {
-                Vector2 enemyPos = new Vector2(
-                    (screenSize.X - 96) / 2f,
-                    (screenSize.Y - 96) / 2f - 20f
-                );
-                spriteBatch.Draw(enemyTexture, enemyPos, Color.White);
+                _pixelTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+                _pixelTexture.SetData(new[] { Color.White });
             }
 
-            // 2. DISPOSICIÓN ESTILO EARTHBOUND
+            // 1. Dibujar a todos los enemigos activos en el combate
+            if (enemies != null)
+            {
+                foreach (var enemy in enemies)
+                {
+                    if (enemy.Texture != null)
+                    {
+                        spriteBatch.Draw(enemy.Texture, enemy.Position, Color.White);
+                    }
+                }
+            }
 
+            // 2. DISPOSICIÓN FIEL A EARTHBOUND (Menú de acciones o caja de texto)
             if (state.IsActionMenuOpen)
             {
-                // A) MENÚ DE ACCIONES (Arriba a la Izquierda)
-                Rectangle menuBox = new Rectangle(20, 15, 270, 95);
-                DrawNinePatchBox(spriteBatch, _uiBordersTexture, menuBox);
+                Rectangle menuBox = new Rectangle(25, 25, 260, 105);
+                DrawEarthboundBox(spriteBatch, _earthboundHudTexture, menuBox);
 
                 if (_font != null)
                 {
                     string activeName = state.PartyMembers.Count > 0 ? state.PartyMembers[0].Name : "Yoko";
                     
-                    // Nombre del personaje en el menú
-                    spriteBatch.DrawString(_font, activeName, new Vector2(menuBox.X + 18, menuBox.Y + 12), Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+                    Vector2 namePos = new Vector2(menuBox.X + 22, menuBox.Y - 12);
+                    Vector2 nameSize = _font.MeasureString(activeName) * 0.85f;
 
-                    // Opciones en 2 columnas estilo EarthBound
+                    if (_pixelTexture != null)
+                    {
+                        Rectangle nameBgRect = new Rectangle((int)namePos.X - 4, (int)namePos.Y - 1, (int)nameSize.X + 8, (int)nameSize.Y + 2);
+                        spriteBatch.Draw(_pixelTexture, nameBgRect, Color.Black);
+                    }
+
+                    spriteBatch.DrawString(_font, activeName, namePos, Color.White, 0f, Vector2.Zero, 0.85f, SpriteEffects.None, 0f);
+
                     for (int i = 0; i < state.CurrentMenuOptions.Count; i++)
                     {
                         int col = i % 2;
                         int row = i / 2;
-                        float optionX = menuBox.X + 18 + (col * 120);
-                        float optionY = menuBox.Y + 36 + (row * 24);
+                        
+                        float optionX = menuBox.X + 18 + (col * 115);
+                        float optionY = menuBox.Y + 28 + (row * 30);
 
                         Color optionColor = (i == state.SelectedOptionIndex) ? Color.Cyan : Color.White;
-                        spriteBatch.DrawString(_font, state.CurrentMenuOptions[i], new Vector2(optionX, optionY), optionColor, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+
+                        if (i == state.SelectedOptionIndex)
+                        {
+                            spriteBatch.DrawString(_font, ">", new Vector2(optionX, optionY), Color.Cyan, 0f, Vector2.Zero, 0.85f, SpriteEffects.None, 0f);
+                        }
+
+                        spriteBatch.DrawString(_font, state.CurrentMenuOptions[i], new Vector2(optionX + 16, optionY), optionColor, 0f, Vector2.Zero, 0.85f, SpriteEffects.None, 0f);
                     }
-                }
-
-                // B) CUADRO DE TEXTO (A la derecha del menú de acciones)
-                Rectangle textBox = new Rectangle(300, 15, (int)screenSize.X - 320, 95);
-                DrawNinePatchBox(spriteBatch, _uiBordersTexture, textBox);
-
-                if (_font != null)
-                {
-                    spriteBatch.DrawString(_font, state.TopMessage, new Vector2(textBox.X + 20, textBox.Y + 20), Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
                 }
             }
             else
             {
-                // C) CUADRO DE TEXTO INICIAL (Centrado arriba cuando NO se presiona Z)
-                Rectangle fullTextBox = new Rectangle(20, 15, (int)screenSize.X - 40, 70);
-                DrawNinePatchBox(spriteBatch, _uiBordersTexture, fullTextBox);
+                Rectangle fullTextBox = new Rectangle(25, 25, (int)screenSize.X - 50, 80);
+                DrawEarthboundBox(spriteBatch, _earthboundHudTexture, fullTextBox);
 
                 if (_font != null)
                 {
-                    spriteBatch.DrawString(_font, state.TopMessage, new Vector2(fullTextBox.X + 25, fullTextBox.Y + 22), Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(_font, state.TopMessage, new Vector2(fullTextBox.X + 25, fullTextBox.Y + 28), Color.White, 0f, Vector2.Zero, 0.85f, SpriteEffects.None, 0f);
                 }
             }
 
             // 3. CUADROS DE ESTADO DE LOS PERSONAJES (Abajo al centro)
             float totalWidth = state.PartyMembers.Count * 130f;
             float startX = (screenSize.X - totalWidth) / 2f;
-            float statusPosY = screenSize.Y - 145f; // Cambiado a statusPosY para evitar conflicto de nombres
+            float statusPosY = screenSize.Y - 145f;
 
             for (int i = 0; i < state.PartyMembers.Count; i++)
             {
@@ -96,33 +108,34 @@ namespace Skies_Scattered.UI
 
                 if (_font != null)
                 {
-                    float textOffsetX = statusPos.X + 16f;
-                    float textOffsetY = statusPos.Y + 8f;
-                    spriteBatch.DrawString(_font, p.Name, new Vector2(textOffsetX, textOffsetY), Color.White, 0f, Vector2.Zero, 0.95f, SpriteEffects.None, 0f);
+                    float textOffsetX = statusPos.X + 18f;
+                    float textOffsetY = statusPos.Y + 12f;
+                    spriteBatch.DrawString(_font, p.Name, new Vector2(textOffsetX, textOffsetY), Color.White, 0f, Vector2.Zero, 0.85f, SpriteEffects.None, 0f);
                 }
             }
         }
 
-        private void DrawNinePatchBox(SpriteBatch spriteBatch, Texture2D texture, Rectangle rect)
+        private void DrawEarthboundBox(SpriteBatch spriteBatch, Texture2D texture, Rectangle rect)
         {
             if (texture != null)
             {
-                int atlasX = 16;
-                int atlasY = 16;
-                int size = 96;
-                int cornerSize = 16;
+                int atlasX = 976;
+                int atlasY = 143;
+                int width = 56;
+                int height = 64;
+                int cornerSize = 12;
 
                 Rectangle topLeftSrc = new Rectangle(atlasX, atlasY, cornerSize, cornerSize);
-                Rectangle topRightSrc = new Rectangle(atlasX + size - cornerSize, atlasY, cornerSize, cornerSize);
-                Rectangle bottomLeftSrc = new Rectangle(atlasX, atlasY + size - cornerSize, cornerSize, cornerSize);
-                Rectangle bottomRightSrc = new Rectangle(atlasX + size - cornerSize, atlasY + size - cornerSize, cornerSize, cornerSize);
+                Rectangle topRightSrc = new Rectangle(atlasX + width - cornerSize, atlasY, cornerSize, cornerSize);
+                Rectangle bottomLeftSrc = new Rectangle(atlasX, atlasY + height - cornerSize, cornerSize, cornerSize);
+                Rectangle bottomRightSrc = new Rectangle(atlasX + width - cornerSize, atlasY + height - cornerSize, cornerSize, cornerSize);
 
-                Rectangle topSrc = new Rectangle(atlasX + cornerSize, atlasY, size - (cornerSize * 2), cornerSize);
-                Rectangle bottomSrc = new Rectangle(atlasX + cornerSize, atlasY + size - cornerSize, size - (cornerSize * 2), cornerSize);
+                Rectangle topSrc = new Rectangle(atlasX + cornerSize, atlasY, width - (cornerSize * 2), cornerSize);
+                Rectangle bottomSrc = new Rectangle(atlasX + cornerSize, atlasY + height - cornerSize, width - (cornerSize * 2), cornerSize);
+                Rectangle leftSrc = new Rectangle(atlasX, atlasY + cornerSize, cornerSize, height - (cornerSize * 2));
+                Rectangle rightSrc = new Rectangle(atlasX + width - cornerSize, atlasY + cornerSize, cornerSize, height - (cornerSize * 2));
                 
-                Rectangle leftSource = new Rectangle(atlasX, atlasY + cornerSize, cornerSize, size - (cornerSize * 2));
-                Rectangle rightSource = new Rectangle(atlasX + size - cornerSize, atlasY + cornerSize, cornerSize, size - (cornerSize * 2));
-                Rectangle centerSrc = new Rectangle(atlasX + cornerSize, atlasY + cornerSize, size - (cornerSize * 2), size - (cornerSize * 2));
+                Rectangle centerSrc = new Rectangle(atlasX + cornerSize, atlasY + cornerSize, width - (cornerSize * 2), height - (cornerSize * 2));
 
                 Rectangle centerDest = new Rectangle(
                     rect.X + cornerSize, 
@@ -139,8 +152,8 @@ namespace Skies_Scattered.UI
 
                 spriteBatch.Draw(texture, new Rectangle(rect.X + cornerSize, rect.Y, rect.Width - (cornerSize * 2), cornerSize), topSrc, Color.White);
                 spriteBatch.Draw(texture, new Rectangle(rect.X + cornerSize, rect.Y + rect.Height - cornerSize, rect.Width - (cornerSize * 2), cornerSize), bottomSrc, Color.White);
-                spriteBatch.Draw(texture, new Rectangle(rect.X, rect.Y + cornerSize, cornerSize, rect.Height - (cornerSize * 2)), leftSource, Color.White);
-                spriteBatch.Draw(texture, new Rectangle(rect.X + rect.Width - cornerSize, rect.Y + cornerSize, cornerSize, rect.Height - (cornerSize * 2)), rightSource, Color.White);
+                spriteBatch.Draw(texture, new Rectangle(rect.X, rect.Y + cornerSize, cornerSize, rect.Height - (cornerSize * 2)), leftSrc, Color.White);
+                spriteBatch.Draw(texture, new Rectangle(rect.X + rect.Width - cornerSize, rect.Y + cornerSize, cornerSize, rect.Height - (cornerSize * 2)), rightSrc, Color.White);
             }
         }
     }

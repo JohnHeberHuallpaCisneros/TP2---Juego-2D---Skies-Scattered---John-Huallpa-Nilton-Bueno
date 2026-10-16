@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
-using MonoGameLibrary.Mecanicas;
 using Skies_Scattered.Entities;
 using Skies_Scattered.Graphics;
+using Skies_Scattered.Mechanics;
 using Skies_Scattered.States;
 using Skies_Scattered.UI;
 
@@ -15,7 +15,7 @@ namespace Skies_Scattered;
 
 public class Game1 : Core  
 {  
-    // Jugadores con la nueva clase Player (en lugar de Teclado)
+    // Jugadores con la clase Player
     private Player _yoko;  
     private Player _kyoko;
 
@@ -46,7 +46,8 @@ public class Game1 : Core
     // Lista de plantillas de enemigos para el combate aleatorio
     private List<BattleState.EnemyTemplate> _enemyTemplates;
     
-    private readonly Encuentro _encuentros = new Encuentro();  
+    // Sistema de encuentros en la carpeta Mechanics
+    private readonly Encounter _encuentros = new Encounter();  
     private IGameState _currentState; // Estado activo (Exploración o Batalla)
 
     public Game1() : base("Skies Scattered", 640, 480, false)  
@@ -107,7 +108,7 @@ public class Game1 : Core
         _battleBackground = new BattleBackground(Content);  
         _battleBackground.LoadContent();  
         
-        // Inicializar a Yoko con la nueva clase Player
+        // Inicializar a Yoko con la clase Player
         _yoko = new Player(Keys.W, Keys.S, Keys.A, Keys.D, new Vector2(400, 300))  
         {  
             AnimFrente = _yokoFrente,  
@@ -120,7 +121,7 @@ public class Game1 : Core
             AnimAbajoIzquierda = _yokoIzquierdaArriba  
         };
 
-        // Inicializar a Kyoko con la nueva clase Player
+        // Inicializar a Kyoko con la clase Player
         _kyoko = new Player(Keys.Up, Keys.Down, Keys.Left, Keys.Right, new Vector2(800, 300))  
         {  
             AnimFrente = _kyokoFrente,  
@@ -159,7 +160,7 @@ public class Game1 : Core
         }  
         else  
         {  
-            // Lógica de exploración del mapa con los nuevos objetos Player
+            // Lógica de exploración del mapa con los objetos Player
             Vector2 posAntes = _yoko.Position;
 
             _yoko.Update(gameTime);  
@@ -172,7 +173,7 @@ public class Game1 : Core
             _encuentros.Update(distancia);  
         }  
 
-        Window.Title = $"Probabilidad: {_encuentros.Probabilidad:P1}";
+        Window.Title = $"Pasos para el combate: {_encuentros.PasosRestantes}";
     }
 
     protected override void Draw(GameTime gameTime)  

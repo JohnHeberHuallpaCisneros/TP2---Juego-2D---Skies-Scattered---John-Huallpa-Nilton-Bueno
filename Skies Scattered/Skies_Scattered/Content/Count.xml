@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>image/Earthbound</Texture>
+    <Regions>
+        <Region name="number0" x="512" y="128" width="9" height="14" />
+        <Region name="number0-1" x="529" y="128" width="9" height="14" />
+    </Regions>
+    <Animations>
+        <Animation name="number" delay="500">
+            <Frame region="number0" />
+            <Frame region="number0-1"/>
+        </Animation>
+    </Animations> <!-- SOLUCIÓN: Agregada esta etiqueta de cierre que faltaba -->
+</TextureAtlas>

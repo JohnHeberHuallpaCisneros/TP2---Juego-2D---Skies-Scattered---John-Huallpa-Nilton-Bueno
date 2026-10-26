@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>Image/Player/together</Texture>
+
+    <Regions>
+        <!-- YOKO (Filas superiores) -->
+        <Region name="yoko-1" x="0" y="0" width="32" height="32" />
+        <Region name="yoko-2" x="0" y="32" width="32" height="32" />
+        <Region name="yoko-3" x="32" y="0" width="32" height="32" />
+        <Region name="yoko-4" x="32" y="32" width="32" height="32" />
+        <Region name="yoko-5" x="64" y="0" width="32" height="32" />
+        <Region name="yoko-6" x="96" y="0" width="32" height="32" />
+        <Region name="yoko-7" x="64" y="32" width="32" height="32" />
+        <Region name="yoko-8" x="96" y="32" width="32" height="32" />
+
+        <Region name="yoko-9" x="128" y="0" width="32" height="32" />
+        <Region name="yoko-10" x="160" y="0" width="32" height="32" />
+        <Region name="yoko-11" x="192" y="0" width="32" height="32" />
+        <Region name="yoko-12" x="224" y="0" width="32" height="32" />
+        <Region name="yoko-13" x="128" y="32" width="32" height="32" />
+        <Region name="yoko-14" x="160" y="32" width="32" height="32" />
+        <Region name="yoko-15" x="192" y="32" width="32" height="32" />
+        <Region name="yoko-16" x="224" y="32" width="32" height="32" />
+
+        <!-- KYOKO (Filas inferiores) -->
+        <Region name="kyoko-1" x="0" y="64" width="32" height="32" />
+        <Region name="kyoko-2" x="0" y="96" width="32" height="32" />
+        <Region name="kyoko-3" x="32" y="64" width="32" height="32" />
+        <Region name="kyoko-4" x="32" y="96" width="32" height="32" />
+        <Region name="kyoko-5" x="64" y="64" width="32" height="32" />
+        <Region name="kyoko-6" x="96" y="64" width="32" height="32" />
+        <Region name="kyoko-7" x="64" y="96" width="32" height="32" />
+        <Region name="kyoko-8" x="96" y="96" width="32" height="32" />
+
+        <Region name="kyoko-9" x="128" y="64" width="32" height="32" />
+        <Region name="kyoko-10" x="160" y="64" width="32" height="32" />
+        <Region name="kyoko-11" x="192" y="64" width="32" height="32" />
+        <Region name="kyoko-12" x="224" y="64" width="32" height="32" />
+        <Region name="kyoko-13" x="128" y="96" width="32" height="32" />
+        <Region name="kyoko-14" x="160" y="96" width="32" height="32" />
+        <Region name="kyoko-15" x="192" y="96" width="32" height="32" />
+        <Region name="kyoko-16" x="224" y="96" width="32" height="32" />
+    </Regions>
+
+    <Animations>
+        <!-- YOKO: FRENTE -->
+        <Animation name="yoko-animation" delay="300">
+            <Frame region="yoko-1" />
+            <Frame region="yoko-2" />
+        </Animation>
+
+        <!-- YOKO: ATRAS -->
+        <Animation name="yoko-atras-animation" delay="300">
+            <Frame region="yoko-3" />
+            <Frame region="yoko-4" />
+        </Animation>
+
+        <!-- YOKO: LADOS -->
+        <Animation name="yoko-lado-animation" delay="300">
+            <Frame region="yoko-5" />
+            <Frame region="yoko-6" />
+        </Animation>
+
+        <Animation name="yoko-izquierda-animation" delay="300">
+            <Frame region="yoko-7" />
+            <Frame region="yoko-8" />
+        </Animation>
+
+        <!-- YOKO: DIAGONALES -->
+        <Animation name="yoko-izquierdaFrente-animation" delay="300">
+            <Frame region="yoko-9" />
+            <Frame region="yoko-10" />
+        </Animation>
+
+        <Animation name="yoko-izquierdaAtras-animation" delay="300">
+            <Frame region="yoko-11" />
+            <Frame region="yoko-12" />
+        </Animation>
+
+        <Animation name="yoko-DerechaFrente-animation" delay="300">
+            <Frame region="yoko-13" />
+            <Frame region="yoko-14" />
+        </Animation>
+
+        <Animation name="yoko-DerechaAtras-animation" delay="300">
+            <Frame region="yoko-15" />
+            <Frame region="yoko-16" />
+        </Animation>
+
+        <!-- KYOKO: FRENTE -->
+        <Animation name="kyoko-Frente-animation" delay="300">
+            <Frame region="kyoko-1" />
+            <Frame region="kyoko-2" />
+        </Animation>
+
+        <!-- KYOKO: ATRAS -->
+        <Animation name="kyoko-atras-animation" delay="300">
+            <Frame region="kyoko-3" />
+            <Frame region="kyoko-4" />
+        </Animation>
+
+        <!-- KYOKO: LADOS -->
+        <Animation name="kyoko-lado-animation" delay="300">
+            <Frame region="kyoko-5" />
+            <Frame region="kyoko-6" />
+        </Animation>
+
+        <Animation name="kyoko-izquierda-animation" delay="300">
+            <Frame region="kyoko-7" />
+            <Frame region="kyoko-8" />
+        </Animation>
+
+        <!-- KYOKO: DIAGONALES -->
+        <Animation name="kyoko-izquierdaFrente-animation" delay="300">
+            <Frame region="kyoko-9" />
+            <Frame region="kyoko-10" />
+        </Animation>
+
+        <Animation name="kyoko-izquierdaAtras-animation" delay="300">
+            <Frame region="kyoko-11" />
+            <Frame region="kyoko-12" />
+        </Animation>
+
+        <Animation name="kyoko-DerechaFrente-animation" delay="300">
+            <Frame region="kyoko-13" />
+            <Frame region="kyoko-14" />
+        </Animation>
+
+        <Animation name="kyoko-DerechaAtras-animation" delay="300">
+            <Frame region="kyoko-15" />
+            <Frame region="kyoko-16" />
+        </Animation>
+    </Animations>
+</TextureAtlas>

@@ -4,28 +4,28 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/BattleBackground.fx</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Fonts/earthbound-beginnings.ttf</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Fonts/RetroFont.spritefont</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/lines02.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/squares01.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/triangles01.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/lines01.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/sea02.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/tiles05.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/Degrade01transparent.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/kaleidoscope03.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/weird03.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Boxes_UI/Pxiel Art UI borders.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Boxes_UI/SNES - EarthBound - Miscellaneous - Battle HUD.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/black_eye.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/caged.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/crypted.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/mantle.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/mothshum.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/reaper_blossom.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Enemies/snow_twins.png</File>
-    <File>C:/Users/alumno.ET26/Desktop/Nueva carpeta/Skies Scattered/Skies_Scattered/Content/Image/Player/together.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/BattleBackground.fx</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Fonts/earthbound-beginnings.ttf</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Fonts/RetroFont.spritefont</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/lines02.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/squares01.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/geometry/triangles01.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/lines01.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/sea02.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/ondulate/tiles05.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/Degrade01transparent.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/kaleidoscope03.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/backgrounds_battle/psycho/weird03.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Boxes_UI/Pxiel Art UI borders.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Boxes_UI/SNES - EarthBound - Miscellaneous - Battle HUD.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/black_eye.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/caged.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/crypted.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/mantle.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/mothshum.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/reaper_blossom.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Enemies/snow_twins.png</File>
+    <File>C:/Users/pc/Desktop/chamba/Poo game/TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno/Skies Scattered/Skies_Scattered/Content/Image/Player/together.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>image/together</Texture>
+    <Regions>
+        <Region name="Yoko" x="0" y="0" width="32" height="32" />
+        <Region name="Kyoko" x="0" y="64" width="32" height="32" />
+    </Regions>
+</TextureAtlas>

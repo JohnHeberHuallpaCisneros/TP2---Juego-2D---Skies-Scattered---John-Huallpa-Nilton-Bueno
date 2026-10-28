@@ -18,6 +18,18 @@ public class BattleBackground
     private float _paletteMix;
     private float _paletteDirection = 1f;
 
+    // Área visible del fondo de batalla.
+    // Resolución del juego: 640 x 480.
+    private readonly Rectangle _battleArea =
+        new Rectangle(0, 80, 640, 320);
+
+    private readonly RasterizerState _rasterizerState =
+        new RasterizerState
+        {
+            CullMode = CullMode.None,
+            ScissorTestEnable = true
+        };
+
     public BattleBackground(ContentManager content)
     {
         _content = content;
@@ -63,6 +75,13 @@ public class BattleBackground
         SpriteBatch spriteBatch,
         GraphicsDevice graphicsDevice)
     {
+        // Guardar el rectángulo de recorte anterior.
+        Rectangle previousScissor =
+            graphicsDevice.ScissorRectangle;
+
+        // Recortar el fondo a la zona central.
+        graphicsDevice.ScissorRectangle = _battleArea;
+
         Color darkRed = new Color(22, 0, 10);
         Color darkBlue = new Color(0, 3, 28);
 
@@ -75,7 +94,6 @@ public class BattleBackground
         Color lightPalette =
             Color.Lerp(lightRed, lightBlue, _paletteMix);
 
-        // Obtener la resolución actual del área de dibujo.
         int ancho = graphicsDevice.Viewport.Width;
         int alto = graphicsDevice.Viewport.Height;
 
@@ -97,6 +115,9 @@ public class BattleBackground
             0.040f, 14f, Color.White * 0.4f,
             ancho, alto,
             darkPalette, lightPalette);
+
+        // Restaurar el recorte original.
+        graphicsDevice.ScissorRectangle = previousScissor;
     }
 
     private void DrawLayer(
@@ -144,6 +165,7 @@ public class BattleBackground
 
         spriteBatch.Begin(
             samplerState: SamplerState.PointWrap,
+            rasterizerState: _rasterizerState,
             effect: _battleEffect);
 
         DrawTiledBackground(
@@ -166,12 +188,12 @@ public class BattleBackground
         offsetX %= textureWidth;
 
         for (int y = -textureHeight;
-            y < alto + textureHeight;
-            y += textureHeight)
+             y < alto + textureHeight;
+             y += textureHeight)
         {
             for (int x = -textureWidth;
-                x < ancho + textureWidth;
-                x += textureWidth)
+                 x < ancho + textureWidth;
+                 x += textureWidth)
             {
                 spriteBatch.Draw(
                     texture,

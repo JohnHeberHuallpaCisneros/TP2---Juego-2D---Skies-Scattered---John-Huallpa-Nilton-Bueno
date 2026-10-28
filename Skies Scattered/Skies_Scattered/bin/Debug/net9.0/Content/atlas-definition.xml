@@ -3,7 +3,7 @@
     <Texture>Image/Player/together</Texture>
 
     <Regions>
-        <!-- YOKO (Filas superiores) -->
+        <!-- YOKO -->
         <Region name="yoko-1" x="0" y="0" width="32" height="32" />
         <Region name="yoko-2" x="0" y="32" width="32" height="32" />
         <Region name="yoko-3" x="32" y="0" width="32" height="32" />
@@ -22,7 +22,7 @@
         <Region name="yoko-15" x="192" y="32" width="32" height="32" />
         <Region name="yoko-16" x="224" y="32" width="32" height="32" />
 
-        <!-- KYOKO (Filas inferiores) -->
+        <!-- KYOKO -->
         <Region name="kyoko-1" x="0" y="64" width="32" height="32" />
         <Region name="kyoko-2" x="0" y="96" width="32" height="32" />
         <Region name="kyoko-3" x="32" y="64" width="32" height="32" />

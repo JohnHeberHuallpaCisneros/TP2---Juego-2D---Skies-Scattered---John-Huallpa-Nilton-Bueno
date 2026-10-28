@@ -37,10 +37,11 @@
     <ProjectReference Include="..\MonoGameLibrary\MonoGameLibrary.csproj" />
   </ItemGroup>
 
-<ItemGroup>
-  <Content Include="Content\atlas-definition.xml">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    <TargetPath>Content\atlas-definition.xml</TargetPath>
-  </Content>
-</ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\atlas-definition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Content\atlas-definition.xml</TargetPath>
+    </Content>
+  </ItemGroup>
+
 </Project>

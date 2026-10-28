@@ -34,6 +34,7 @@ C:\Users\alumno.ET26\Desktop\Nueva carpeta\Skies Scattered\MonoGameLibrary\obj\D
 C:\Users\alumno.ET26\Desktop\Nueva carpeta\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\refint\MonoGameLibrary.dll
 C:\Users\alumno.ET26\Desktop\Nueva carpeta\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.pdb
 C:\Users\alumno.ET26\Desktop\Nueva carpeta\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\ref\MonoGameLibrary.dll
+<<<<<<< HEAD
 C:\Users\alumno.ET26\Desktop\Nueva carpeta\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.sourcelink.json
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.deps.json
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.dll
@@ -47,3 +48,18 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\MonoGameLibrary\obj\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\refint\MonoGameLibrary.dll
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.pdb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\ref\MonoGameLibrary.dll
+=======
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.deps.json
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.dll
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\bin\Debug\net9.0\MonoGameLibrary.pdb
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.csproj.AssemblyReference.cache
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.AssemblyInfoInputs.cache
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.AssemblyInfo.cs
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.csproj.CoreCompileInputs.cache
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.sourcelink.json
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.dll
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\refint\MonoGameLibrary.dll
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\MonoGameLibrary.pdb
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\MonoGameLibrary\obj\Debug\net9.0\ref\MonoGameLibrary.dll
+>>>>>>> af1e37b6eb55a3965d0f6df5bfdcae0728aea72a

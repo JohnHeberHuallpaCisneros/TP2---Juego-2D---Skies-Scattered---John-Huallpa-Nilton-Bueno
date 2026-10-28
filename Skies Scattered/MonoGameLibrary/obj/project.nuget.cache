@@ -14,5 +14,15 @@
     "C:\\Users\\John\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.20\\microsoft.windowsdesktop.app.ref.9.0.20.nupkg.sha512",
     "C:\\Users\\John\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.20\\microsoft.aspnetcore.app.ref.9.0.20.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\MonoGameLibrary\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
+      "projectPath": "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

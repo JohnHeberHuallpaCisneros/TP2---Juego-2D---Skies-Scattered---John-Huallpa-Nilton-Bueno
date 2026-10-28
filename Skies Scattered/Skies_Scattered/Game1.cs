@@ -60,6 +60,11 @@ public class Game1 : Core
     private readonly Encounter _encuentros = new Encounter();
     private readonly Camera2D _camera = new Camera2D();
 
+    // Sistema de elecciones (cuadrados de color)
+    private readonly ChoiceSystem _choices = new ChoiceSystem();
+    private Texture2D _pixel;
+    private Color? _colorFinal; // color del cuadrado final, una vez tocado
+
     private readonly Vector2 _worldSize =
         new Vector2(1920, 1440);
 
@@ -103,6 +108,7 @@ public class Game1 : Core
 
         CrearFondoDeBatalla();
         CrearMenu();
+        CrearElecciones();
     }
 
     private void CargarRecursos()
@@ -117,6 +123,10 @@ public class Game1 : Core
 
         _retroFont =
             Content.Load<SpriteFont>("Fonts/RetroFont");
+
+        // Textura de 1x1 para dibujar rectángulos de color.
+        _pixel = new Texture2D(GraphicsDevice, 1, 1);
+        _pixel.SetData(new[] { Color.White });
     }
 
     private void CargarEnemigos()
@@ -356,6 +366,15 @@ public class Game1 : Core
         _mainMenu.OnExitGame += Exit;
     }
 
+    private void CrearElecciones()
+    {
+        _choices.OnFinalSquareTouched += color =>
+        {
+            // Acá va lo que quieras que pase al tocar el cuadrado final.
+            _colorFinal = color;
+        };
+    }
+
     private void IniciarJuego()
     {
         _enMenu = false;
@@ -395,7 +414,8 @@ public class Game1 : Core
         }
 
         Window.Title =
-            $"Pasos para el combate: {_encuentros.PasosRestantes}";
+            $"Pasos para el combate: {_encuentros.PasosRestantes}" +
+            (_colorFinal.HasValue ? $" | Color final: {_colorFinal.Value}" : "");
     }
 
     private void ActualizarPantalla()
@@ -415,6 +435,14 @@ public class Game1 : Core
 
     private void ActualizarExploracion(GameTime gameTime)
     {
+        // Mientras hay un menú de elección abierto, el mundo queda congelado
+        // (no se mueve nadie y no se cuentan pasos para el combate).
+        if (_choices.IsChoosing)
+        {
+            _choices.Update(ObtenerHitbox(_yoko), _worldSize);
+            return;
+        }
+
         Vector2 posicionAnterior = _yoko.Position;
 
         // Yoko se controla con WASD.
@@ -447,6 +475,29 @@ public class Game1 : Core
 
         // Actualizar el sistema de encuentros.
         _encuentros.Update(distanciaRecorrida);
+
+        // Sistema de elecciones: solo Yoko activa los cuadrados.
+        _choices.Update(ObtenerHitbox(_yoko), _worldSize);
+    }
+
+    // Hitbox del personaje en coordenadas del mundo.
+    // Width/Height ya incluyen la escala; la esquina superior izquierda
+    // es Position menos Origin * Scale (igual que en LimitarPosicion).
+    private Rectangle ObtenerHitbox(Player p)
+    {
+        var a = p.CurrentAnimation;
+
+        if (a == null)
+            return new Rectangle((int)p.Position.X, (int)p.Position.Y, 32, 32);
+
+        var rect = new Rectangle(
+            (int)(p.Position.X - a.Origin.X * a.Scale.X),
+            (int)(p.Position.Y - a.Origin.Y * a.Scale.Y),
+            (int)a.Width,
+            (int)a.Height);
+
+        rect.Inflate(-8, -8); // hitbox un poco más chica que el sprite
+        return rect;
     }
 
     // =========================================
@@ -545,6 +596,9 @@ public class Game1 : Core
             samplerState: SamplerState.PointClamp,
             transformMatrix: _camera.Transform);
 
+        // Los cuadrados van primero, así los personajes quedan encima.
+        _choices.DrawSquares(SpriteBatch, _pixel);
+
         _yoko.CurrentAnimation?.Draw(
             SpriteBatch,
             _yoko.Position);
@@ -552,6 +606,18 @@ public class Game1 : Core
         _kyoko.CurrentAnimation?.Draw(
             SpriteBatch,
             _kyoko.Position);
+
+        SpriteBatch.End();
+
+        // El menú de elección se dibuja SIN cámara (coordenadas de pantalla).
+        SpriteBatch.Begin(
+            samplerState: SamplerState.PointClamp);
+
+        _choices.DrawMenu(
+            SpriteBatch,
+            _pixel,
+            _retroFont,
+            TamanoVista());
 
         SpriteBatch.End();
     }

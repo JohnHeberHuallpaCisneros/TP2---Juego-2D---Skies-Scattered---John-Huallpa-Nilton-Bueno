@@ -46,15 +46,13 @@ public class Core : Game
         IsMouseVisible = true;
     }
 
-    protected override void Initialize()
-    {
-        base.Initialize();
+  protected override void Initialize()
+{
+    GraphicsDevice = base.GraphicsDevice;
+    SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-        GraphicsDevice = base.GraphicsDevice;
-
-        SpriteBatch = new SpriteBatch(GraphicsDevice);
-    }
-
+    base.Initialize();
+}
     protected override void Update(GameTime gameTime)
     {
         Input.Update();

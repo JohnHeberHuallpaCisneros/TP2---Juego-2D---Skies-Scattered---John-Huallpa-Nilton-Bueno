@@ -55,6 +55,9 @@
     <TargetPath>Content\Image\Maps\mapa3.tmx</TargetPath>
   </Content>
 </ItemGroup>
-  
-
+<ItemGroup>
+  <Content Include="Content\Image\Maps\EarthboundMapLilliputSteps2x.png">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
 </Project>

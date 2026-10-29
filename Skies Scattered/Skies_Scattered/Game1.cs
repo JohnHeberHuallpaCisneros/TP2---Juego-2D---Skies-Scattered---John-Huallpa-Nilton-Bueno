@@ -126,8 +126,18 @@ public class Game1 : Core
 
         _worldSize = _colisiones.TamanoMundo;
 
-        _mapaTextura = Content.Load<Texture2D>(
-            "Image/Maps/EarthboundMapLilliputSteps2x");
+        string rutaMapa = System.IO.Path.Combine(
+    AppContext.BaseDirectory,
+    "Content",
+    "Image",
+    "Maps",
+    "EarthboundMapLilliputSteps2x.png"
+);
+
+using (var archivo = System.IO.File.OpenRead(rutaMapa))
+{
+    _mapaTextura = Texture2D.FromStream(GraphicsDevice, archivo);
+}
     }
 
     private void CargarRecursos()

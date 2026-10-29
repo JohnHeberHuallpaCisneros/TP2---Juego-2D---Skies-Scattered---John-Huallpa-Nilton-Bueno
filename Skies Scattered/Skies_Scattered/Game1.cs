@@ -52,6 +52,7 @@ public class Game1 : Core
     private SpriteFont _retroFont;
     private Texture2D _earthboundHudTexture;
     private Texture2D _uiBordersTexture;
+    private Texture2D _mapaTextura;                
 
     // =========================================
     // SISTEMAS
@@ -63,10 +64,13 @@ public class Game1 : Core
     // Sistema de elecciones (cuadrados de color)
     private readonly ChoiceSystem _choices = new ChoiceSystem();
     private Texture2D _pixel;
-    private Color? _colorFinal; // color del cuadrado final, una vez tocado
+    private Color? _colorFinal;
 
-    private readonly Vector2 _worldSize =
-        new Vector2(1920, 1440);
+    // CAMBIO: sin readonly, el tamaño sale del mapa
+    private Vector2 _worldSize = new Vector2(2048, 2560);
+
+    private TileCollision _colisiones;              
+    private bool _verColisiones;                        
 
     private List<BattleState.EnemyTemplate> _enemyTemplates;
 
@@ -97,6 +101,7 @@ public class Game1 : Core
 
         CargarRecursos();
         CargarEnemigos();
+        CargarMapa();                               
 
         TextureAtlas atlas =
             TextureAtlas.FromFile(
@@ -109,6 +114,20 @@ public class Game1 : Core
         CrearFondoDeBatalla();
         CrearMenu();
         CrearElecciones();
+    }
+
+    // NUEVO
+    private void CargarMapa()
+    {
+        _colisiones = new TileCollision(
+            System.IO.Path.Combine(
+                AppContext.BaseDirectory,
+                "Content", "Image", "Maps", "mapa2.tmx"));
+
+        _worldSize = _colisiones.TamanoMundo;
+
+        _mapaTextura = Content.Load<Texture2D>(
+            "Image/Maps/EarthboundMapLilliputSteps2x");
     }
 
     private void CargarRecursos()
@@ -203,85 +222,46 @@ public class Game1 : Core
         AnimatedSprite animacion =
             atlas.CreateAnimatedSprite(nombre);
 
-        animacion.Scale = new Vector2(3f, 3f);
+        animacion.Scale = new Vector2(2f, 2f);
 
         return animacion;
     }
 
     private void CargarAnimaciones(TextureAtlas atlas)
     {
-        // =====================================
         // YOKO
-        // Se conserva el orden original
-        // =====================================
-
-        // 1. Frente
         _yokoFrente =
             CrearAnimacion(atlas, "yoko-animation");
-
-        // 2. Atrás
         _yokoAtras =
             CrearAnimacion(atlas, "yoko-atras-animation");
-
-        // 3. Lado
         _yokoLado =
             CrearAnimacion(atlas, "yoko-lado-animation");
-
-        // 4. Izquierda
         _yokoIzquierda =
             CrearAnimacion(atlas, "yoko-izquierda-animation");
-
-        // 5. Izquierda abajo
         _yokoIzquierdaAbajo =
             CrearAnimacion(atlas, "yoko-izquierdaFrente-animation");
-
-        // 6. Izquierda arriba
         _yokoIzquierdaArriba =
             CrearAnimacion(atlas, "yoko-izquierdaAtras-animation");
-
-        // 7. Derecha abajo
         _yokoDerechaAbajo =
             CrearAnimacion(atlas, "yoko-DerechaFrente-animation");
-
-        // 8. Derecha arriba
         _yokoDerechaArriba =
             CrearAnimacion(atlas, "yoko-DerechaAtras-animation");
 
-
-        // =====================================
         // KYOKO
-        // Se conserva el mismo orden
-        // =====================================
-
-        // 1. Frente
         _kyokoFrente =
             CrearAnimacion(atlas, "kyoko-Frente-animation");
-
-        // 2. Atrás
         _kyokoAtras =
             CrearAnimacion(atlas, "kyoko-atras-animation");
-
-        // 3. Lado
         _kyokoLado =
             CrearAnimacion(atlas, "kyoko-lado-animation");
-
-        // 4. Izquierda
         _kyokoIzquierda =
             CrearAnimacion(atlas, "kyoko-izquierda-animation");
-
-        // 5. Izquierda abajo
         _kyokoIzquierdaAbajo =
             CrearAnimacion(atlas, "kyoko-izquierdaFrente-animation");
-
-        // 6. Izquierda arriba
         _kyokoIzquierdaArriba =
             CrearAnimacion(atlas, "kyoko-izquierdaAtras-animation");
-
-        // 7. Derecha abajo
         _kyokoDerechaAbajo =
             CrearAnimacion(atlas, "kyoko-DerechaFrente-animation");
-
-        // 8. Derecha arriba
         _kyokoDerechaArriba =
             CrearAnimacion(atlas, "kyoko-DerechaAtras-animation");
     }
@@ -292,16 +272,14 @@ public class Game1 : Core
 
     private void CrearPersonajes()
     {
-        // =====================================
-        // YOKO
-        // =====================================
-
+        // CAMBIO: posiciones iniciales nuevas (zona de pasto).
+        // Si caen en pared, ajustalas mirando con F3.
         _yoko = new Player(
             Keys.W,
             Keys.S,
             Keys.A,
             Keys.D,
-            new Vector2(400, 300))
+            new Vector2(1500, 1700))
         {
             AnimFrente = _yokoFrente,
             AnimAtras = _yokoAtras,
@@ -316,16 +294,12 @@ public class Game1 : Core
             AnimAbajoIzquierda = _yokoIzquierdaAbajo
         };
 
-        // =====================================
-        // KYOKO
-        // =====================================
-
         _kyoko = new Player(
             Keys.Up,
             Keys.Down,
             Keys.Left,
             Keys.Right,
-            new Vector2(500, 300))
+            new Vector2(1550, 1700))
         {
             AnimFrente = _kyokoFrente,
             AnimAtras = _kyokoAtras,
@@ -370,7 +344,6 @@ public class Game1 : Core
     {
         _choices.OnFinalSquareTouched += color =>
         {
-            // Acá va lo que quieras que pase al tocar el cuadrado final.
             _colorFinal = color;
         };
     }
@@ -395,6 +368,10 @@ public class Game1 : Core
         base.Update(gameTime);
 
         ActualizarPantalla();
+
+        //F3 muestra/oculta las colisiones
+        if (Input.IsKeyPressed(Keys.F3))
+            _verColisiones = !_verColisiones;
 
         if (_enMenu)
         {
@@ -435,54 +412,81 @@ public class Game1 : Core
 
     private void ActualizarExploracion(GameTime gameTime)
     {
-        // Mientras hay un menú de elección abierto, el mundo queda congelado
-        // (no se mueve nadie y no se cuentan pasos para el combate).
         if (_choices.IsChoosing)
         {
             _choices.Update(ObtenerHitbox(_yoko), _worldSize);
             return;
         }
 
-        Vector2 posicionAnterior = _yoko.Position;
+        // CAMBIO: guardamos las posiciones de los dos personajes
+        Vector2 yokoAntes = _yoko.Position;
+        Vector2 kyokoAntes = _kyoko.Position;
 
-        // Yoko se controla con WASD.
+        // Yoko se controla con WASD y choca con las paredes.
         _yoko.Update(gameTime);
+        ResolverColision(_yoko, yokoAntes);
 
-        // Kyoko sigue a Yoko y actualiza su animación.
-        _kyoko.Seguir(_yoko.Position, gameTime);
+        
+     _kyoko.Seguir(_yoko.Position, gameTime);
 
-        // Limitar la posición de Yoko.
         _yoko.Position = LimitarPosicion(
             _yoko.Position,
             _yoko.CurrentAnimation);
 
-        // Limitar la posición de Kyoko.
         _kyoko.Position = LimitarPosicion(
             _kyoko.Position,
             _kyoko.CurrentAnimation);
 
-        // Actualizar la cámara.
         _camera.Follow(
             _yoko.Position,
             TamanoVista(),
             _worldSize);
 
-        // Calcular la distancia recorrida.
         float distanciaRecorrida =
             Vector2.Distance(
-                posicionAnterior,
+                yokoAntes,
                 _yoko.Position);
 
-        // Actualizar el sistema de encuentros.
         _encuentros.Update(distanciaRecorrida);
 
-        // Sistema de elecciones: solo Yoko activa los cuadrados.
         _choices.Update(ObtenerHitbox(_yoko), _worldSize);
     }
 
-    // Hitbox del personaje en coordenadas del mundo.
-    // Width/Height ya incluyen la escala; la esquina superior izquierda
-    // es Position menos Origin * Scale (igual que en LimitarPosicion).
+    // NUEVO: mueve por ejes separados para deslizar contra las paredes
+    private void ResolverColision(Player p, Vector2 anterior)
+    {
+        Vector2 destino = p.Position;
+        Vector2 final = anterior;
+
+        p.Position = new Vector2(destino.X, anterior.Y);
+        if (!_colisiones.Choca(HitboxPies(p)))
+            final.X = destino.X;
+
+        p.Position = new Vector2(final.X, destino.Y);
+        if (!_colisiones.Choca(HitboxPies(p)))
+            final.Y = destino.Y;
+
+        p.Position = final;
+    }
+
+    // NUEVO: hitbox de los pies (la parte baja del sprite)
+    private Rectangle HitboxPies(Player p)
+    {
+        var a = p.CurrentAnimation;
+
+        if (a == null)
+            return new Rectangle((int)p.Position.X - 8, (int)p.Position.Y - 8, 16, 16);
+
+        int izq = (int)(p.Position.X - a.Origin.X * a.Scale.X);
+        int arr = (int)(p.Position.Y - a.Origin.Y * a.Scale.Y);
+
+        return new Rectangle(
+            izq + (int)a.Width / 4,
+            arr + (int)a.Height - 14,
+            (int)a.Width / 2,
+            12);
+    }
+
     private Rectangle ObtenerHitbox(Player p)
     {
         var a = p.CurrentAnimation;
@@ -496,7 +500,7 @@ public class Game1 : Core
             (int)a.Width,
             (int)a.Height);
 
-        rect.Inflate(-8, -8); // hitbox un poco más chica que el sprite
+        rect.Inflate(-8, -8);
         return rect;
     }
 
@@ -596,7 +600,22 @@ public class Game1 : Core
             samplerState: SamplerState.PointClamp,
             transformMatrix: _camera.Transform);
 
-        // Los cuadrados van primero, así los personajes quedan encima.
+        
+        SpriteBatch.Draw(_mapaTextura, Vector2.Zero, Color.White);
+
+        // NUEVO: capa de depuración (F3)
+        if (_verColisiones)
+        {
+            _colisiones.DibujarDebug(
+                SpriteBatch,
+                _pixel,
+                new Rectangle(
+                    (int)_camera.Position.X,
+                    (int)_camera.Position.Y,
+                    (int)TamanoVista().X,
+                    (int)TamanoVista().Y));
+        }
+
         _choices.DrawSquares(SpriteBatch, _pixel);
 
         _yoko.CurrentAnimation?.Draw(
@@ -609,7 +628,6 @@ public class Game1 : Core
 
         SpriteBatch.End();
 
-        // El menú de elección se dibuja SIN cámara (coordenadas de pantalla).
         SpriteBatch.Begin(
             samplerState: SamplerState.PointClamp);
 

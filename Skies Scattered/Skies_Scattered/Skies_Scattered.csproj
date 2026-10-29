@@ -43,5 +43,18 @@
       <TargetPath>Content\atlas-definition.xml</TargetPath>
     </Content>
   </ItemGroup>
+    <ItemGroup>
+    <Content Include="Content\Image\Maps\mapa2.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Content\Image\Maps\mapa2.tmx</TargetPath>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+  <Content Include="Content\Image\Maps\mapa3.tmx">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <TargetPath>Content\Image\Maps\mapa3.tmx</TargetPath>
+  </Content>
+</ItemGroup>
+  
 
 </Project>

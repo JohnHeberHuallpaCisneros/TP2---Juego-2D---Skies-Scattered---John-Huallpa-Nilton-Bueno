@@ -9,6 +9,7 @@
       "Skies_Scattered/1.0.0": {
         "dependencies": {
           "Gum.MonoGame": "2026.10.1.1",
+          "MonoGame.Content.Builder.Task": "3.8.6",
           "MonoGame.Framework.DesktopGL": "3.8.6",
           "MonoGameLibrary": "1.0.0"
         },
@@ -17,6 +18,9 @@
         }
       },
       "BrotliSharpLib/0.3.3": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+        },
         "runtime": {
           "lib/netstandard2.0/BrotliSharpLib.dll": {
             "assemblyVersion": "0.3.2.0",
@@ -37,7 +41,8 @@
           "BrotliSharpLib": "0.3.3",
           "CsvHelper": "33.1.0",
           "FlatRedBall.InterpolationCore": "2025.4.22.1",
-          "SharpCompress": "0.48.0"
+          "SharpCompress": "0.48.0",
+          "System.Numerics.Vectors": "4.5.0"
         },
         "runtime": {
           "lib/net8.0/GumCommon.dll": {
@@ -47,6 +52,10 @@
         }
       },
       "FlatRedBall.InterpolationCore/2025.4.22.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "System.Data.DataSetExtensions": "4.5.0"
+        },
         "runtime": {
           "lib/netstandard2.0/FlatRedBall.InterpolationCore.dll": {
             "assemblyVersion": "1.1.0.0",
@@ -66,6 +75,7 @@
           }
         }
       },
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0": {
         "runtime": {
           "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
@@ -74,6 +84,7 @@
           }
         }
       },
+      "MonoGame.Content.Builder.Task/3.8.6": {},
       "MonoGame.Framework.DesktopGL/3.8.6": {
         "dependencies": {
           "MonoGame.Library.OpenAL": "1.24.3.4",
@@ -181,6 +192,10 @@
         }
       },
       "NVorbis/0.10.4": {
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "System.ValueTuple": "4.5.0"
+        },
         "runtime": {
           "lib/netstandard2.0/NVorbis.dll": {
             "assemblyVersion": "0.10.4.0",
@@ -196,6 +211,11 @@
           }
         }
       },
+      "System.Data.DataSetExtensions/4.5.0": {},
+      "System.Memory/4.5.3": {},
+      "System.Numerics.Vectors/4.5.0": {},
+      "System.Runtime.CompilerServices.Unsafe/4.5.2": {},
+      "System.ValueTuple/4.5.0": {},
       "TextCopy/6.2.1": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0"
@@ -258,12 +278,26 @@
       "path": "gum.monogame/2026.10.1.1",
       "hashPath": "gum.monogame.2026.10.1.1.nupkg.sha512"
     },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
+    },
     "Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-h3j/QfmFN4S0w4C2A6X7arXij/M/OVw3uQHSOFxnND4DyAzO1F9eMX7Eti7lU/OkSthEE0WzRsfT/Dmx86jzCw==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/7.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+    },
+    "MonoGame.Content.Builder.Task/3.8.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YzlwPtEGn5wlxToias3I/dW7ZyRJZLr2uMYKgrkwm/gpYyxWg4eI9f5+ih2CdLoCm5Daqvpf8w5PvwwzGsR1Og==",
+      "path": "monogame.content.builder.task/3.8.6",
+      "hashPath": "monogame.content.builder.task.3.8.6.nupkg.sha512"
     },
     "MonoGame.Framework.DesktopGL/3.8.6": {
       "type": "package",
@@ -299,6 +333,41 @@
       "sha512": "sha512-6k0Sa9gf85Sz9Npy7jnn5UPerejrAa3FxU9Gq5T6PwFWHUhUIdF903TjPiJtrYjXFJsXbnccaWSNMHzEg27DwQ==",
       "path": "sharpcompress/0.48.0",
       "hashPath": "sharpcompress.0.48.0.nupkg.sha512"
+    },
+    "System.Data.DataSetExtensions/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-221clPs1445HkTBZPL+K9sDBdJRB8UN8rgjO3ztB0CQ26z//fmJXtlsr6whGatscsKGBrhJl5bwJuKSA8mwFOw==",
+      "path": "system.data.datasetextensions/4.5.0",
+      "hashPath": "system.data.datasetextensions.4.5.0.nupkg.sha512"
+    },
+    "System.Memory/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "path": "system.memory/4.5.3",
+      "hashPath": "system.memory.4.5.3.nupkg.sha512"
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "path": "system.numerics.vectors/4.5.0",
+      "hashPath": "system.numerics.vectors.4.5.0.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/4.5.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wprSFgext8cwqymChhrBLu62LMg/1u92bU+VOwyfBimSPVFXtsNqEWC92Pf9ofzJFlk4IHmJA75EDJn1b2goAQ==",
+      "path": "system.runtime.compilerservices.unsafe/4.5.2",
+      "hashPath": "system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+    },
+    "System.ValueTuple/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "path": "system.valuetuple/4.5.0",
+      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
     "TextCopy/6.2.1": {
       "type": "package",

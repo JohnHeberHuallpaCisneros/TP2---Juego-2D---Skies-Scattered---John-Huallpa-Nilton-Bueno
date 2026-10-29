@@ -271,6 +271,37 @@
 /processorParam:Version=3.8.5.1
 /build:Image/Enemies/snow_twins.png
 
+#begin Image/Maps/EarthboundMapCaveToThePast2X.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.1
+/build:Image/Maps/EarthboundMapCaveToThePast2X.png
+
+#begin Image/Maps/EarthboundMapLilliputSteps2x.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.1
+/build:Image/Maps/EarthboundMapLilliputSteps2x.png
+
+#begin Image/Maps/mapa3.tmx
+/importer:
+/processor:
+/build:Image/Maps/mapa3.tmx
+
 #begin Image/Player/together.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -1,4 +1,6 @@
 
+using System;
+using Skies_Scattered.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,8 +22,6 @@ public class BattleBackground
 
     // Área visible del fondo de batalla.
     // Resolución del juego: 640 x 480.
-    private readonly Rectangle _battleArea =
-        new Rectangle(0, 80, 640, 320);
 
     private readonly RasterizerState _rasterizerState =
         new RasterizerState
@@ -80,7 +80,9 @@ public class BattleBackground
             graphicsDevice.ScissorRectangle;
 
         // Recortar el fondo a la zona central.
-        graphicsDevice.ScissorRectangle = _battleArea;
+        graphicsDevice.ScissorRectangle = new Rectangle(0, BattleUI.TopBandHeight,
+            graphicsDevice.Viewport.Width,
+            Math.Max(1, graphicsDevice.Viewport.Height - BattleUI.TopBandHeight - BattleUI.BottomBandHeight));
 
         Color darkRed = new Color(22, 0, 10);
         Color darkBlue = new Color(0, 3, 28);

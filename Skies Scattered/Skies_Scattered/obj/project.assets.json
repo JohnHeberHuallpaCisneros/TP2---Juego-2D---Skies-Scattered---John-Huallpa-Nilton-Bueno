@@ -838,19 +838,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\alumno.ET26\\.nuget\\packages\\": {}
+    "C:\\Users\\John\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\Skies_Scattered\\Skies_Scattered.csproj",
+      "projectUniqueName": "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\Skies_Scattered\\Skies_Scattered.csproj",
       "projectName": "Skies_Scattered",
-      "projectPath": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\Skies_Scattered\\Skies_Scattered.csproj",
-      "packagesPath": "C:\\Users\\alumno.ET26\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\Skies_Scattered\\obj\\",
+      "projectPath": "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\Skies_Scattered\\Skies_Scattered.csproj",
+      "packagesPath": "C:\\Users\\John\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\Skies_Scattered\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\alumno.ET26\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\John\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -865,8 +865,8 @@
           "framework": "net9.0",
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {
-              "projectPath": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj"
+            "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {
+              "projectPath": "C:\\Users\\John\\OneDrive\\Desktop\\sicseben\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj"
             }
           }
         }
@@ -881,7 +881,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "10.0.400"
     },
     "frameworks": {
       "net9.0": {
@@ -915,15 +915,19 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[9.0.17, 9.0.17]"
+            "version": "[9.0.20, 9.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[9.0.20, 9.0.20]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[9.0.17, 9.0.17]"
+            "version": "[9.0.20, 9.0.20]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[9.0.17, 9.0.17]"
+            "version": "[9.0.20, 9.0.20]"
           }
         ],
         "frameworkReferences": {
@@ -931,7 +935,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

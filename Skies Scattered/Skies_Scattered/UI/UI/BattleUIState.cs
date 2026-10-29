@@ -1,10 +1,12 @@
-
+﻿
 using System.Collections.Generic;
 
 namespace Skies_Scattered.UI
 {
     public class BattleUIState
     {
+        public bool IsAwaitingIntro { get; set; } = true;
+
         public string TopMessage { get; set; } = "Here They Are";
 
         public List<CharacterStats> PartyMembers { get; set; } =
@@ -17,6 +19,7 @@ namespace Skies_Scattered.UI
                 "Z-SPELL",
                 "ACT",
                 "DEFEND",
+                "ITEMS",
                 "RUN"
             };
 
@@ -27,6 +30,8 @@ namespace Skies_Scattered.UI
         public bool IsActionMenuOpen { get; set; } = false;
 
         public bool IsSelectingTarget { get; set; } = false;
+
+        public bool IsItemMenuOpen { get; set; } = false;
 
         public bool IsSpellMenuOpen { get; set; } = false;
 
@@ -41,6 +46,10 @@ namespace Skies_Scattered.UI
 
         public int HP { get; set; }
 
+        public int MaxHP { get; set; } = 50;
+
+        public List<string> Items { get; set; } = new List<string>();
+
         public int AP { get; set; }
 
         public int CT { get; set; }
@@ -53,3 +62,4 @@ namespace Skies_Scattered.UI
             new List<string>();
     }
 }
+

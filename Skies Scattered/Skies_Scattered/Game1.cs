@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +9,7 @@ using Skies_Scattered.Entities;
 using Skies_Scattered.Graphics;
 using Skies_Scattered.Mechanics;
 using Skies_Scattered.States;
+using Skies_Scattered.UI;
 
 namespace Skies_Scattered;
 
@@ -74,7 +75,12 @@ public class Game1 : Core
 
     private List<BattleState.EnemyTemplate> _enemyTemplates;
 
+    private readonly List<CharacterStats> _party = BattleState.CreateParty();
+
+    private readonly OverworldUI _overworldUI = new OverworldUI();
+
     private IGameState _currentState;
+    private GameOverState _gameOver;
     private MainMenuState _mainMenu;
 
     private bool _enMenu = true;
@@ -389,6 +395,12 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             return;
         }
 
+        if (_gameOver != null)
+        {
+            _gameOver.Update(gameTime);
+            return;
+        }
+
         _battleBackground.Update(gameTime);
 
         if (_encuentros.Activo)
@@ -422,6 +434,17 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void ActualizarExploracion(GameTime gameTime)
     {
+        if (!_choices.IsChoosing && Input.IsKeyPressed(Keys.C))
+        {
+            _overworldUI.Toggle();
+            return;
+        }
+        if (_overworldUI.IsOpen)
+        {
+            _overworldUI.Update(_party);
+            return;
+        }
+
         if (_choices.IsChoosing)
         {
             _choices.Update(ObtenerHitbox(_yoko), _worldSize);
@@ -526,7 +549,8 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 _retroFont,
                 _uiBordersTexture,
                 _earthboundHudTexture,
-                _enemyTemplates);
+                _enemyTemplates,
+                _party);
 
             batalla.OnBattleEnded += FinalizarBatalla;
 
@@ -540,6 +564,26 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     {
         _encuentros.Reiniciar();
         _currentState = null;
+        if (_party.TrueForAll(hero => hero.HP <= 0))
+        {
+            _gameOver = new GameOverState(_retroFont, _earthboundHudTexture, _pixel);
+            _gameOver.OnRetry += () => ReiniciarPartida(false);
+            _gameOver.OnMainMenu += () => ReiniciarPartida(true);
+        }
+    }
+
+    private void ReiniciarPartida(bool volverAlMenu)
+    {
+        _gameOver = null;
+        _party.Clear();
+        _party.AddRange(BattleState.CreateParty());
+        _encuentros.Reiniciar();
+        _choices.Reiniciar();
+        _colorFinal = null;
+        if (_overworldUI.IsOpen) _overworldUI.Toggle();
+        CrearPersonajes();
+        IniciarJuego();
+        _enMenu = volverAlMenu;
     }
 
     // =========================================
@@ -548,6 +592,16 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     protected override void Draw(GameTime gameTime)
     {
+        if (_gameOver != null)
+        {
+            GraphicsDevice.Clear(Color.Black);
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _gameOver.Draw(SpriteBatch, GraphicsDevice);
+            SpriteBatch.End();
+            base.Draw(gameTime);
+            return;
+        }
+
         bool enBatalla =
             !_enMenu &&
             _encuentros.Activo &&
@@ -647,6 +701,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             _retroFont,
             TamanoVista());
 
+        _overworldUI.Draw(SpriteBatch, _pixel, _earthboundHudTexture, _retroFont, _party, TamanoVista());
         SpriteBatch.End();
     }
 

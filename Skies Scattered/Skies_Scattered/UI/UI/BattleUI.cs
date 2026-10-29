@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -7,13 +7,36 @@ using Skies_Scattered.Entities;
 
 namespace Skies_Scattered.UI
 {
-    public class BattleUI
+    public class BattleUI : IDisposable
     {
         private SpriteFont _font;
         private Texture2D _uiBordersTexture;
         private Texture2D _earthboundHudTexture;
         private Texture2D _pixelTexture;
         private float _tiempo = 0f;
+        private int _lastTarget = -1;
+        private float _targetFlash;
+        private readonly Dictionary<Texture2D, Texture2D> _whiteMasks = new();
+
+        private Texture2D WhiteMask(Texture2D source)
+        {
+            if (_whiteMasks.TryGetValue(source, out var mask)) return mask;
+            Color[] pixels = new Color[source.Width * source.Height];
+            source.GetData(pixels);
+            for (int i = 0; i < pixels.Length; i++)
+                pixels[i] = new Color(pixels[i].A, pixels[i].A, pixels[i].A, pixels[i].A);
+            mask = new Texture2D(source.GraphicsDevice, source.Width, source.Height);
+            mask.SetData(pixels);
+            _whiteMasks.Add(source, mask);
+            return mask;
+        }
+
+        public void Dispose()
+        {
+            foreach (var mask in _whiteMasks.Values) mask.Dispose();
+            _whiteMasks.Clear();
+            _pixelTexture?.Dispose();
+        }
 
         private readonly List<RollingCounter> _hpCounters =
             new List<RollingCounter>();
@@ -21,8 +44,27 @@ namespace Skies_Scattered.UI
         private readonly List<RollingCounter> _ppCounters =
             new List<RollingCounter>();
 
-        // Velocidad del contador estilo EarthBound.
-        private const float SecondsPerNumber = 0.075f;
+        internal const int TopBandHeight = 80;
+        internal const int BottomBandHeight = 144;
+        private const float StatScale = 2f;
+        private static readonly Rectangle StatBoxSource = new Rectangle(917, 143, 56, 64);
+        private static readonly Rectangle NullSource = new Rectangle(833, 161, 7, 12);
+        private static readonly Rectangle CrossSource = new Rectangle(865, 161, 23, 12);
+
+        private float _secondsPerNumber = 0.075f;
+        public float SecondsPerNumber
+        {
+            get => _secondsPerNumber;
+            set
+            {
+                if (!float.IsFinite(value) || value <= 0f)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _secondsPerNumber = value;
+            }
+        }
+
+        // Opcional: mantiene el diseño 000 por defecto; Null nunca se trata como cero.
+        public bool HideLeadingZeros { get; set; } = false;
 
         private class RollingCounter
         {
@@ -31,7 +73,7 @@ namespace Skies_Scattered.UI
             public float Progress;
             public bool Initialized;
 
-            public void Update(float elapsed)
+            public void Update(float elapsed, float secondsPerNumber)
             {
                 if (Visible == Target)
                 {
@@ -39,7 +81,7 @@ namespace Skies_Scattered.UI
                     return;
                 }
 
-                Progress += elapsed / SecondsPerNumber;
+                Progress += elapsed / secondsPerNumber;
 
                 while (Progress >= 1f && Visible != Target)
                 {
@@ -68,12 +110,13 @@ namespace Skies_Scattered.UI
                 (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             _tiempo += elapsed;
+            _targetFlash += elapsed;
 
             foreach (var counter in _hpCounters)
-                counter.Update(elapsed);
+                counter.Update(elapsed, SecondsPerNumber);
 
             foreach (var counter in _ppCounters)
-                counter.Update(elapsed);
+                counter.Update(elapsed, SecondsPerNumber);
         }
 
         private void EnsureCounters(BattleUIState state)
@@ -134,8 +177,6 @@ namespace Skies_Scattered.UI
 
             if (enemies != null)
             {
-                const float enemyScale = 1.5f;
-
                 int aliveCount = 0;
 
                 foreach (Enemy enemy in enemies)
@@ -153,44 +194,38 @@ namespace Skies_Scattered.UI
                     if (enemy.Texture == null || enemy.HP <= 0)
                         continue;
 
-                    float spacing = Math.Min(
-                        125f,
-                        (screenSize.X - 130f) /
-                        Math.Max(1, aliveCount - 1));
-
-                    float offsetX =
-                        (aliveIndex - (aliveCount - 1) / 2f)
-                        * spacing;
-
-                    float x = screenSize.X / 2f + offsetX;
-                    float y = screenSize.Y / 2f;
+                    // Un espacio por enemigo vivo: 1 centrado, 2 o 3 repartidos.
+                    float areaWidth = Math.Min(540f, screenSize.X - 64f);
+                    float slotWidth = areaWidth / Math.Max(1, aliveCount);
+                    float areaHeight = screenSize.Y - TopBandHeight - BottomBandHeight;
+                    float x = (screenSize.X - areaWidth) / 2f + slotWidth * (aliveIndex + 0.5f);
+                    float y = TopBandHeight + areaHeight / 2f;
+                    // Tamaño nativo como máximo; ajustar solo si no cabe en su espacio.
+                    float enemyScale = Math.Min(1.5f, Math.Min(
+                        (slotWidth - 24f) / enemy.Texture.Width,
+                        (areaHeight - 24f) / enemy.Texture.Height));
 
                     aliveIndex++;
 
-                    // Parpadeo del objetivo seleccionado.
-                    bool selected =
-                        state.IsSelectingTarget &&
-                        i == state.SelectedEnemyIndex;
-
-                    if (selected &&
-                        (int)(_tiempo * 6f) % 2 != 0)
+                    bool selected = state.IsSelectingTarget && i == state.SelectedEnemyIndex;
+                    if (!state.IsSelectingTarget) _lastTarget = -1;
+                    if (selected && _lastTarget != i)
                     {
-                        continue;
+                        _lastTarget = i;
+                        _targetFlash = 0f;
                     }
 
                     // Movimiento suave del enemigo.
                     float wave = (float)Math.Sin(
                         _tiempo * 2.5f + i * 0.7f);
 
-                    float scaleX =
-                        enemyScale * (1f - wave * 0.015f);
-
-                    float scaleY =
-                        enemyScale * (1f + wave * 0.03f);
+                    // Flotación alineada a píxeles, conservando el filtrado por puntos.
+                    x = (float)Math.Round(x);
+                    y = (float)Math.Round(y + wave * 3f);
 
                     Vector2 origin = new Vector2(
-                        enemy.Texture.Width / 2f,
-                        enemy.Texture.Height / 2f);
+                        enemy.Texture.Width / 2,
+                        enemy.Texture.Height / 2);
 
                     spriteBatch.Draw(
                         enemy.Texture,
@@ -199,280 +234,96 @@ namespace Skies_Scattered.UI
                         Color.White,
                         0f,
                         origin,
-                        new Vector2(scaleX, scaleY),
+                        new Vector2(enemyScale),
                         SpriteEffects.None,
                         0f);
+                    // Destello breve sobre la silueta; el enemigo nunca desaparece.
+                    float pulse = _targetFlash % 0.8f;
+                    if (selected && pulse < 0.12f)
+                        spriteBatch.Draw(WhiteMask(enemy.Texture), new Vector2(x, y), null,
+                            Color.White * (0.85f * (1f - pulse / 0.12f)), 0f, origin,
+                            new Vector2(enemyScale), SpriteEffects.None, 0f);
                 }
             }
 
-            // ========================================
-            // 2. MENÚ PRINCIPAL
-            // ========================================
+            // Franjas reservadas: mensaje arriba, controles y grupo abajo.
+            Rectangle messageBox = new Rectangle(12, 8, (int)screenSize.X - 24, 64);
+            DrawPanel(spriteBatch, messageBox, Color.Cyan);
+            DrawWrappedText(spriteBatch, state.TopMessage,
+                new Vector2(messageBox.X + 14, messageBox.Y + 10),
+                messageBox.Width - 28, 44, Color.White);
 
-            if (state.IsActionMenuOpen || state.IsSpellMenuOpen)
+            int bottom = (int)screenSize.Y - BottomBandHeight + 8;
+            int statusWidth = 130;
+            int statusStart = (int)screenSize.X - 12 - state.PartyMembers.Count * statusWidth;
+            Rectangle menuBox = new Rectangle(12, bottom, Math.Min(300, Math.Max(100, statusStart - 24)), 104);
+            DrawPanel(spriteBatch, menuBox, Color.Cyan);
+
+            if (state.PartyMembers.Count > 0)
             {
-                Rectangle menuBox = new Rectangle(
-                    25,
-                    state.IsSpellMenuOpen ? 195 : 25,
-                    350,
-                    150);
+                CharacterStats hero = state.PartyMembers[Math.Clamp(
+                    state.CurrentPartyMemberIndex, 0, state.PartyMembers.Count - 1)];
 
-                DrawEarthboundBox(
-                    spriteBatch,
-                    _earthboundHudTexture,
-                    menuBox);
-
-                if (_font != null &&
-                    state.PartyMembers.Count > 0)
+                if (state.IsItemMenuOpen)
                 {
-                    int heroIndex = Math.Clamp(
-                        state.CurrentPartyMemberIndex,
-                        0,
-                        state.PartyMembers.Count - 1);
-
-                    CharacterStats hero =
-                        state.PartyMembers[heroIndex];
-
-                    for (int i = 0;
-                         i < state.CurrentMenuOptions.Count;
-                         i++)
+                    DrawFittedText(spriteBatch, "ITEMS", new Vector2(26, bottom + 10),
+                        menuBox.Width - 28, 18, Color.Cyan);
+                    DrawFittedText(spriteBatch, "No tienes objetos", new Vector2(26, bottom + 38),
+                        menuBox.Width - 28, 22, Color.White);
+                    DrawFittedText(spriteBatch, "X / Z: Volver", new Vector2(26, bottom + 76),
+                        menuBox.Width - 28, 16, Color.LightGray);
+                }
+                else if (state.IsSpellMenuOpen)
+                {
+                    DrawFittedText(spriteBatch, "Z-SPELL   /   X: Volver", new Vector2(26, bottom + 8),
+                        menuBox.Width - 28, 16, Color.LightGray);
+                    for (int i = 0; i < hero.Spells.Count; i++)
                     {
-                        int col = i % 2;
-                        int row = i / 2;
-
-                        float x =
-                            menuBox.X + 18 + col * 155;
-
-                        float y =
-                            menuBox.Y + 28 + row * 30;
-
-                        bool selected =
-                            !state.IsSpellMenuOpen &&
-                            i == state.SelectedOptionIndex;
-
-                        Color color = selected
-                            ? Color.Cyan
-                            : Color.White;
-
-                        if (selected)
-                        {
-                            DrawFittedText(
-                                spriteBatch,
-                                ">",
-                                new Vector2(x, y),
-                                14f,
-                                24f,
-                                Color.Cyan);
-                        }
-
-                        DrawFittedText(
-                            spriteBatch,
-                            state.CurrentMenuOptions[i],
-                            new Vector2(x + 16f, y),
-                            132f,
-                            24f,
-                            color);
-                    }
-
-                    // ========================================
-                    // 3. SUBMENÚ DE HECHIZOS
-                    // ========================================
-
-                    if (state.IsSpellMenuOpen)
-                    {
-                        Rectangle spellBox =
-                            new Rectangle(25, 25, 350, 150);
-
-                        DrawEarthboundBox(
-                            spriteBatch,
-                            _earthboundHudTexture,
-                            spellBox);
-
-                        DrawFittedText(
-                            spriteBatch,
-                            "Z-SPELL",
-                            new Vector2(
-                                spellBox.X + 22,
-                                spellBox.Y + 8),
-                            190f,
-                            22f,
-                            Color.White);
-
-                        DrawFittedText(
-                            spriteBatch,
-                            $"PP: {hero.PP}/{hero.MaxPP}",
-                            new Vector2(
-                                spellBox.X + 235,
-                                spellBox.Y + 8),
-                            90f,
-                            22f,
-                            Color.White);
-
-                        for (int i = 0;
-                             i < hero.Spells.Count;
-                             i++)
-                        {
-                            string spell = hero.Spells[i];
-                            int cost = GetSpellCost(spell);
-
-                            float x = spellBox.X + 22;
-                            float y =
-                                spellBox.Y + 32 + i * 29;
-
-                            bool selected =
-                                i == state.SelectedSpellIndex;
-
-                            Color color = selected
-                                ? Color.Cyan
-                                : Color.White;
-
-                            if (selected)
-                            {
-                                DrawFittedText(
-                                    spriteBatch,
-                                    ">",
-                                    new Vector2(x, y),
-                                    14f,
-                                    22f,
-                                    Color.Cyan);
-                            }
-
-                            DrawFittedText(
-                                spriteBatch,
-                                spell,
-                                new Vector2(x + 18, y),
-                                215f,
-                                22f,
-                                color);
-
-                            DrawFittedText(
-                                spriteBatch,
-                                $"{cost} PP",
-                                new Vector2(
-                                    spellBox.X + 265,
-                                    y),
-                                64f,
-                                22f,
-                                hero.PP >= cost
-                                    ? color
-                                    : Color.Gray);
-                        }
-
-                        DrawFittedText(
-                            spriteBatch,
-                            "X: Volver",
-                            new Vector2(
-                                spellBox.X + 230,
-                                spellBox.Y + 122),
-                            98f,
-                            20f,
-                            Color.LightGray);
+                        string spell = hero.Spells[i];
+                        Color color = i == state.SelectedSpellIndex ? Color.Cyan : Color.White;
+                        string text = (i == state.SelectedSpellIndex ? "> " : "  ") + spell;
+                        DrawFittedText(spriteBatch, text, new Vector2(26, bottom + 30 + i * 22),
+                            menuBox.Width - 100, 20, color);
+                        DrawFittedText(spriteBatch, $"{GetSpellCost(spell)} PP",
+                            new Vector2(menuBox.Right - 70, bottom + 30 + i * 22),
+                            58, 20, hero.PP >= GetSpellCost(spell) ? color : Color.Gray);
                     }
                 }
-            }
-            else
-            {
-                // ========================================
-                // 4. MENSAJES DE COMBATE
-                // ========================================
-
-                Rectangle fullTextBox = new Rectangle(
-                    25,
-                    25,
-                    (int)screenSize.X - 50,
-                    80);
-
-                DrawEarthboundBox(
-                    spriteBatch,
-                    _earthboundHudTexture,
-                    fullTextBox);
-
-                if (_font != null)
+                else if (state.IsActionMenuOpen)
                 {
-                    DrawWrappedText(
-                        spriteBatch,
-                        state.TopMessage,
-                        new Vector2(
-                            fullTextBox.X + 25,
-                            fullTextBox.Y + 14),
-                        fullTextBox.Width - 50f,
-                        42f,
-                        Color.White);
-
-                    // Selección de objetivos.
-                    if (state.IsSelectingTarget &&
-                        enemies != null &&
-                        enemies.Count > 0)
+                    for (int i = 0; i < state.CurrentMenuOptions.Count; i++)
                     {
-                        float x = fullTextBox.X + 25;
-                        float y = fullTextBox.Y + 44;
-
-                        const float gap = 40f;
-
-                        for (int i = 0;
-                             i < enemies.Count;
-                             i++)
-                        {
-                            bool selected =
-                                i == state.SelectedEnemyIndex;
-
-                            string text = selected
-                                ? "> " + enemies[i].Name
-                                : "  " + enemies[i].Name;
-
-                            float remaining =
-                                fullTextBox.Right - 25f - x;
-
-                            if (remaining < 24f)
-                                break;
-
-                            DrawFittedText(
-                                spriteBatch,
-                                text,
-                                new Vector2(x, y),
-                                remaining,
-                                23f,
-                                selected
-                                    ? Color.Cyan
-                                    : Color.White);
-
-                            x += _font.MeasureString(text).X + gap;
-                        }
+                        float cellWidth = (menuBox.Width - 24) / 2f;
+                        bool selected = i == state.SelectedOptionIndex;
+                        DrawFittedText(spriteBatch,
+                            (selected ? "> " : "  ") + state.CurrentMenuOptions[i],
+                            new Vector2(menuBox.X + 12 + (i % 2) * cellWidth,
+                                bottom + 12 + (i / 2) * 28),
+                            cellWidth - 8, 24, selected ? Color.Cyan : Color.White);
                     }
                 }
+                else
+                {
+                    DrawFittedText(spriteBatch,
+                        state.IsSelectingTarget ? "A / D: Elegir objetivo" :
+                            state.IsAwaitingIntro ? "Z: Continuar" : "Combate en curso",
+                        new Vector2(26, bottom + 22), menuBox.Width - 28, 22, Color.LightGray);
+                    if (state.IsSelectingTarget)
+                        DrawFittedText(spriteBatch, "Z: Confirmar   X: Volver",
+                            new Vector2(26, bottom + 58), menuBox.Width - 28, 20, Color.White);
+                }
             }
-
-            // ========================================
-            // 5. CUADROS DE YOKO Y KYOKO
-            // ========================================
 
             EnsureCounters(state);
-
-            float totalWidth =
-                state.PartyMembers.Count * 130f;
-
-            float startX =
-                (screenSize.X - totalWidth) / 2f;
-
-            float statusPosY =
-                screenSize.Y - 145f;
-
-            for (int i = 0;
-                 i < state.PartyMembers.Count;
-                 i++)
+            for (int i = 0; i < state.PartyMembers.Count; i++)
             {
-                CharacterStats p =
-                    state.PartyMembers[i];
-
-                Vector2 statusPos = new Vector2(
-                    startX + i * 130f,
-                    statusPosY);
-
+                CharacterStats p = state.PartyMembers[i];
+                // El panel original se adapta a la franja inferior sin cubrir enemigos.
+                Vector2 statusPos = new Vector2(statusStart + i * statusWidth + 9, bottom + 4);
                 // Cuadro original de EarthBound.
                 if (_earthboundHudTexture != null)
                 {
-                    Rectangle sourceRect =
-                        new Rectangle(917, 143, 56, 64);
+                    Rectangle sourceRect = StatBoxSource;
 
                     spriteBatch.Draw(
                         _earthboundHudTexture,
@@ -481,7 +332,7 @@ namespace Skies_Scattered.UI
                         Color.White,
                         0f,
                         Vector2.Zero,
-                        2f,
+                        StatScale,
                         SpriteEffects.None,
                         0f);
                 }
@@ -547,15 +398,22 @@ namespace Skies_Scattered.UI
                     _hpCounters[i],
                     statusPos,
                     25,
-                    p.HP <= 0);
+                    p.HP <= 0,
+                    StatScale);
 
                 DrawCounter(
                     spriteBatch,
                     _ppCounters[i],
                     statusPos,
                     41,
-                    false);
+                    false,
+                    StatScale);
             }
+        }
+
+        private void DrawPanel(SpriteBatch batch, Rectangle box, Color accent)
+        {
+            DrawEarthboundBox(batch, _earthboundHudTexture, box);
         }
 
         // ========================================
@@ -621,60 +479,33 @@ namespace Skies_Scattered.UI
                 return;
             }
 
-            string[] words = message
-                .Replace("\r", "")
-                .Replace("\n", " ")
-                .Split(
-                    new[] { ' ' },
-                    StringSplitOptions.RemoveEmptyEntries);
-
+            if (width <= 0 || height <= 0) return;
+            float preferredScale = Math.Min(1f, height / _font.LineSpacing);
+            var lines = new List<string>();
             string line = "";
-            int lineNumber = 0;
-
-            float lineHeight = height / 2f;
-
-            foreach (string word in words)
+            foreach (string word in message.Replace("\r", "").Replace("\n", " ")
+                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                string candidate = line.Length == 0
-                    ? word
-                    : line + " " + word;
-
-                if (line.Length > 0 &&
-                    _font.MeasureString(candidate).X > width)
+                string candidate = line.Length == 0 ? word : line + " " + word;
+                if (line.Length > 0 && _font.MeasureString(candidate).X * preferredScale > width)
                 {
-                    DrawFittedText(
-                        batch,
-                        line,
-                        position + new Vector2(
-                            0,
-                            lineNumber * lineHeight),
-                        width,
-                        lineHeight,
-                        color);
-
-                    lineNumber++;
+                    lines.Add(line);
                     line = word;
-
-                    if (lineNumber >= 2)
-                        return;
                 }
-                else
-                {
-                    line = candidate;
-                }
+                else line = candidate;
             }
-
-            if (lineNumber < 2)
+            if (line.Length > 0) lines.Add(line);
+            if (lines.Count == 0) return;
+            float widest = 1f;
+            foreach (string text in lines) widest = Math.Max(widest, _font.MeasureString(text).X);
+            float scale = Math.Min(preferredScale, Math.Min(width / widest,
+                height / (lines.Count * _font.LineSpacing)));
+            float y = position.Y + (height - lines.Count * _font.LineSpacing * scale) / 2f;
+            foreach (string text in lines)
             {
-                DrawFittedText(
-                    batch,
-                    line,
-                    position + new Vector2(
-                        0,
-                        lineNumber * lineHeight),
-                    width,
-                    lineHeight,
-                    color);
+                batch.DrawString(_font, text, new Vector2((int)position.X, (int)y),
+                    color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                y += _font.LineSpacing * scale;
             }
         }
 
@@ -686,6 +517,10 @@ namespace Skies_Scattered.UI
             int digit,
             int transitionFrame)
         {
+            if (digit < 0 || digit > 9)
+                throw new ArgumentOutOfRangeException(nameof(digit));
+            if (transitionFrame < 0 || transitionFrame > 3)
+                throw new ArgumentOutOfRangeException(nameof(transitionFrame));
             int row = digit / 4;
             int column = digit % 4;
 
@@ -705,7 +540,8 @@ namespace Skies_Scattered.UI
             RollingCounter counter,
             Vector2 panelPosition,
             int rowOffset,
-            bool defeated)
+            bool defeated,
+            float scale = 2f)
         {
             if (_earthboundHudTexture == null)
                 return;
@@ -718,15 +554,11 @@ namespace Skies_Scattered.UI
                 spriteBatch.Draw(
                     _earthboundHudTexture,
                     new Rectangle(
-                        (int)panelPosition.X + 25 * 2,
-                        (int)panelPosition.Y + rowOffset * 2,
-                        23 * 2,
-                        12 * 2),
-                    new Rectangle(
-                        865,
-                        161,
-                        23,
-                        12),
+                        (int)panelPosition.X + (int)(25 * scale),
+                        (int)panelPosition.Y + (int)(rowOffset * scale),
+                        (int)(23 * scale),
+                        (int)(12 * scale)),
+                    CrossSource,
                     Color.White);
 
                 return;
@@ -782,15 +614,20 @@ namespace Skies_Scattered.UI
                     }
                 }
 
+                // No ocultar una cifra que participa en un acarreo o préstamo.
+                if (HideLeadingZeros && place < 2 &&
+                    counter.Visible < divisor && next < divisor)
+                    source = NullSource;
+
                 spriteBatch.Draw(
                     _earthboundHudTexture,
                     new Rectangle(
                         (int)panelPosition.X +
-                            (25 + place * 8) * 2,
+                            (int)((25 + place * 8) * scale),
                         (int)panelPosition.Y +
-                            rowOffset * 2,
-                        7 * 2,
-                        12 * 2),
+                            (int)(rowOffset * scale),
+                        (int)(7 * scale),
+                        (int)(12 * scale)),
                     source,
                     Color.White);
             }
@@ -996,3 +833,4 @@ namespace Skies_Scattered.UI
         }
     }
 }
+

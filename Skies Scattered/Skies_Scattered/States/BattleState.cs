@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -24,6 +24,7 @@ namespace Skies_Scattered.States
             EnemyIntro,
             PlayerTurn,
             SpellSelection,
+            ItemsSelection,
             SelectingTarget,
             PlayerActionResult,
             EnemyTurn,
@@ -75,7 +76,8 @@ namespace Skies_Scattered.States
             SpriteFont font,
             Texture2D uiBorders,
             Texture2D earthboundHud,
-            List<EnemyTemplate> enemyTemplates)
+            List<EnemyTemplate> enemyTemplates,
+            List<CharacterStats> partyMembers)
         {
             _battleUI = new BattleUI(font, uiBorders, earthboundHud);
             _random = new Random();
@@ -88,7 +90,7 @@ namespace Skies_Scattered.States
                     nameof(enemyTemplates));
             }
 
-            int cantidad = _random.Next(1, 3);
+            int cantidad = _random.Next(1, 4);
             float startX = 200f;
 
             for (int i = 0; i < cantidad; i++)
@@ -113,13 +115,35 @@ namespace Skies_Scattered.States
             {
                 TopMessage = BuildEnemyIntroMessage(),
 
-                PartyMembers = new List<CharacterStats>
+                PartyMembers = partyMembers ?? throw new ArgumentNullException(nameof(partyMembers)),
+
+                CurrentMenuOptions = new List<string>
+                {
+                    "SPELL",
+                    "Z-SPELL",
+                    "ACT",
+                    "DEFEND",
+                    "ITEMS",
+                    "RUN"
+                },
+
+                IsActionMenuOpen = false,
+                IsSelectingTarget = false,
+                IsSpellMenuOpen = false
+            };
+        }
+
+        // Se crea una vez por partida; cada batalla comparte estas estadísticas.
+        public static List<CharacterStats> CreateParty()
+        {
+            return new List<CharacterStats>
                 {
                     new CharacterStats
                     {
                         Name = "Yoko",
                         AP = 10,
                         HP = 50,
+                        MaxHP = 50,
                         CT = 5,
                         PP = 30,
                         MaxPP = 30,
@@ -136,6 +160,7 @@ namespace Skies_Scattered.States
                         Name = "Kyoko",
                         AP = 12,
                         HP = 50,
+                        MaxHP = 50,
                         CT = 4,
                         PP = 30,
                         MaxPP = 30,
@@ -146,21 +171,7 @@ namespace Skies_Scattered.States
                             "ShieldBeta"
                         }
                     }
-                },
-
-                CurrentMenuOptions = new List<string>
-                {
-                    "SPELL",
-                    "Z-SPELL",
-                    "ACT",
-                    "DEFEND",
-                    "RUN"
-                },
-
-                IsActionMenuOpen = false,
-                IsSelectingTarget = false,
-                IsSpellMenuOpen = false
-            };
+                };
         }
 
         private string BuildEnemyIntroMessage()
@@ -168,8 +179,9 @@ namespace Skies_Scattered.States
             if (_currentBattleEnemies.Count == 1)
                 return $"¡Apareció {_currentBattleEnemies[0].Name}!";
 
-            return $"¡Aparecieron {_currentBattleEnemies[0].Name} y " +
-                   $"{_currentBattleEnemies[1].Name}!";
+            var names = _currentBattleEnemies.ConvertAll(enemy => enemy.Name);
+            return "¡Aparecieron " + string.Join(", ", names.GetRange(0, names.Count - 1)) +
+                   " y " + names[names.Count - 1] + "!";
         }
 
         public void Initialize() { }
@@ -186,9 +198,7 @@ namespace Skies_Scattered.States
             switch (_currentPhase)
             {
                 case BattlePhase.EnemyIntro:
-                    _timer += dt;
-
-                    if (_timer >= MessageDelay)
+                    if (Input.IsKeyPressed(Keys.Z))
                     {
                         _timer = 0f;
                         OpenPlayerTurn();
@@ -201,6 +211,16 @@ namespace Skies_Scattered.States
 
                 case BattlePhase.SpellSelection:
                     UpdateSpellSelection();
+                    break;
+
+                case BattlePhase.ItemsSelection:
+                    if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back) ||
+                        Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Z) ||
+                        Input.IsKeyPressed(Keys.Space))
+                    {
+                        _battleState.IsItemMenuOpen = false;
+                        ReturnToActionMenu();
+                    }
                     break;
 
                 case BattlePhase.SelectingTarget:
@@ -222,6 +242,14 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.BattleEnded:
+                    _timer += dt;
+                    if (_timer >= MessageDelay)
+                    {
+                        var ended = OnBattleEnded;
+                        OnBattleEnded = null;
+                        _battleUI.Dispose();
+                        ended?.Invoke();
+                    }
                     break;
             }
         }
@@ -237,6 +265,7 @@ namespace Skies_Scattered.States
 
         private void OpenPlayerTurn()
         {
+            _battleState.IsAwaitingIntro = false;
             int firstAlive = _battleState.PartyMembers.FindIndex(
                 p => p.HP > 0);
 
@@ -350,6 +379,13 @@ namespace Skies_Scattered.States
                             $"¡{CurrentHero.Name} se defendió!";
 
                         FinishPlayerAction();
+                        break;
+
+                    case "ITEMS":
+                        _battleState.IsActionMenuOpen = false;
+                        _battleState.IsItemMenuOpen = true;
+                        _battleState.TopMessage = "No tienes objetos";
+                        _currentPhase = BattlePhase.ItemsSelection;
                         break;
 
                     case "RUN":
@@ -790,7 +826,7 @@ namespace Skies_Scattered.States
             _battleState.IsSelectingTarget = false;
 
             _currentPhase = BattlePhase.BattleEnded;
-            OnBattleEnded?.Invoke();
+            _timer = 0f;
         }
 
         public void Draw(
@@ -809,3 +845,4 @@ namespace Skies_Scattered.States
         }
     }
 }
+

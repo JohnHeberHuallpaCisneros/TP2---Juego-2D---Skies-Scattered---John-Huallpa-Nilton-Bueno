@@ -22,6 +22,7 @@
     <EmbeddedResource Include="Icon.ico">
       <LogicalName>Icon.ico</LogicalName>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Icon.bmp">
       <LogicalName>Icon.bmp</LogicalName>
     </EmbeddedResource>
@@ -42,22 +43,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>Content\atlas-definition.xml</TargetPath>
     </Content>
-  </ItemGroup>
-    <ItemGroup>
+
     <Content Include="Content\Image\Maps\mapa2.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>Content\Image\Maps\mapa2.tmx</TargetPath>
     </Content>
+
+    <Content Include="Content\Image\Maps\mapa3.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Content\Image\Maps\mapa3.tmx</TargetPath>
+    </Content>
+
+    <Content Include="Content\Image\Maps\EarthboundMapLilliputSteps2x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>Content\Image\Maps\EarthboundMapLilliputSteps2x.png</TargetPath>
+    </Content>
   </ItemGroup>
-  <ItemGroup>
-  <Content Include="Content\Image\Maps\mapa3.tmx">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    <TargetPath>Content\Image\Maps\mapa3.tmx</TargetPath>
-  </Content>
-</ItemGroup>
-<ItemGroup>
-  <Content Include="Content\Image\Maps\EarthboundMapLilliputSteps2x.png">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-</ItemGroup>
+
 </Project>

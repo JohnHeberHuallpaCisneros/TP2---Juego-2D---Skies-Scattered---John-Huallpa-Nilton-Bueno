@@ -297,11 +297,6 @@
 /processorParam:Version=3.8.5.1
 /build:Image/Maps/EarthboundMapLilliputSteps2x.png
 
-#begin Image/Maps/mapa3.tmx
-/importer:
-/processor:
-/build:Image/Maps/mapa3.tmx
-
 #begin Image/Player/together.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2aDKMyU4A9k=",
+  "dgSpecHash": "FliVDDbLcaY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\alumno.ET26\\Downloads\\Nueva carpeta\\Skies Scattered\\Skies_Scattered\\Skies_Scattered.csproj",
+  "projectFilePath": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\Skies_Scattered\\Skies_Scattered.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alumno.ET26\\.nuget\\packages\\brotlisharplib\\0.3.3\\brotlisharplib.0.3.3.nupkg.sha512",
     "C:\\Users\\alumno.ET26\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
@@ -23,9 +23,9 @@
     "C:\\Users\\alumno.ET26\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "C:\\Users\\alumno.ET26\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
     "C:\\Users\\alumno.ET26\\.nuget\\packages\\textcopy\\6.2.1\\textcopy.6.2.1.nupkg.sha512",
-    "C:\\Users\\alumno.ET26\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.20\\microsoft.netcore.app.ref.9.0.20.nupkg.sha512",
-    "C:\\Users\\alumno.ET26\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.20\\microsoft.windowsdesktop.app.ref.9.0.20.nupkg.sha512",
-    "C:\\Users\\alumno.ET26\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.20\\microsoft.aspnetcore.app.ref.9.0.20.nupkg.sha512"
+    "C:\\Users\\alumno.ET26\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.17\\microsoft.netcore.app.ref.9.0.17.nupkg.sha512",
+    "C:\\Users\\alumno.ET26\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.17\\microsoft.windowsdesktop.app.ref.9.0.17.nupkg.sha512",
+    "C:\\Users\\alumno.ET26\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.17\\microsoft.aspnetcore.app.ref.9.0.17.nupkg.sha512"
   ],
   "logs": []
 }

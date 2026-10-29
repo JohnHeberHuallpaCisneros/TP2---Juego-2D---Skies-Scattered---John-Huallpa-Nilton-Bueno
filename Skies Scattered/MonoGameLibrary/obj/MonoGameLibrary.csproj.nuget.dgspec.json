@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alumno.ET26\\Downloads\\Nueva carpeta\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
+    "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alumno.ET26\\Downloads\\Nueva carpeta\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {
+    "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alumno.ET26\\Downloads\\Nueva carpeta\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
         "projectName": "MonoGameLibrary",
-        "projectPath": "C:\\Users\\alumno.ET26\\Downloads\\Nueva carpeta\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "projectPath": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\MonoGameLibrary.csproj",
         "packagesPath": "C:\\Users\\alumno.ET26\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alumno.ET26\\Downloads\\Nueva carpeta\\Skies Scattered\\MonoGameLibrary\\obj\\",
+        "outputPath": "C:\\Users\\alumno.ET26\\Downloads\\SICSEBEN\\Skies Scattered\\MonoGameLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alumno.ET26\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,7 +41,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.400"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -68,15 +68,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.20, 9.0.20]"
+              "version": "[9.0.17, 9.0.17]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[9.0.20, 9.0.20]"
+              "version": "[9.0.17, 9.0.17]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[9.0.20, 9.0.20]"
+              "version": "[9.0.17, 9.0.17]"
             }
           ],
           "frameworkReferences": {
@@ -84,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

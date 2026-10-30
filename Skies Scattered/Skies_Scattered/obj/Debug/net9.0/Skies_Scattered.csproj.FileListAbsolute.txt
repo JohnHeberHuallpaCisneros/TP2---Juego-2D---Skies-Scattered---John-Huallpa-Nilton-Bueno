@@ -322,3 +322,16 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-2.png
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\ShieldBeta-0.png
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\EnemyBeam-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\animations.json
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\DefenseDownOmega-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\DefenseDownOmega-1.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\DefenseDownOmega-2.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\EnemyBeam-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FireBeta-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FireGamma-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeAlpha-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-1.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-2.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\ShieldBeta-0.png
+C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Maps\EarthboundMapLilliputSteps2x.png

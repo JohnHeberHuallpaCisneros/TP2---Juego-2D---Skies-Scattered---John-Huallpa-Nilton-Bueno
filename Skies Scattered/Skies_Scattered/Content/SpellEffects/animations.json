@@ -3,145 +3,145 @@
     {
       "texture": "EnemyBeam-0.png",
       "x": 0,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.15
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 256,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 512,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 768,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1024,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1280,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1536,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1792,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 0,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 256,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 512,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 768,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1024,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1280,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1536,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 1792,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 0,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.045
     },
     {
       "texture": "EnemyBeam-0.png",
       "x": 256,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.12
     }
   ],
@@ -695,209 +695,209 @@
     {
       "texture": "ShieldBeta-0.png",
       "x": 0,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.15
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 256,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 512,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 768,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1024,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1280,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1536,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1792,
-      "y": 0,
+      "y": 16,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 0,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 256,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 512,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 768,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1024,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1280,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1536,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1792,
-      "y": 256,
+      "y": 272,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 0,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 256,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 512,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 768,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1024,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1280,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1536,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 1792,
-      "y": 512,
+      "y": 528,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 0,
-      "y": 768,
+      "y": 784,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.055
     },
     {
       "texture": "ShieldBeta-0.png",
       "x": 256,
-      "y": 768,
+      "y": 784,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.12
     }
   ],
@@ -1531,217 +1531,217 @@
     {
       "texture": "FireBeta-0.png",
       "x": 0,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.15
     },
     {
       "texture": "FireBeta-0.png",
       "x": 256,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 512,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 768,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1024,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1280,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1536,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1792,
-      "y": 0,
+      "y": 77,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 0,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 256,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 512,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 768,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1024,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1280,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1536,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1792,
-      "y": 256,
+      "y": 333,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 0,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 256,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 512,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 768,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1024,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1280,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1536,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 1792,
-      "y": 512,
+      "y": 589,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 0,
-      "y": 768,
+      "y": 845,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 256,
-      "y": 768,
+      "y": 845,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.058
     },
     {
       "texture": "FireBeta-0.png",
       "x": 512,
-      "y": 768,
+      "y": 845,
       "width": 256,
-      "height": 256,
+      "height": 149,
       "seconds": 0.12
     }
   ],
@@ -1751,7 +1751,7 @@
       "x": 0,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.15
     },
     {
@@ -1759,7 +1759,7 @@
       "x": 256,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1767,7 +1767,7 @@
       "x": 512,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1775,7 +1775,7 @@
       "x": 768,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1783,7 +1783,7 @@
       "x": 1024,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1791,7 +1791,7 @@
       "x": 1280,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1799,7 +1799,7 @@
       "x": 1536,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1807,7 +1807,7 @@
       "x": 1792,
       "y": 0,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1815,7 +1815,7 @@
       "x": 0,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1823,7 +1823,7 @@
       "x": 256,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1831,7 +1831,7 @@
       "x": 512,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1839,7 +1839,7 @@
       "x": 768,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1847,7 +1847,7 @@
       "x": 1024,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1855,7 +1855,7 @@
       "x": 1280,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1863,7 +1863,7 @@
       "x": 1536,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1871,7 +1871,7 @@
       "x": 1792,
       "y": 256,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.094
     },
     {
@@ -1879,7 +1879,7 @@
       "x": 0,
       "y": 512,
       "width": 256,
-      "height": 256,
+      "height": 224,
       "seconds": 0.12
     }
   ],

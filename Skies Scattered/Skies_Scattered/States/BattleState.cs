@@ -20,6 +20,8 @@ namespace Skies_Scattered.States
         private readonly SpellEffectPlayer _spellEffect;
         private Action _afterSpell;
         private Enemy _effectTarget;
+        private readonly BattleShake _screenShake = new BattleShake();
+        public Vector2 ShakeOffset => _screenShake.Offset;
 
         public event Action OnBattleEnded;
 
@@ -72,6 +74,7 @@ namespace Skies_Scattered.States
 
         public class EnemyTemplate
         {
+            public bool Floats { get; set; }
             public string Name { get; set; }
             public Texture2D Texture { get; set; }
             public int HP { get; set; }
@@ -111,6 +114,7 @@ namespace Skies_Scattered.States
                     Texture = template.Texture,
                     HP = template.HP,
                     MaxHP = template.HP,
+                    Floats = template.Floats,
                     Position = new Vector2(
                         startX + (i * 120f), 180f)
                 };
@@ -201,6 +205,13 @@ namespace Skies_Scattered.States
 
             float dt =
                 (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _screenShake.Update(dt);
+            _battleState.Message.Update(dt);
+            if (Input.IsKeyPressed(Keys.Z) && !_battleState.Message.IsComplete)
+            {
+                _battleState.Message.Reveal();
+                return;
+            }
 
             switch (_currentPhase)
             {
@@ -245,6 +256,7 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.PlayerActionResult:
+                    if (!_battleState.Message.IsComplete) break;
                     _timer += dt;
 
                     if (_timer >= MessageDelay)
@@ -259,6 +271,7 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.BattleEnded:
+                    if (!_battleState.Message.IsComplete) break;
                     _timer += dt;
                     if (_timer >= MessageDelay)
                     {
@@ -752,6 +765,7 @@ namespace Skies_Scattered.States
         {
             if (_pendingAction == PendingAction.BasicAttack)
             {
+                _screenShake.Trigger("BasicAttack");
                 ExecuteSelectedAction(target);
                 return;
             }
@@ -769,6 +783,7 @@ namespace Skies_Scattered.States
 
         private void StartSpellAnimation(string spell, Action resolve, Enemy effectTarget = null)
         {
+            _screenShake.Trigger(spell, 0.15f);
             if (_spellEffect == null) { resolve(); return; }
             _battleState.IsActionMenuOpen = false;
             _battleState.IsSpellMenuOpen = false;
@@ -836,6 +851,7 @@ namespace Skies_Scattered.States
 
         private void UpdateEnemyTurn(float dt)
         {
+            if (!_battleState.Message.IsComplete) return;
             _timer += dt;
 
             if (_timer < EnemyTurnDelay)

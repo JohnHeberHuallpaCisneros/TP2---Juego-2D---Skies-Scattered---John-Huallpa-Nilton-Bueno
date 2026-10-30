@@ -12,4 +12,5 @@ public class Enemy
     public int Attack { get; set; }
     public int Defense { get; set; }
     public Vector2 Position { get; set; }
+    public bool Floats { get; set; }
 }

@@ -7,7 +7,8 @@ namespace Skies_Scattered.UI
     {
         public bool IsAwaitingIntro { get; set; } = true;
 
-        public string TopMessage { get; set; } = "Here They Are";
+        public TypewriterText Message { get; } = new TypewriterText { Text = "Here They Are" };
+        public string TopMessage { get => Message.Text; set => Message.Text = value; }
 
         public List<CharacterStats> PartyMembers { get; set; } =
             new List<CharacterStats>();

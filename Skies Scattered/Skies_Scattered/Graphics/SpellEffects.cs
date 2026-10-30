@@ -70,7 +70,18 @@ public sealed class SpellEffectPlayer
     private int _index;
     private float _elapsed;
     public bool IsPlaying => _frames != null && _index < _frames.Count;
-    public float Opacity { get; set; } = 0.82f;
+    public float Opacity { get; set; } = 0.70f;
+    private float _playbackSpeed = 1.25f;
+    public float PlaybackSpeed
+    {
+        get => _playbackSpeed;
+        set
+        {
+            if (!float.IsFinite(value) || value <= 0f)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            _playbackSpeed = value;
+        }
+    }
 
     public SpellEffectPlayer(SpellEffectLibrary library) { _library = library; }
 
@@ -91,7 +102,7 @@ public sealed class SpellEffectPlayer
     public void Update(float seconds)
     {
         if (!IsPlaying) return;
-        _elapsed += seconds;
+        _elapsed += seconds * PlaybackSpeed;
         while (IsPlaying && _elapsed >= _frames[_index].Seconds)
         {
             _elapsed -= _frames[_index].Seconds;

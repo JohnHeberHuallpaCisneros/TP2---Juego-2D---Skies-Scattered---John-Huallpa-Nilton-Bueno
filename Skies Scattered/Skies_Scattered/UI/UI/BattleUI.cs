@@ -249,6 +249,9 @@ namespace Skies_Scattered.UI
                     float enemyScale = Math.Min(1.5f, Math.Min(
                         (slotWidth - 24f) / visible.Width,
                         (areaHeight - 24f) / visible.Height));
+                    float groundY = TopBandHeight + areaHeight * 0.72f;
+                    y = groundY - visible.Height * enemyScale / 2f;
+                    if (enemy.Floats) y -= 18f;
 
                     aliveIndex++;
 
@@ -266,7 +269,7 @@ namespace Skies_Scattered.UI
 
                     // Flotación alineada a píxeles, conservando el filtrado por puntos.
                     x = (float)Math.Round(x);
-                    y = (float)Math.Round(y + wave * 3f);
+                    y = (float)Math.Round(y + (enemy.Floats ? wave * 3f : 0f));
                     Vector2 origin = new Vector2(
                         visible.X + visible.Width / 2f,
                         visible.Y + visible.Height / 2f);
@@ -276,7 +279,7 @@ namespace Skies_Scattered.UI
                     enemy.Position = drawPosition + origin * enemyScale;
 
                     int shadowWidth = Math.Max(24, (int)(visible.Width * enemyScale * 0.75f));
-                    int shadowY = (int)(TopBandHeight + areaHeight / 2f + visible.Height * enemyScale / 2f + 5);
+                    int shadowY = (int)groundY - 3;
                     spriteBatch.Draw(_shadow, new Rectangle((int)x - shadowWidth / 2, shadowY, shadowWidth, 12), Color.White);
                     Texture2D silhouette = WhiteMask(enemy.Texture);
                     Color rim = new Color(190, 205, 230) * 0.18f;
@@ -308,7 +311,7 @@ namespace Skies_Scattered.UI
             DrawPanel(spriteBatch, messageBox, Color.Cyan);
             DrawWrappedText(spriteBatch, state.TopMessage,
                 new Vector2(messageBox.X + 14, messageBox.Y + 10),
-                messageBox.Width - 28, 44, Color.White);
+                messageBox.Width - 28, 44, Color.White, state.Message.VisibleCharacters);
 
             int bottom = (int)screenSize.Y - BottomBandHeight + 8;
             int statusWidth = 130;
@@ -528,7 +531,8 @@ namespace Skies_Scattered.UI
             Vector2 position,
             float width,
             float height,
-            Color color)
+            Color color,
+            int visibleCharacters = int.MaxValue)
         {
             if (_font == null ||
                 string.IsNullOrEmpty(message))
@@ -560,8 +564,10 @@ namespace Skies_Scattered.UI
             float y = position.Y + (height - lines.Count * _font.LineSpacing * scale) / 2f;
             foreach (string text in lines)
             {
-                batch.DrawString(_font, text, new Vector2((int)position.X, (int)y),
+                string visibleText = text.Substring(0, Math.Min(text.Length, Math.Max(0, visibleCharacters)));
+                batch.DrawString(_font, visibleText, new Vector2((int)position.X, (int)y),
                     color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                visibleCharacters -= text.Length + 1;
                 y += _font.LineSpacing * scale;
             }
         }

@@ -50,6 +50,7 @@ public class Game1 : Core
 
     private BattleBackground _battleBackground;
     private SpellEffectLibrary _spellEffects;
+    private RenderTarget2D _battleFrame;
 
     private SpriteFont _retroFont;
     private Texture2D _earthboundHudTexture;
@@ -174,6 +175,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 new BattleState.EnemyTemplate
                 {
                     Name = "Black Eye",
+                    Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/black_eye"),
                     HP = 40
@@ -206,6 +208,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 new BattleState.EnemyTemplate
                 {
                     Name = "Mothshum",
+                    Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/mothshum"),
                     HP = 35
@@ -222,6 +225,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 new BattleState.EnemyTemplate
                 {
                     Name = "Snow Twins",
+                    Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/snow_twins"),
                     HP = 45
@@ -566,6 +570,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     protected override void UnloadContent()
     {
         _spellEffects?.Dispose();
+        _battleFrame?.Dispose();
         base.UnloadContent();
     }
 
@@ -653,6 +658,15 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void DibujarBatalla(GameTime gameTime)
     {
+        int width = GraphicsDevice.Viewport.Width;
+        int height = GraphicsDevice.Viewport.Height;
+        if (_battleFrame == null || _battleFrame.Width != width || _battleFrame.Height != height)
+        {
+            _battleFrame?.Dispose();
+            _battleFrame = new RenderTarget2D(GraphicsDevice, width, height);
+        }
+        GraphicsDevice.SetRenderTarget(_battleFrame);
+        GraphicsDevice.Clear(Color.Black);
         _battleBackground.Draw(
             SpriteBatch,
             GraphicsDevice);
@@ -664,6 +678,12 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             SpriteBatch,
             GraphicsDevice);
 
+        SpriteBatch.End();
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.Black);
+        Vector2 offset = _currentState is BattleState battle ? battle.ShakeOffset : Vector2.Zero;
+        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        SpriteBatch.Draw(_battleFrame, offset, Color.White);
         SpriteBatch.End();
     }
 

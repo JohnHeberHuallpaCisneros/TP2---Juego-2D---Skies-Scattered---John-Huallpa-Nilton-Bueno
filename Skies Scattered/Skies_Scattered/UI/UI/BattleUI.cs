@@ -17,6 +17,44 @@ namespace Skies_Scattered.UI
         private int _lastTarget = -1;
         private float _targetFlash;
         private readonly Dictionary<Texture2D, Texture2D> _whiteMasks = new();
+        private readonly Dictionary<Texture2D, Rectangle> _visibleBounds = new();
+        private Texture2D _shadow;
+        private static readonly Vector2[] RimOffsets = {
+            new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(0, 1)
+        };
+
+        private Rectangle VisibleBounds(Texture2D texture)
+        {
+            if (_visibleBounds.TryGetValue(texture, out var result)) return result;
+            var pixels = new Color[texture.Width * texture.Height];
+            texture.GetData(pixels);
+            int left = texture.Width, top = texture.Height, right = -1, bottom = -1;
+            for (int y = 0; y < texture.Height; y++)
+                for (int x = 0; x < texture.Width; x++)
+                    if (pixels[y * texture.Width + x].A > 0)
+                    {
+                        left = Math.Min(left, x); top = Math.Min(top, y);
+                        right = Math.Max(right, x); bottom = Math.Max(bottom, y);
+                    }
+            result = right < left ? new Rectangle(0, 0, texture.Width, texture.Height)
+                : new Rectangle(left, top, right - left + 1, bottom - top + 1);
+            _visibleBounds.Add(texture, result);
+            return result;
+        }
+
+        private void EnsureShadow(GraphicsDevice graphics)
+        {
+            if (_shadow != null) return;
+            _shadow = new Texture2D(graphics, 32, 8);
+            var pixels = new Color[32 * 8];
+            for (int y = 0; y < 8; y++)
+                for (int x = 0; x < 32; x++)
+                {
+                    float dx = (x - 15.5f) / 16f, dy = (y - 3.5f) / 4f;
+                    pixels[y * 32 + x] = Color.Black * MathHelper.Clamp((1f - dx * dx - dy * dy) * 0.45f, 0f, 0.45f);
+                }
+            _shadow.SetData(pixels);
+        }
 
         private Texture2D WhiteMask(Texture2D source)
         {
@@ -36,6 +74,7 @@ namespace Skies_Scattered.UI
             foreach (var mask in _whiteMasks.Values) mask.Dispose();
             _whiteMasks.Clear();
             _pixelTexture?.Dispose();
+            _shadow?.Dispose();
         }
 
         private readonly List<RollingCounter> _hpCounters =
@@ -175,6 +214,11 @@ namespace Skies_Scattered.UI
             // 1. ENEMIGOS
             // ========================================
 
+            // Un fondo más tranquilo ayuda a separar las siluetas del escenario.
+            spriteBatch.Draw(_pixelTexture, new Rectangle(0, TopBandHeight, (int)screenSize.X,
+                (int)screenSize.Y - TopBandHeight - BottomBandHeight), Color.Black * 0.28f);
+            EnsureShadow(spriteBatch.GraphicsDevice);
+
             if (enemies != null)
             {
                 int aliveCount = 0;
@@ -200,10 +244,11 @@ namespace Skies_Scattered.UI
                     float areaHeight = screenSize.Y - TopBandHeight - BottomBandHeight;
                     float x = (screenSize.X - areaWidth) / 2f + slotWidth * (aliveIndex + 0.5f);
                     float y = TopBandHeight + areaHeight / 2f;
-                    // Tamaño nativo como máximo; ajustar solo si no cabe en su espacio.
+                    Rectangle visible = VisibleBounds(enemy.Texture);
+                    // Usar la silueta visible, sin contar márgenes transparentes.
                     float enemyScale = Math.Min(1.5f, Math.Min(
-                        (slotWidth - 24f) / enemy.Texture.Width,
-                        (areaHeight - 24f) / enemy.Texture.Height));
+                        (slotWidth - 24f) / visible.Width,
+                        (areaHeight - 24f) / visible.Height));
 
                     aliveIndex++;
 
@@ -222,26 +267,38 @@ namespace Skies_Scattered.UI
                     // Flotación alineada a píxeles, conservando el filtrado por puntos.
                     x = (float)Math.Round(x);
                     y = (float)Math.Round(y + wave * 3f);
-
                     Vector2 origin = new Vector2(
-                        enemy.Texture.Width / 2,
-                        enemy.Texture.Height / 2);
+                        visible.X + visible.Width / 2f,
+                        visible.Y + visible.Height / 2f);
+                    Vector2 drawPosition = new Vector2(
+                        (float)Math.Round(x - origin.X * enemyScale),
+                        (float)Math.Round(y - origin.Y * enemyScale));
+                    enemy.Position = drawPosition + origin * enemyScale;
+
+                    int shadowWidth = Math.Max(24, (int)(visible.Width * enemyScale * 0.75f));
+                    int shadowY = (int)(TopBandHeight + areaHeight / 2f + visible.Height * enemyScale / 2f + 5);
+                    spriteBatch.Draw(_shadow, new Rectangle((int)x - shadowWidth / 2, shadowY, shadowWidth, 12), Color.White);
+                    Texture2D silhouette = WhiteMask(enemy.Texture);
+                    Color rim = new Color(190, 205, 230) * 0.18f;
+                    foreach (var offset in RimOffsets)
+                        spriteBatch.Draw(silhouette, drawPosition + offset, null, rim,
+                            0f, Vector2.Zero, enemyScale, SpriteEffects.None, 0f);
 
                     spriteBatch.Draw(
                         enemy.Texture,
-                        new Vector2(x, y),
+                        drawPosition,
                         null,
                         Color.White,
                         0f,
-                        origin,
+                        Vector2.Zero,
                         new Vector2(enemyScale),
                         SpriteEffects.None,
                         0f);
                     // Destello breve sobre la silueta; el enemigo nunca desaparece.
                     float pulse = _targetFlash % 0.8f;
                     if (selected && pulse < 0.12f)
-                        spriteBatch.Draw(WhiteMask(enemy.Texture), new Vector2(x, y), null,
-                            Color.White * (0.85f * (1f - pulse / 0.12f)), 0f, origin,
+                        spriteBatch.Draw(silhouette, drawPosition, null,
+                            Color.White * (0.85f * (1f - pulse / 0.12f)), 0f, Vector2.Zero,
                             new Vector2(enemyScale), SpriteEffects.None, 0f);
                 }
             }

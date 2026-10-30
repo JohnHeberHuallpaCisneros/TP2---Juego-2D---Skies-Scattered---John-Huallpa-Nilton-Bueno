@@ -310,3 +310,15 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\obj\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\Skies_Scattered.pdb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\Skies_Scattered.genruntimeconfig.cache
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\obj\Debug\net9.0\ref\Skies_Scattered.dll
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\animations.json
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\DefenseDownOmega-0.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\DefenseDownOmega-1.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\DefenseDownOmega-2.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FireBeta-0.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FireGamma-0.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeAlpha-0.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-0.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-1.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-2.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\ShieldBeta-0.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\EnemyBeam-0.png

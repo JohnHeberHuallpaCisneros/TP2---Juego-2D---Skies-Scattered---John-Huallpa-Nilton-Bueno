@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 using Skies_Scattered.Entities;
 using Skies_Scattered.UI;
+using Skies_Scattered.Graphics;
 
 namespace Skies_Scattered.States
 {
@@ -16,6 +17,9 @@ namespace Skies_Scattered.States
         private BattleUIState _battleState;
         private List<Enemy> _currentBattleEnemies;
         private Random _random;
+        private readonly SpellEffectPlayer _spellEffect;
+        private Action _afterSpell;
+        private Enemy _effectTarget;
 
         public event Action OnBattleEnded;
 
@@ -24,6 +28,7 @@ namespace Skies_Scattered.States
             EnemyIntro,
             PlayerTurn,
             SpellSelection,
+            SpellAnimation,
             ItemsSelection,
             SelectingTarget,
             PlayerActionResult,
@@ -77,8 +82,10 @@ namespace Skies_Scattered.States
             Texture2D uiBorders,
             Texture2D earthboundHud,
             List<EnemyTemplate> enemyTemplates,
-            List<CharacterStats> partyMembers)
+            List<CharacterStats> partyMembers,
+            SpellEffectLibrary spellEffects = null)
         {
+            if (spellEffects != null) _spellEffect = new SpellEffectPlayer(spellEffects);
             _battleUI = new BattleUI(font, uiBorders, earthboundHud);
             _random = new Random();
             _currentBattleEnemies = new List<Enemy>();
@@ -213,6 +220,16 @@ namespace Skies_Scattered.States
                     UpdateSpellSelection();
                     break;
 
+                case BattlePhase.SpellAnimation:
+                    _spellEffect.Update(dt);
+                    if (!_spellEffect.IsPlaying)
+                    {
+                        var resolve = _afterSpell;
+                        _afterSpell = null;
+                        resolve?.Invoke();
+                    }
+                    break;
+
                 case BattlePhase.ItemsSelection:
                     if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back) ||
                         Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Z) ||
@@ -265,6 +282,7 @@ namespace Skies_Scattered.States
 
         private void OpenPlayerTurn()
         {
+            _spellEffect?.Stop();
             _battleState.IsAwaitingIntro = false;
             int firstAlive = _battleState.PartyMembers.FindIndex(
                 p => p.HP > 0);
@@ -465,7 +483,7 @@ namespace Skies_Scattered.States
                     _battleState.TopMessage =
                         $"¡{CurrentHero.Name} usó ShieldBeta!";
 
-                    FinishPlayerAction();
+                    StartSpellAnimation("ShieldBeta", FinishPlayerAction);
                     return;
                 }
 
@@ -498,7 +516,10 @@ namespace Skies_Scattered.States
                         return;
                 }
 
-                OpenTargetSelection();
+                if (_pendingAction == PendingAction.FireBeta || _pendingAction == PendingAction.FireGamma)
+                    AnimateSelectedAction(null);
+                else
+                    OpenTargetSelection();
             }
         }
 
@@ -594,7 +615,7 @@ namespace Skies_Scattered.States
                 Input.IsKeyPressed(Keys.Enter) ||
                 Input.IsKeyPressed(Keys.Space))
             {
-                ExecuteSelectedAction(target);
+                AnimateSelectedAction(target);
             }
         }
 
@@ -677,6 +698,23 @@ namespace Skies_Scattered.States
                 }
             }
 
+            if (_pendingAction == PendingAction.FireBeta || _pendingAction == PendingAction.FireGamma)
+            {
+                foreach (var enemy in _currentBattleEnemies)
+                    enemy.HP = Math.Max(0, enemy.HP - damage);
+                _currentBattleEnemies.RemoveAll(enemy => enemy.HP <= 0);
+                _defenseDownEnemies.RemoveWhere(enemy => enemy.HP <= 0);
+                _battleState.SelectedEnemyIndex = 0;
+                if (_currentBattleEnemies.Count == 0)
+                    EndBattle("¡Todos los enemigos han sido derrotados!");
+                else
+                {
+                    _battleState.TopMessage = $"¡{CurrentHero.Name} usó {spell} contra todos los enemigos!";
+                    FinishPlayerAction();
+                }
+                return;
+            }
+
             target.HP = Math.Max(0, target.HP - damage);
 
             if (target.HP <= 0)
@@ -710,8 +748,40 @@ namespace Skies_Scattered.States
             FinishPlayerAction();
         }
 
+        private void AnimateSelectedAction(Enemy target)
+        {
+            if (_pendingAction == PendingAction.BasicAttack)
+            {
+                ExecuteSelectedAction(target);
+                return;
+            }
+            string spell = GetSpellName(_pendingAction);
+            if (CurrentHero.PP < GetSpellCost(spell))
+            {
+                ReturnToActionMenu();
+                _battleState.TopMessage = "¡No hay suficientes PP!";
+                return;
+            }
+            _battleState.TopMessage = $"¡{CurrentHero.Name} usó {spell}!";
+            bool affectsAll = _pendingAction == PendingAction.FireBeta || _pendingAction == PendingAction.FireGamma;
+            StartSpellAnimation(spell, () => ExecuteSelectedAction(target), affectsAll ? null : target);
+        }
+
+        private void StartSpellAnimation(string spell, Action resolve, Enemy effectTarget = null)
+        {
+            if (_spellEffect == null) { resolve(); return; }
+            _battleState.IsActionMenuOpen = false;
+            _battleState.IsSpellMenuOpen = false;
+            _battleState.IsSelectingTarget = false;
+            _spellEffect.Play(spell);
+            _effectTarget = effectTarget;
+            _afterSpell = resolve;
+            _currentPhase = BattlePhase.SpellAnimation;
+        }
+
         private void ReturnToActionMenu()
         {
+            _spellEffect?.Stop();
             _battleState.IsSpellMenuOpen = false;
             _battleState.IsSelectingTarget = false;
             _battleState.IsActionMenuOpen = true;
@@ -800,16 +870,17 @@ namespace Skies_Scattered.States
                 if (_defending.Contains(target))
                     damage = Math.Max(1, damage / 2);
 
-                target.HP = Math.Max(0, target.HP - damage);
-
-                _battleState.TopMessage =
-                    $"¡{enemy.Name} atacó a {target.Name} y le hizo " +
-                    $"{damage} de daño!";
-
-                if (_battleState.PartyMembers.TrueForAll(p => p.HP <= 0))
+                _battleState.TopMessage = $"¡{enemy.Name} ataca a {target.Name}!";
+                StartSpellAnimation("EnemyBeam", () =>
                 {
-                    EndBattle("Tu grupo ha caído...");
-                }
+                    target.HP = Math.Max(0, target.HP - damage);
+                    _battleState.TopMessage = $"¡{enemy.Name} atacó a {target.Name} y le hizo {damage} de daño!";
+                    _timer = 0f;
+                    if (_battleState.PartyMembers.TrueForAll(p => p.HP <= 0))
+                        EndBattle("Tu grupo ha caído...");
+                    else
+                        _currentPhase = BattlePhase.EnemyTurn;
+                });
             }
             else
             {
@@ -842,6 +913,20 @@ namespace Skies_Scattered.States
                 _battleState,
                 _currentBattleEnemies,
                 screenSize);
+            if (_currentPhase == BattlePhase.SpellAnimation)
+            {
+                Rectangle arena = new Rectangle(0, BattleUI.TopBandHeight, (int)screenSize.X,
+                    (int)screenSize.Y - BattleUI.TopBandHeight - BattleUI.BottomBandHeight);
+                Rectangle effectArea = arena;
+                if (_effectTarget != null)
+                {
+                    // El lienzo incluye margen transparente; el hielo visible ocupa el centro.
+                    const int size = 384;
+                    effectArea = new Rectangle((int)_effectTarget.Position.X - size / 2,
+                        (int)_effectTarget.Position.Y - size / 2, size, size);
+                }
+                _spellEffect?.Draw(spriteBatch, effectArea, arena);
+            }
         }
     }
 }

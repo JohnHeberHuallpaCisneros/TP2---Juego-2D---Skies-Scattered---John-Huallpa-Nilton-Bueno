@@ -49,6 +49,7 @@ public class Game1 : Core
     // =========================================
 
     private BattleBackground _battleBackground;
+    private SpellEffectLibrary _spellEffects;
 
     private SpriteFont _retroFont;
     private Texture2D _earthboundHudTexture;
@@ -148,6 +149,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void CargarRecursos()
     {
+        _spellEffects = new SpellEffectLibrary(GraphicsDevice);
         _earthboundHudTexture =
             Content.Load<Texture2D>(
                 "Image/Boxes_UI/SNES - EarthBound - Miscellaneous - Battle HUD");
@@ -550,7 +552,8 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 _uiBordersTexture,
                 _earthboundHudTexture,
                 _enemyTemplates,
-                _party);
+                _party,
+                _spellEffects);
 
             batalla.OnBattleEnded += FinalizarBatalla;
 
@@ -558,6 +561,12 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         }
 
         _currentState.Update(gameTime);
+    }
+
+    protected override void UnloadContent()
+    {
+        _spellEffects?.Dispose();
+        base.UnloadContent();
     }
 
     private void FinalizarBatalla()

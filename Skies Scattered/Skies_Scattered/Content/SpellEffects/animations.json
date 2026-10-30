@@ -1,0 +1,2112 @@
+{
+  "EnemyBeam": [
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.045
+    },
+    {
+      "texture": "EnemyBeam-0.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ],
+  "FreezeOmega": [
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 768,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1024,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1280,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1536,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-0.png",
+      "x": 1792,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 768,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1024,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1280,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1536,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-1.png",
+      "x": 1792,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-2.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-2.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-2.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.04
+    },
+    {
+      "texture": "FreezeOmega-2.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ],
+  "ShieldBeta": [
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.055
+    },
+    {
+      "texture": "ShieldBeta-0.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ],
+  "DefenseDownOmega": [
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 768,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1024,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1280,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1536,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-0.png",
+      "x": 1792,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 768,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1024,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1280,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1536,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-1.png",
+      "x": 1792,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.035
+    },
+    {
+      "texture": "DefenseDownOmega-2.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ],
+  "FireBeta": [
+    {
+      "texture": "FireBeta-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.058
+    },
+    {
+      "texture": "FireBeta-0.png",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ],
+  "FireGamma": [
+    {
+      "texture": "FireGamma-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.094
+    },
+    {
+      "texture": "FireGamma-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ],
+  "FreezeAlpha": [
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.15
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1024,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1280,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1536,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1792,
+      "y": 0,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 0,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 256,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 512,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 768,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1024,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1280,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1536,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1792,
+      "y": 256,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 0,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 256,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 512,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 768,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1024,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1280,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1536,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 1792,
+      "y": 512,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.06
+    },
+    {
+      "texture": "FreezeAlpha-0.png",
+      "x": 768,
+      "y": 768,
+      "width": 256,
+      "height": 256,
+      "seconds": 0.12
+    }
+  ]
+}

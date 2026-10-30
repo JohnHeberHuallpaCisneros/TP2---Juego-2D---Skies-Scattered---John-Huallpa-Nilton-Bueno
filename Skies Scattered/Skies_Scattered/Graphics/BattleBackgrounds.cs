@@ -101,19 +101,19 @@ public class BattleBackground
 
         DrawLayer(
             spriteBatch, _background1,
-            _time * 20f, _time,
+            _time * 10f, _time * 0.8f,
             0.015f, 8f, Color.White,
             ancho, alto);
 
         DrawLayer(
             spriteBatch, _background2,
-            _time * -35f, _time * 1.2f,
+            _time * -16f, _time * 0.9f,
             0.025f, 10f, Color.White * 0.5f,
             ancho, alto);
 
         DrawLayer(
             spriteBatch, _background3,
-            _time * 50f, _time * 1.8f,
+            _time * 22f, _time * 1.1f,
             0.040f, 14f, Color.White * 0.4f,
             ancho, alto,
             darkPalette, lightPalette);

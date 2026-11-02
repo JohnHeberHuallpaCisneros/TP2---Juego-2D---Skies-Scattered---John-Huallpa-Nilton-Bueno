@@ -51,6 +51,9 @@ public class Game1 : Core
     private BattleBackground _battleBackground;
     private SpellEffectLibrary _spellEffects;
     private RenderTarget2D _battleFrame;
+    private RenderTarget2D _sceneFrame;
+    private Effect _crtFilter;
+    private bool _crtEnabled = true;
 
     private SpriteFont _retroFont;
     private Texture2D _earthboundHudTexture;
@@ -83,6 +86,15 @@ public class Game1 : Core
 
     private IGameState _currentState;
     private GameOverState _gameOver;
+    private readonly SaveGameService _saveGame = new SaveGameService();
+    private Vector2? _savePointPosition = new Vector2(1440, 1700);
+    private Dictionary<string, ZoneProgress> _zones = new() { ["mapa2"] = new ZoneProgress() };
+    private ZoneProgress CurrentZone => _zones["mapa2"];
+    private bool _saveDialogOpen;
+    private bool _saveFromMenu;
+    private string _saveNotice = "";
+    private float _saveNoticeTime;
+    private const string SavePointId = "inicio-mapa2";
     private MainMenuState _mainMenu;
 
     private bool _enMenu = true;
@@ -150,6 +162,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void CargarRecursos()
     {
+        _crtFilter = Content.Load<Effect>("CrtFilter");
         _spellEffects = new SpellEffectLibrary(GraphicsDevice);
         _earthboundHudTexture =
             Content.Load<Texture2D>(
@@ -175,7 +188,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 new BattleState.EnemyTemplate
                 {
                     Name = "Black Eye",
-                    Floats = true,
+                    Floats = false,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/black_eye"),
                     HP = 40
@@ -200,6 +213,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 new BattleState.EnemyTemplate
                 {
                     Name = "Mantle",
+                    Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/mantle"),
                     HP = 70
@@ -304,6 +318,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             new Vector2(1500, 1700))
         {
             AnimFrente = _yokoFrente,
+            AllowArrowKeys = true,
             AnimAtras = _yokoAtras,
 
             AnimIzquierda = _yokoLado,
@@ -356,9 +371,11 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     {
         _mainMenu = new MainMenuState(
             _retroFont,
-            _earthboundHudTexture);
+            _earthboundHudTexture, () => _saveGame.HasSave);
 
-        _mainMenu.OnStartGame += IniciarJuego;
+        _mainMenu.OnStartGame += () => ReiniciarPartida(false);
+        _mainMenu.OnContinueGame += ContinuarPartida;
+        _overworldUI.OnSaveRequested += AbrirGuardadoDesdeMenu;
         _mainMenu.OnExitGame += Exit;
     }
 
@@ -390,6 +407,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         base.Update(gameTime);
 
         ActualizarPantalla();
+        _saveNoticeTime = Math.Max(0, _saveNoticeTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
 
         //F3 muestra/oculta las colisiones
         if (Input.IsKeyPressed(Keys.F3))
@@ -419,12 +437,15 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         }
 
         Window.Title =
-            $"Pasos para el combate: {_encuentros.PasosRestantes}" +
+            (CurrentZone.RemainingEnemies == 0 ? "No quedan enemigos en esta zona" :
+                _encuentros.PasosSegurosRestantes > 0 ? $"Pasos seguros: {_encuentros.PasosSegurosRestantes}" :
+                $"Probabilidad de encuentro por paso: {_encuentros.ProbabilidadActual:P1}") +
             (_colorFinal.HasValue ? $" | Color final: {_colorFinal.Value}" : "");
     }
 
     private void ActualizarPantalla()
     {
+        if (Input.IsKeyPressed(Keys.F9)) _crtEnabled = !_crtEnabled;
         if (Input.IsKeyPressed(Keys.F11))
         {
             Core.Graphics.IsFullScreen =
@@ -440,6 +461,29 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void ActualizarExploracion(GameTime gameTime)
     {
+        if (_saveDialogOpen)
+        {
+            if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape)) _saveDialogOpen = false;
+            else if (Input.IsKeyPressed(Keys.Z))
+            {
+                var data = new SaveGameData { Yoko = new SavedPosition(_yoko.Position),
+                    Kyoko = new SavedPosition(_kyoko.Position), Party = _party, Choices = _choices.Capture(),
+                    SavePointId = _saveFromMenu ? "menu-overworld" : SavePointId, SavedAt = DateTimeOffset.UtcNow, Zones = _zones };
+                bool saved = _saveGame.TrySave(data);
+                _saveNotice = saved ? "Partida guardada." : _saveGame.LastError;
+                _saveNoticeTime = 4f;
+                if (saved) _saveDialogOpen = false;
+            }
+            return;
+        }
+        if (!_overworldUI.IsOpen && !_choices.IsChoosing && NearSavePoint() && Input.IsKeyPressed(Keys.Z))
+        {
+            _saveDialogOpen = true;
+            _saveFromMenu = false;
+            _saveNoticeTime = 0;
+            return;
+        }
+
         if (!_choices.IsChoosing && Input.IsKeyPressed(Keys.C))
         {
             _overworldUI.Toggle();
@@ -486,7 +530,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 yokoAntes,
                 _yoko.Position);
 
-        _encuentros.Update(distanciaRecorrida);
+        _encuentros.Update(distanciaRecorrida, CurrentZone.RemainingEnemies > 0);
 
         _choices.Update(ObtenerHitbox(_yoko), _worldSize);
     }
@@ -551,13 +595,15 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     {
         if (_currentState is not BattleState)
         {
+            if (CurrentZone.RemainingEnemies <= 0) { _encuentros.Reiniciar(); return; }
             var batalla = new BattleState(
                 _retroFont,
                 _uiBordersTexture,
                 _earthboundHudTexture,
                 _enemyTemplates,
                 _party,
-                _spellEffects);
+                _spellEffects,
+                CurrentZone);
 
             batalla.OnBattleEnded += FinalizarBatalla;
 
@@ -571,6 +617,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     {
         _spellEffects?.Dispose();
         _battleFrame?.Dispose();
+        _sceneFrame?.Dispose();
         base.UnloadContent();
     }
 
@@ -580,17 +627,87 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         _currentState = null;
         if (_party.TrueForAll(hero => hero.HP <= 0))
         {
-            _gameOver = new GameOverState(_retroFont, _earthboundHudTexture, _pixel);
-            _gameOver.OnRetry += () => ReiniciarPartida(false);
+            _gameOver = new GameOverState(_retroFont, _earthboundHudTexture, _pixel, _saveGame.HasSave);
+            _gameOver.OnRetry += () => { if (_saveGame.HasSave) ContinuarPartida(); else ReiniciarPartida(false); };
             _gameOver.OnMainMenu += () => ReiniciarPartida(true);
         }
+    }
+
+    private void AbrirGuardadoDesdeMenu()
+    {
+        if (_enMenu || _gameOver != null || _encuentros.Activo || _choices.IsChoosing || !_overworldUI.IsOpen) return;
+        _saveFromMenu = true;
+        _saveDialogOpen = true;
+        _saveNoticeTime = 0;
+    }
+
+    private bool NearSavePoint() => _savePointPosition.HasValue &&
+        Vector2.Distance(_yoko.Position, _savePointPosition.Value) <= 72f;
+
+    private void ContinuarPartida()
+    {
+        if (!_saveGame.TryLoad(out var saved))
+        {
+            _mainMenu.StatusMessage = _saveGame.LastError;
+            if (_gameOver != null) _gameOver.StatusMessage = _saveGame.LastError;
+            return;
+        }
+        // Validar las posiciones contra las colisiones antes de cambiar la partida.
+        Vector2 oldYoko = _yoko.Position, oldKyoko = _kyoko.Position;
+        _yoko.Position = saved.Yoko.ToVector();
+        _kyoko.Position = saved.Kyoko.ToVector();
+        bool blocked = _colisiones.Choca(HitboxPies(_yoko));
+        if (blocked)
+        {
+            _yoko.Position = oldYoko; _kyoko.Position = oldKyoko;
+            _mainMenu.StatusMessage = "La posición del guardado no es válida.";
+            if (_gameOver != null) _gameOver.StatusMessage = _mainMenu.StatusMessage;
+            return;
+        }
+        _party.Clear(); _party.AddRange(saved.Party);
+        _zones = saved.Zones;
+        _choices.Restore(saved.Choices);
+        _colorFinal = saved.Choices.Finished ? _choices.FinalColor : null;
+        _encuentros.Reiniciar();
+        _currentState = null; _gameOver = null; _saveDialogOpen = false;
+        _saveNotice = "Partida cargada."; _saveNoticeTime = 3f;
+        if (_overworldUI.IsOpen) _overworldUI.Toggle();
+        IniciarJuego();
+    }
+
+    private void DrawSavePoint()
+    {
+        if (!_savePointPosition.HasValue) return;
+        Vector2 point = _savePointPosition.Value;
+        Color color = Color.Gold;
+        SpriteBatch.Draw(_pixel, new Rectangle((int)point.X - 3, (int)point.Y - 16, 6, 32), color);
+        SpriteBatch.Draw(_pixel, new Rectangle((int)point.X - 13, (int)point.Y - 3, 26, 6), color);
+        SpriteBatch.Draw(_pixel, new Rectangle((int)point.X - 7, (int)point.Y - 7, 14, 14), Color.LightYellow);
+    }
+
+    private void DrawSavePanel()
+    {
+        if (!_saveDialogOpen && _saveNoticeTime <= 0 && !NearSavePoint()) return;
+        var view = TamanoVista();
+        Rectangle box = new Rectangle(20, (int)view.Y - 102, (int)view.X - 40, 82);
+        EarthboundBox.Draw(SpriteBatch, _earthboundHudTexture, _pixel, box);
+        string text = _saveNoticeTime > 0 ? _saveNotice : _saveDialogOpen
+            ? (_saveGame.HasSave ? "¿Sobrescribir la partida guardada?" : "¿Guardar la partida?") + "\nZ: Confirmar    X: Volver"
+            : "Punto de guardado - Z: Interactuar";
+        Vector2 size = _retroFont.MeasureString(text);
+        float scale = Math.Min(1f, (box.Width - 28) / Math.Max(1f, size.X));
+        SpriteBatch.DrawString(_retroFont, text, new Vector2(box.X + 14, box.Y + 18), Color.White,
+            0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
     }
 
     private void ReiniciarPartida(bool volverAlMenu)
     {
         _gameOver = null;
+        _saveDialogOpen = false;
+        _saveNoticeTime = 0;
         _party.Clear();
         _party.AddRange(BattleState.CreateParty());
+        _zones = new Dictionary<string, ZoneProgress> { ["mapa2"] = new ZoneProgress() };
         _encuentros.Reiniciar();
         _choices.Reiniciar();
         _colorFinal = null;
@@ -605,6 +722,32 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     // =========================================
 
     protected override void Draw(GameTime gameTime)
+    {
+        if (!_crtEnabled)
+        {
+            DrawScene(gameTime);
+            return;
+        }
+        var previous = GraphicsDevice.GetRenderTargets();
+        int width = GraphicsDevice.Viewport.Width, height = GraphicsDevice.Viewport.Height;
+        if (_sceneFrame == null || _sceneFrame.Width != width || _sceneFrame.Height != height)
+        {
+            _sceneFrame?.Dispose();
+            _sceneFrame = new RenderTarget2D(GraphicsDevice, width, height);
+        }
+        GraphicsDevice.SetRenderTarget(_sceneFrame);
+        DrawScene(gameTime);
+        GraphicsDevice.SetRenderTargets(previous);
+        _crtFilter.Parameters["OutputSize"].SetValue(new Vector2(width, height));
+        _crtFilter.Parameters["ScanlineStrength"].SetValue(0.28f);
+        _crtFilter.Parameters["VignetteStrength"].SetValue(0.16f);
+        _crtFilter.Parameters["MaskStrength"].SetValue(0.06f);
+        SpriteBatch.Begin(samplerState: SamplerState.PointClamp, effect: _crtFilter);
+        SpriteBatch.Draw(_sceneFrame, Vector2.Zero, Color.White);
+        SpriteBatch.End();
+    }
+
+    private void DrawScene(GameTime gameTime)
     {
         if (_gameOver != null)
         {
@@ -658,6 +801,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void DibujarBatalla(GameTime gameTime)
     {
+        var previous = GraphicsDevice.GetRenderTargets();
         int width = GraphicsDevice.Viewport.Width;
         int height = GraphicsDevice.Viewport.Height;
         if (_battleFrame == null || _battleFrame.Width != width || _battleFrame.Height != height)
@@ -679,11 +823,14 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             GraphicsDevice);
 
         SpriteBatch.End();
-        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.SetRenderTargets(previous);
         GraphicsDevice.Clear(Color.Black);
         Vector2 offset = _currentState is BattleState battle ? battle.ShakeOffset : Vector2.Zero;
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
         SpriteBatch.Draw(_battleFrame, offset, Color.White);
+        if (_currentState is BattleState activeBattle && activeBattle.ScreenFlashOpacity > 0)
+            SpriteBatch.Draw(_pixel, new Rectangle(0, 0, width, height),
+                activeBattle.ScreenFlashColor * activeBattle.ScreenFlashOpacity);
         SpriteBatch.End();
     }
 
@@ -710,14 +857,15 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         }
 
         _choices.DrawSquares(SpriteBatch, _pixel);
+        DrawSavePoint();
 
         _yoko.CurrentAnimation?.Draw(
             SpriteBatch,
-            _yoko.Position);
+            PixelPosition(_yoko.Position));
 
         _kyoko.CurrentAnimation?.Draw(
             SpriteBatch,
-            _kyoko.Position);
+            PixelPosition(_kyoko.Position));
 
         SpriteBatch.End();
 
@@ -731,12 +879,16 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             TamanoVista());
 
         _overworldUI.Draw(SpriteBatch, _pixel, _earthboundHudTexture, _retroFont, _party, TamanoVista());
+        if (!_choices.IsChoosing && (_saveDialogOpen || _saveNoticeTime > 0 || !_overworldUI.IsOpen)) DrawSavePanel();
         SpriteBatch.End();
     }
 
     // =========================================
     // CÁMARA Y LÍMITES
     // =========================================
+
+    private static Vector2 PixelPosition(Vector2 position) =>
+        new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
     private Vector2 TamanoVista()
     {

@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -22,6 +22,16 @@ namespace Skies_Scattered.UI
         private static readonly Vector2[] RimOffsets = {
             new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(0, 1)
         };
+
+        internal static Vector2 GetIdleScale(Rectangle visible, float baseScale, bool floats, float time, int index)
+        {
+            if (floats) return new Vector2(baseScale);
+            float pulse = (float)Math.Sin(time * 2.5f + index * 0.7f) * 0.018f;
+            // Cambios de uno o dos píxeles, sin interpolar ni modificar los sprites.
+            float width = Math.Max(1, (float)Math.Round(visible.Width * baseScale * (1f - pulse * 0.5f)));
+            float height = Math.Max(1, (float)Math.Round(visible.Height * baseScale * (1f + pulse)));
+            return new Vector2(width / visible.Width, height / visible.Height);
+        }
 
         private Rectangle VisibleBounds(Texture2D texture)
         {
@@ -273,10 +283,13 @@ namespace Skies_Scattered.UI
                     Vector2 origin = new Vector2(
                         visible.X + visible.Width / 2f,
                         visible.Y + visible.Height / 2f);
+                    Vector2 renderScale = GetIdleScale(visible, enemyScale, enemy.Floats, _tiempo, i);
                     Vector2 drawPosition = new Vector2(
-                        (float)Math.Round(x - origin.X * enemyScale),
-                        (float)Math.Round(y - origin.Y * enemyScale));
-                    enemy.Position = drawPosition + origin * enemyScale;
+                        (float)Math.Round(x - origin.X * renderScale.X),
+                        enemy.Floats ? (float)Math.Round(y - origin.Y * renderScale.Y)
+                            : (float)Math.Round(groundY - visible.Bottom * renderScale.Y));
+                    drawPosition += enemy.ImpactOffset;
+                    enemy.Position = drawPosition + origin * renderScale;
 
                     int shadowWidth = Math.Max(24, (int)(visible.Width * enemyScale * 0.75f));
                     int shadowY = (int)groundY - 3;
@@ -285,7 +298,7 @@ namespace Skies_Scattered.UI
                     Color rim = new Color(190, 205, 230) * 0.18f;
                     foreach (var offset in RimOffsets)
                         spriteBatch.Draw(silhouette, drawPosition + offset, null, rim,
-                            0f, Vector2.Zero, enemyScale, SpriteEffects.None, 0f);
+                            0f, Vector2.Zero, renderScale, SpriteEffects.None, 0f);
 
                     spriteBatch.Draw(
                         enemy.Texture,
@@ -294,15 +307,18 @@ namespace Skies_Scattered.UI
                         Color.White,
                         0f,
                         Vector2.Zero,
-                        new Vector2(enemyScale),
+                        renderScale,
                         SpriteEffects.None,
                         0f);
                     // Destello breve sobre la silueta; el enemigo nunca desaparece.
+                    if (enemy.ImpactFlash > 0)
+                        spriteBatch.Draw(silhouette, drawPosition, null, enemy.ImpactTint * enemy.ImpactFlash,
+                            0f, Vector2.Zero, renderScale, SpriteEffects.None, 0f);
                     float pulse = _targetFlash % 0.8f;
                     if (selected && pulse < 0.12f)
                         spriteBatch.Draw(silhouette, drawPosition, null,
                             Color.White * (0.85f * (1f - pulse / 0.12f)), 0f, Vector2.Zero,
-                            new Vector2(enemyScale), SpriteEffects.None, 0f);
+                            renderScale, SpriteEffects.None, 0f);
                 }
             }
 
@@ -324,7 +340,13 @@ namespace Skies_Scattered.UI
                 CharacterStats hero = state.PartyMembers[Math.Clamp(
                     state.CurrentPartyMemberIndex, 0, state.PartyMembers.Count - 1)];
 
-                if (state.IsItemMenuOpen)
+                if (state.IsActMenuOpen)
+                {
+                    DrawFittedText(spriteBatch, "> PERDONAR", new Vector2(26, bottom + 16), menuBox.Width - 28, 24, Color.Cyan);
+                    DrawFittedText(spriteBatch, "Enemigo con 25% HP o menos", new Vector2(26, bottom + 48), menuBox.Width - 28, 20, Color.White);
+                    DrawFittedText(spriteBatch, "Z: Elegir   X: Volver", new Vector2(26, bottom + 76), menuBox.Width - 28, 18, Color.LightGray);
+                }
+                else if (state.IsItemMenuOpen)
                 {
                     DrawFittedText(spriteBatch, "ITEMS", new Vector2(26, bottom + 10),
                         menuBox.Width - 28, 18, Color.Cyan);
@@ -341,7 +363,7 @@ namespace Skies_Scattered.UI
                     {
                         string spell = hero.Spells[i];
                         Color color = i == state.SelectedSpellIndex ? Color.Cyan : Color.White;
-                        string text = (i == state.SelectedSpellIndex ? "> " : "  ") + spell;
+                        string text = (i == state.SelectedSpellIndex ? "> " : "  ") + SpellNames.Display(spell);
                         DrawFittedText(spriteBatch, text, new Vector2(26, bottom + 30 + i * 22),
                             menuBox.Width - 100, 20, color);
                         DrawFittedText(spriteBatch, $"{GetSpellCost(spell)} PP",

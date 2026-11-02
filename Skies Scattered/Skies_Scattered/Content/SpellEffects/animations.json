@@ -6,7 +6,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -14,7 +15,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -22,7 +24,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -30,7 +33,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -38,7 +42,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -46,7 +51,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -54,7 +60,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -62,7 +69,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -70,7 +78,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -78,7 +87,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -86,7 +96,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -94,7 +105,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -102,7 +114,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -110,7 +123,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -118,7 +132,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -126,7 +141,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -134,7 +150,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.045
+      "seconds": 0.045,
+      "flashColor": 4287203327
     },
     {
       "texture": "EnemyBeam-0.png",
@@ -142,7 +159,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4287203327
     }
   ],
   "FreezeOmega": [
@@ -152,7 +170,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -160,7 +179,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -168,7 +188,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -176,7 +197,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -184,7 +206,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -192,7 +215,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -200,7 +224,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -208,7 +233,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -216,7 +242,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -224,7 +251,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -232,7 +260,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -240,7 +269,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -248,7 +278,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -256,7 +287,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -264,7 +296,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -272,7 +305,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -280,7 +314,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -288,7 +323,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -296,7 +332,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -304,7 +341,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -312,7 +350,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -320,7 +359,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -328,7 +368,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -336,7 +377,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -344,7 +386,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -352,7 +395,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -360,7 +404,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -368,7 +413,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -376,7 +422,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -384,7 +431,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -392,7 +440,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-0.png",
@@ -400,7 +449,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -408,7 +458,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -416,7 +467,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -424,7 +476,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -432,7 +485,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -440,7 +494,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -448,7 +503,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -456,7 +512,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -464,7 +521,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -472,7 +530,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -480,7 +539,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -488,7 +548,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -496,7 +557,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -504,7 +566,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -512,7 +575,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -520,7 +584,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -528,7 +593,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -536,7 +602,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -544,7 +611,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -552,7 +620,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -560,7 +629,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -568,7 +638,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -576,7 +647,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -584,7 +656,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -592,7 +665,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -600,7 +674,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -608,7 +683,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -616,7 +692,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -624,7 +701,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -632,7 +710,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -640,7 +719,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -648,7 +728,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-1.png",
@@ -656,7 +737,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-2.png",
@@ -664,7 +746,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-2.png",
@@ -672,7 +755,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-2.png",
@@ -680,7 +764,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.04
+      "seconds": 0.04,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeOmega-2.png",
@@ -688,7 +773,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4294933760
     }
   ],
   "ShieldBeta": [
@@ -698,7 +784,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -706,7 +793,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -714,7 +802,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -722,7 +811,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -730,7 +820,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -738,7 +829,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -746,7 +838,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -754,7 +847,8 @@
       "y": 16,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -762,7 +856,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -770,7 +865,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -778,7 +874,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -786,7 +883,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -794,7 +892,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -802,7 +901,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -810,7 +910,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -818,7 +919,8 @@
       "y": 272,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -826,7 +928,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -834,7 +937,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -842,7 +946,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -850,7 +955,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -858,7 +964,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -866,7 +973,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -874,7 +982,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -882,7 +991,8 @@
       "y": 528,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -890,7 +1000,8 @@
       "y": 784,
       "width": 256,
       "height": 224,
-      "seconds": 0.055
+      "seconds": 0.055,
+      "flashColor": 4294901760
     },
     {
       "texture": "ShieldBeta-0.png",
@@ -898,7 +1009,8 @@
       "y": 784,
       "width": 256,
       "height": 224,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4294901760
     }
   ],
   "DefenseDownOmega": [
@@ -908,7 +1020,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -916,7 +1029,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -924,7 +1038,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -932,7 +1047,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -940,7 +1056,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -948,7 +1065,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -956,7 +1074,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -964,7 +1083,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -972,7 +1092,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -980,7 +1101,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -988,7 +1110,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -996,7 +1119,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1004,7 +1128,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1012,7 +1137,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1020,7 +1146,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1028,7 +1155,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1036,7 +1164,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1044,7 +1173,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1052,7 +1182,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1060,7 +1191,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1068,7 +1200,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1076,7 +1209,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1084,7 +1218,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1092,7 +1227,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1100,7 +1236,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1108,7 +1245,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1116,7 +1254,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1124,7 +1263,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1132,7 +1272,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1140,7 +1281,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1148,7 +1290,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-0.png",
@@ -1156,7 +1299,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1164,7 +1308,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1172,7 +1317,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1180,7 +1326,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1188,7 +1335,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1196,7 +1344,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1204,7 +1353,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1212,7 +1362,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1220,7 +1371,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1228,7 +1380,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1236,7 +1389,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1244,7 +1398,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1252,7 +1407,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1260,7 +1416,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1268,7 +1425,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1276,7 +1434,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1284,7 +1443,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1292,7 +1452,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1300,7 +1461,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1308,7 +1470,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1316,7 +1479,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1324,7 +1488,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1332,7 +1497,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1340,7 +1506,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1348,7 +1515,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1356,7 +1524,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1364,7 +1533,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1372,7 +1542,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1380,7 +1551,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1388,7 +1560,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1396,7 +1569,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1404,7 +1578,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-1.png",
@@ -1412,7 +1587,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1420,7 +1596,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1428,7 +1605,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1436,7 +1614,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1444,7 +1623,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1452,7 +1632,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1460,7 +1641,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1468,7 +1650,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1476,7 +1659,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1484,7 +1668,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1492,7 +1677,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1500,7 +1686,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1508,7 +1695,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1516,7 +1704,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.035
+      "seconds": 0.035,
+      "flashColor": 4278255554
     },
     {
       "texture": "DefenseDownOmega-2.png",
@@ -1524,7 +1713,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4278255554
     }
   ],
   "FireBeta": [
@@ -1534,7 +1724,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1542,7 +1733,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1550,7 +1742,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1558,7 +1751,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1566,7 +1760,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1574,7 +1769,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1582,7 +1778,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1590,7 +1787,8 @@
       "y": 77,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1598,7 +1796,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1606,7 +1805,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1614,7 +1814,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1622,7 +1823,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1630,7 +1832,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1638,7 +1841,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1646,7 +1850,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1654,7 +1859,8 @@
       "y": 333,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1662,7 +1868,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1670,7 +1877,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1678,7 +1886,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1686,7 +1895,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1694,7 +1904,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1702,7 +1913,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1710,7 +1922,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1718,7 +1931,8 @@
       "y": 589,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1726,7 +1940,8 @@
       "y": 845,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1734,7 +1949,8 @@
       "y": 845,
       "width": 256,
       "height": 149,
-      "seconds": 0.058
+      "seconds": 0.058,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireBeta-0.png",
@@ -1742,7 +1958,8 @@
       "y": 845,
       "width": 256,
       "height": 149,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4278190335
     }
   ],
   "FireGamma": [
@@ -1752,7 +1969,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1760,7 +1978,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1768,7 +1987,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1776,7 +1996,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1784,7 +2005,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1792,7 +2014,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1800,7 +2023,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1808,7 +2032,8 @@
       "y": 0,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1816,7 +2041,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1824,7 +2050,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1832,7 +2059,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1840,7 +2068,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1848,7 +2077,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1856,7 +2086,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1864,7 +2095,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1872,7 +2104,8 @@
       "y": 256,
       "width": 256,
       "height": 224,
-      "seconds": 0.094
+      "seconds": 0.094,
+      "flashColor": 4278190335
     },
     {
       "texture": "FireGamma-0.png",
@@ -1880,7 +2113,8 @@
       "y": 512,
       "width": 256,
       "height": 224,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4278190335
     }
   ],
   "FreezeAlpha": [
@@ -1890,7 +2124,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.15
+      "seconds": 0.15,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1898,7 +2133,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1906,7 +2142,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1914,7 +2151,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1922,7 +2160,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1930,7 +2169,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1938,7 +2178,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1946,7 +2187,8 @@
       "y": 0,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1954,7 +2196,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1962,7 +2205,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1970,7 +2214,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1978,7 +2223,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1986,7 +2232,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -1994,7 +2241,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2002,7 +2250,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2010,7 +2259,8 @@
       "y": 256,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2018,7 +2268,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2026,7 +2277,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2034,7 +2286,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2042,7 +2295,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2050,7 +2304,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2058,7 +2313,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2066,7 +2322,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2074,7 +2331,8 @@
       "y": 512,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2082,7 +2340,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2090,7 +2349,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2098,7 +2358,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.06
+      "seconds": 0.06,
+      "flashColor": 4294933760
     },
     {
       "texture": "FreezeAlpha-0.png",
@@ -2106,7 +2367,8 @@
       "y": 768,
       "width": 256,
       "height": 256,
-      "seconds": 0.12
+      "seconds": 0.12,
+      "flashColor": 4294933760
     }
   ]
 }

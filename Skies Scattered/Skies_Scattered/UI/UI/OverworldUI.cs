@@ -13,6 +13,7 @@ public class OverworldUI
     private int _heroIndex;
     private int _option = 1;
     private bool _details;
+    public event Action OnSaveRequested;
 
     public void Toggle()
     {
@@ -42,11 +43,18 @@ public class OverworldUI
         CharacterStats hero = party[_heroIndex];
         if (!_details)
         {
-            if (Input.IsKeyPressed(Keys.Up) || Input.IsKeyPressed(Keys.Down))
-                _option = hero.Items.Count == 0 ? 1 : 1 - _option;
-            if (hero.Items.Count == 0) _option = 1;
-            if (Input.IsKeyPressed(Keys.Z) && (_option == 1 || hero.Items.Count > 0))
-                _details = true;
+            int direction = Input.IsKeyPressed(Keys.Up) ? -1 : Input.IsKeyPressed(Keys.Down) ? 1 : 0;
+            if (direction != 0)
+            {
+                do { _option = (_option + direction + 3) % 3; }
+                while (_option == 0 && hero.Items.Count == 0);
+            }
+            if (_option == 0 && hero.Items.Count == 0) _option = 1;
+            if (Input.IsKeyPressed(Keys.Z))
+            {
+                if (_option == 2) OnSaveRequested?.Invoke();
+                else if (_option == 1 || hero.Items.Count > 0) _details = true;
+            }
         }
     }
 
@@ -75,7 +83,7 @@ public class OverworldUI
         int x = ((int)screen.X - 576) / 2;
         int y = ((int)screen.Y - 392) / 2;
         Rectangle summary = new Rectangle(x, y, 164, 150);
-        Rectangle actions = new Rectangle(x, y + 162, 164, 120);
+        Rectangle actions = new Rectangle(x, y + 162, 164, 156);
         Rectangle detail = new Rectangle(x + 180, y, 396, 352);
         Box(batch, pixel, hud, summary);
         Box(batch, pixel, hud, actions);
@@ -85,11 +93,14 @@ public class OverworldUI
         Text(batch, font, $"PP {hero.PP}/{hero.MaxPP}", new Vector2(x + 14, y + 98), 136, 25, Color.White);
         bool itemsEnabled = hero.Items.Count > 0;
         Text(batch, font, (_option == 0 ? "> " : "  ") + "ITEM",
-            new Vector2(x + 18, actions.Y + 22), 130, 28,
+            new Vector2(x + 18, actions.Y + 18), 130, 28,
             itemsEnabled ? (_option == 0 ? Color.Cyan : Color.White) : Color.Gray);
         Text(batch, font, (_option == 1 ? "> " : "  ") + "STAT",
-            new Vector2(x + 18, actions.Y + 68), 130, 28,
+            new Vector2(x + 18, actions.Y + 62), 130, 28,
             _option == 1 ? Color.Cyan : Color.White);
+        Text(batch, font, (_option == 2 ? "> " : "  ") + "GUARDAR",
+            new Vector2(x + 18, actions.Y + 106), 130, 28,
+            _option == 2 ? Color.Cyan : Color.White);
 
         Text(batch, font, "C: Cerrar   X: Volver   Z: Abrir   Izq / Der: Personaje",
             new Vector2(x, y + 368), 576, 24, Color.White);
@@ -113,11 +124,11 @@ public class OverworldUI
         {
             Text(batch, font, $"HP {hero.HP} / {hero.MaxHP}    PP {hero.PP} / {hero.MaxPP}",
                 new Vector2(dx, y + 70), 356, 26, Color.White);
-            Text(batch, font, $"AP {hero.AP}     CT {hero.CT}",
+            Text(batch, font, $"Attack Power {hero.AP}   Concentration {hero.CT}",
                 new Vector2(dx, y + 116), 356, 28, Color.White);
             Text(batch, font, "HECHIZOS", new Vector2(dx, y + 170), 356, 25, Color.Cyan);
             for (int i = 0; i < Math.Min(hero.Spells.Count, 4); i++)
-                Text(batch, font, hero.Spells[i], new Vector2(dx, y + 207 + i * 30), 356, 26, Color.White);
+                Text(batch, font, SpellNames.Display(hero.Spells[i]), new Vector2(dx, y + 207 + i * 30), 356, 26, Color.White);
         }
     }
 }

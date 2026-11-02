@@ -33,6 +33,7 @@ namespace Skies_Scattered.UI
         public bool IsSelectingTarget { get; set; } = false;
 
         public bool IsItemMenuOpen { get; set; } = false;
+        public bool IsActMenuOpen { get; set; }
 
         public bool IsSpellMenuOpen { get; set; } = false;
 
@@ -54,6 +55,8 @@ namespace Skies_Scattered.UI
         public int AP { get; set; }
 
         public int CT { get; set; }
+        public int EnemiesDefeated { get; set; }
+        public int EnemiesSpared { get; set; }
 
         public int PP { get; set; }
 

@@ -12,14 +12,17 @@ public class GameOverState : IGameState
     private readonly SpriteFont _font;
     private readonly Texture2D _hud;
     private readonly Texture2D _pixel;
+    private readonly bool _hasSave;
+    public string StatusMessage { get; set; } = "Yoko y Kyoko han caído.";
     public event Action OnRetry;
     public event Action OnMainMenu;
 
-    public GameOverState(SpriteFont font, Texture2D hud, Texture2D pixel)
+    public GameOverState(SpriteFont font, Texture2D hud, Texture2D pixel, bool hasSave = false)
     {
         _font = font;
         _hud = hud;
         _pixel = pixel;
+        _hasSave = hasSave;
     }
 
     public void Initialize() { }
@@ -38,8 +41,8 @@ public class GameOverState : IGameState
             (graphics.Viewport.Height - 190) / 2, width, 190);
         EarthboundBox.Draw(batch, _hud, _pixel, box);
         Center(batch, "GAME OVER", box, 25, Color.IndianRed);
-        Center(batch, "Yoko y Kyoko han caído.", box, 65, Color.White);
-        Center(batch, "Z: Reiniciar partida", box, 112, Color.White);
+        Center(batch, StatusMessage, box, 65, Color.White);
+        Center(batch, _hasSave ? "Z: Continuar desde el guardado" : "Z: Reiniciar partida", box, 112, Color.White);
         Center(batch, "Escape: Volver al menú", box, 144, Color.LightGray);
     }
 

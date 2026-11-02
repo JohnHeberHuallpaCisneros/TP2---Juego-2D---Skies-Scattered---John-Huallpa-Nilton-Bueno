@@ -11,7 +11,22 @@ public class Player
 {
     public Vector2 Position { get; set; }
 
-    public float Speed { get; set; } = 3f;
+    // Píxeles por tick de referencia de 60 Hz: 2 equivale a 120 px/segundo.
+    public float Speed { get; set; } = 2f;
+    public bool AllowArrowKeys { get; set; }
+    private float _walkingPixelsPerFrame = 32f;
+    private float _walkingDistance;
+    private int _walkingFrame;
+    // Dos casillas de 16x16 por cambio de pose; independiente de los FPS.
+    public float WalkingPixelsPerFrame
+    {
+        get => _walkingPixelsPerFrame;
+        set
+        {
+            if (!float.IsFinite(value) || value <= 0f) throw new ArgumentOutOfRangeException(nameof(value));
+            _walkingPixelsPerFrame = value;
+        }
+    }
 
     public AnimatedSprite CurrentAnimation { get; set; }
 
@@ -32,7 +47,6 @@ public class Player
     private readonly Keys _keyLeft;
     private readonly Keys _keyRight;
 
-    private AnimatedSprite _ultimaAnimacion;
     private bool _estabaMoviendose;
 
     public Player(
@@ -58,16 +72,16 @@ public class Player
     {
         Vector2 direccion = Vector2.Zero;
 
-        if (Input.IsKeyDown(_keyUp))
+        if (Input.IsKeyDown(_keyUp) || AllowArrowKeys && Input.IsKeyDown(Keys.Up))
             direccion.Y -= 1;
 
-        if (Input.IsKeyDown(_keyDown))
+        if (Input.IsKeyDown(_keyDown) || AllowArrowKeys && Input.IsKeyDown(Keys.Down))
             direccion.Y += 1;
 
-        if (Input.IsKeyDown(_keyLeft))
+        if (Input.IsKeyDown(_keyLeft) || AllowArrowKeys && Input.IsKeyDown(Keys.Left))
             direccion.X -= 1;
 
-        if (Input.IsKeyDown(_keyRight))
+        if (Input.IsKeyDown(_keyRight) || AllowArrowKeys && Input.IsKeyDown(Keys.Right))
             direccion.X += 1;
 
         if (direccion == Vector2.Zero)
@@ -80,9 +94,10 @@ public class Player
 
         SeleccionarAnimacion(direccion);
 
-        Position += direccion * Speed;
+        float distance = Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Position += direccion * distance;
 
-        ActualizarAnimacion(gameTime);
+        ActualizarAnimacion(distance);
     }
 
     // =========================================
@@ -109,9 +124,10 @@ public void Seguir(Vector2 objetivo, GameTime gameTime)
     // Movimiento basado en segundos.
     float velocidad = Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-    Position += direccion * velocidad;
+    float distance = Math.Min(velocidad, distancia - 48f);
+    Position += direccion * distance;
 
-    ActualizarAnimacion(gameTime);
+    ActualizarAnimacion(distance);
 }
 
     // =========================================
@@ -156,27 +172,34 @@ public void Seguir(Vector2 objetivo, GameTime gameTime)
     // ACTUALIZACIÓN DE LA ANIMACIÓN
     // =========================================
 
-    private void ActualizarAnimacion(GameTime gameTime)
+    private void ActualizarAnimacion(float distance)
     {
         if (CurrentAnimation == null)
             return;
 
-        // Reiniciar solamente cuando comienza una animación diferente
-        // o cuando el personaje vuelve a caminar.
-        if (CurrentAnimation != _ultimaAnimacion ||
-            !_estabaMoviendose)
+        if (!_estabaMoviendose)
         {
-            CurrentAnimation.Reset();
-            _ultimaAnimacion = CurrentAnimation;
+            _walkingDistance = 0f;
+            _walkingFrame = 0;
         }
-
-        CurrentAnimation.Update(gameTime);
+        _walkingDistance += Math.Max(0, distance);
+        var frames = CurrentAnimation.Animation.Frames;
+        while (_walkingDistance >= WalkingPixelsPerFrame)
+        {
+            _walkingDistance -= WalkingPixelsPerFrame;
+            _walkingFrame = (_walkingFrame + 1) % frames.Count;
+        }
+        // Conservar la fase del paso al cambiar de dirección evita el parpadeo de pies.
+        CurrentAnimation.Region = frames[_walkingFrame % frames.Count];
 
         _estabaMoviendose = true;
     }
 
     private void DetenerAnimacion()
     {
+        if (_estabaMoviendose) CurrentAnimation?.Reset();
+        _walkingDistance = 0f;
+        _walkingFrame = 0;
         _estabaMoviendose = false;
     }
 }

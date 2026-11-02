@@ -18,6 +18,7 @@ public sealed class SpellEffectLibrary : IDisposable
         public int Width { get; set; }
         public int Height { get; set; }
         public float Seconds { get; set; }
+        public uint FlashColor { get; set; } = 0xffffffff;
     }
 
     private readonly Dictionary<string, List<Frame>> _animations;
@@ -54,6 +55,7 @@ public sealed class SpellEffectLibrary : IDisposable
     }
 
     internal List<Frame> GetFrames(string name) => _animations[name];
+    internal Color GetFlashColor(string name) => new Color(_animations[name][0].FlashColor);
     internal Texture2D GetTexture(string name) => _textures[name];
 
     public void Dispose()
@@ -69,6 +71,7 @@ public sealed class SpellEffectPlayer
     private List<SpellEffectLibrary.Frame> _frames;
     private int _index;
     private float _elapsed;
+    private float _animationRate = 1f;
     public bool IsPlaying => _frames != null && _index < _frames.Count;
     public float Opacity { get; set; } = 0.70f;
     private float _playbackSpeed = 1.25f;
@@ -88,6 +91,7 @@ public sealed class SpellEffectPlayer
     public void Play(string name)
     {
         _frames = _library.GetFrames(name);
+        _animationRate = name == "EnemyBeam" ? 0.8f : 1f;
         _index = 0;
         _elapsed = 0;
     }
@@ -102,7 +106,7 @@ public sealed class SpellEffectPlayer
     public void Update(float seconds)
     {
         if (!IsPlaying) return;
-        _elapsed += seconds * PlaybackSpeed;
+        _elapsed += seconds * PlaybackSpeed * _animationRate;
         while (IsPlaying && _elapsed >= _frames[_index].Seconds)
         {
             _elapsed -= _frames[_index].Seconds;

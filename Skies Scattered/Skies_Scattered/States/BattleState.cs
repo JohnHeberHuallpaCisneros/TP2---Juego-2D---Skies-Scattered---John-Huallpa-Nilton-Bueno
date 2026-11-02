@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -8,6 +8,7 @@ using MonoGameLibrary;
 using Skies_Scattered.Entities;
 using Skies_Scattered.UI;
 using Skies_Scattered.Graphics;
+using Skies_Scattered.Mechanics;
 
 namespace Skies_Scattered.States
 {
@@ -18,8 +19,14 @@ namespace Skies_Scattered.States
         private List<Enemy> _currentBattleEnemies;
         private Random _random;
         private readonly SpellEffectPlayer _spellEffect;
+        private readonly SpellEffectLibrary _effectLibrary;
+        private float _flashRemaining, _flashStrength;
+        private const float FlashDuration = 0.22f;
+        public Color ScreenFlashColor { get; private set; } = Color.White;
+        public float ScreenFlashOpacity => _flashStrength * MathHelper.Clamp(_flashRemaining / FlashDuration, 0, 1);
         private Action _afterSpell;
         private Enemy _effectTarget;
+        private readonly ZoneProgress _zone;
         private readonly BattleShake _screenShake = new BattleShake();
         public Vector2 ShakeOffset => _screenShake.Offset;
 
@@ -32,6 +39,7 @@ namespace Skies_Scattered.States
             SpellSelection,
             SpellAnimation,
             ItemsSelection,
+            ActSelection,
             SelectingTarget,
             PlayerActionResult,
             EnemyTurn,
@@ -41,6 +49,7 @@ namespace Skies_Scattered.States
         private enum PendingAction
         {
             BasicAttack,
+            Spare,
             FireBeta,
             FireGamma,
             FreezeAlpha,
@@ -86,8 +95,11 @@ namespace Skies_Scattered.States
             Texture2D earthboundHud,
             List<EnemyTemplate> enemyTemplates,
             List<CharacterStats> partyMembers,
-            SpellEffectLibrary spellEffects = null)
+            SpellEffectLibrary spellEffects = null,
+            ZoneProgress zone = null)
         {
+            _zone = zone ?? new ZoneProgress();
+            _effectLibrary = spellEffects;
             if (spellEffects != null) _spellEffect = new SpellEffectPlayer(spellEffects);
             _battleUI = new BattleUI(font, uiBorders, earthboundHud);
             _random = new Random();
@@ -100,7 +112,7 @@ namespace Skies_Scattered.States
                     nameof(enemyTemplates));
             }
 
-            int cantidad = _random.Next(1, 4);
+            int cantidad = Math.Min(_random.Next(1, 4), _zone.RemainingEnemies);
             float startX = 200f;
 
             for (int i = 0; i < cantidad; i++)
@@ -142,6 +154,7 @@ namespace Skies_Scattered.States
                 IsSelectingTarget = false,
                 IsSpellMenuOpen = false
             };
+            if (_currentBattleEnemies.Count == 0) _currentPhase = BattlePhase.BattleEnded;
         }
 
         // Se crea una vez por partida; cada batalla comparte estas estadísticas.
@@ -187,6 +200,7 @@ namespace Skies_Scattered.States
 
         private string BuildEnemyIntroMessage()
         {
+            if (_currentBattleEnemies.Count == 0) return "No quedan enemigos en esta zona.";
             if (_currentBattleEnemies.Count == 1)
                 return $"¡Apareció {_currentBattleEnemies[0].Name}!";
 
@@ -206,6 +220,8 @@ namespace Skies_Scattered.States
             float dt =
                 (float)gameTime.ElapsedGameTime.TotalSeconds;
             _screenShake.Update(dt);
+            _flashRemaining = Math.Max(0, _flashRemaining - dt);
+            foreach (var enemy in _currentBattleEnemies) enemy.UpdateImpact(dt);
             _battleState.Message.Update(dt);
             if (Input.IsKeyPressed(Keys.Z) && !_battleState.Message.IsComplete)
             {
@@ -229,6 +245,16 @@ namespace Skies_Scattered.States
 
                 case BattlePhase.SpellSelection:
                     UpdateSpellSelection();
+                    break;
+
+                case BattlePhase.ActSelection:
+                    if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back))
+                        ReturnToActionMenu();
+                    else if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
+                    {
+                        _pendingAction = PendingAction.Spare;
+                        OpenTargetSelection();
+                    }
                     break;
 
                 case BattlePhase.SpellAnimation:
@@ -313,6 +339,7 @@ namespace Skies_Scattered.States
 
             _battleState.IsSelectingTarget = false;
             _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
             _battleState.IsActionMenuOpen = true;
 
             _battleState.TopMessage =
@@ -367,12 +394,6 @@ namespace Skies_Scattered.States
                         _battleState.SelectedOptionIndex + 2);
             }
 
-            if (Input.IsKeyPressed(Keys.Back))
-            {
-                EndBattle("La batalla terminó.");
-                return;
-            }
-
             if (Input.IsKeyPressed(Keys.Z) ||
                 Input.IsKeyPressed(Keys.Enter) ||
                 Input.IsKeyPressed(Keys.Space))
@@ -397,10 +418,7 @@ namespace Skies_Scattered.States
                         break;
 
                     case "ACT":
-                        _battleState.TopMessage =
-                            $"{CurrentHero.Name} intentó ACT.";
-
-                        FinishPlayerAction();
+                        OpenActMenu();
                         break;
 
                     case "DEFEND":
@@ -424,6 +442,49 @@ namespace Skies_Scattered.States
                             "¡El grupo escapó de la batalla!");
                         break;
                 }
+            }
+        }
+
+        private void OpenActMenu()
+        {
+            _battleState.IsActionMenuOpen = false;
+            _battleState.IsActMenuOpen = true;
+            _battleState.TopMessage = "PERDONAR: el enemigo debe tener 25% de HP o menos.";
+            _currentPhase = BattlePhase.ActSelection;
+        }
+
+        private void TrySpare(Enemy target)
+        {
+            if (!CombatRules.CanSpare(target))
+            {
+                _battleState.TopMessage = $"{target.Name} aún no está listo para ser perdonado.";
+                FinishPlayerAction();
+                return;
+            }
+            bool gained = _zone.RecordSpare(CurrentHero);
+            _currentBattleEnemies.Remove(target);
+            _defenseDownEnemies.Remove(target);
+            _battleState.SelectedEnemyIndex = 0;
+            if (_currentBattleEnemies.Count == 0)
+                EndBattle($"¡{CurrentHero.Name} perdonó a {target.Name}! La batalla terminó.");
+            else
+            {
+                _battleState.TopMessage = $"¡{CurrentHero.Name} perdonó a {target.Name}!" + (gained ? " CT +1" : "");
+                FinishPlayerAction();
+            }
+        }
+
+        private void DamageEnemy(Enemy target, int power)
+        {
+            if (target.HP <= 0) return;
+            int damage = CombatRules.DamageToEnemy(power, target, _defenseDownEnemies.Contains(target));
+            target.HP = Math.Max(0, target.HP - damage);
+            string attack = _pendingAction == PendingAction.BasicAttack ? "BasicAttack" : GetSpellName(_pendingAction);
+            TriggerAttackFeedback(attack);
+            target.TriggerImpact(damage, ScreenFlashColor);
+            if (target.HP == 0)
+            {
+                _zone.RecordDefeat(CurrentHero);
             }
         }
 
@@ -482,7 +543,7 @@ namespace Skies_Scattered.States
                 if (CurrentHero.PP < cost)
                 {
                     _battleState.TopMessage =
-                        $"¡No hay suficientes PP para {spell}!";
+                        $"¡No hay suficientes PP para {SpellNames.Display(spell)}!";
 
                     return;
                 }
@@ -567,6 +628,7 @@ namespace Skies_Scattered.States
         {
             _battleState.IsActionMenuOpen = false;
             _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
             _battleState.IsSelectingTarget = true;
             _battleState.SelectedEnemyIndex = 0;
 
@@ -602,15 +664,20 @@ namespace Skies_Scattered.States
             Enemy target = _currentBattleEnemies[
                 _battleState.SelectedEnemyIndex];
 
-            _battleState.TopMessage =
-                $"¿A quién atacará {CurrentHero.Name}? {target.Name}";
+            _battleState.TopMessage = _pendingAction == PendingAction.Spare
+                ? $"¿A quién perdonará {CurrentHero.Name}? {target.Name}" + (CombatRules.CanSpare(target) ? " - Listo" : " - Aún no")
+                : $"¿A quién atacará {CurrentHero.Name}? {target.Name}";
 
             if (Input.IsKeyPressed(Keys.X) ||
                 Input.IsKeyPressed(Keys.Back))
             {
                 _battleState.IsSelectingTarget = false;
 
-                if (CurrentHero.Spells.Contains(
+                if (_pendingAction == PendingAction.Spare)
+                {
+                    OpenActMenu();
+                }
+                else if (CurrentHero.Spells.Contains(
                     GetSpellName(_pendingAction)))
                 {
                     _battleState.IsSpellMenuOpen = true;
@@ -663,7 +730,7 @@ namespace Skies_Scattered.States
 
             if (_pendingAction == PendingAction.BasicAttack)
             {
-                damage = 10;
+                damage = CombatRules.BasicPower(CurrentHero);
             }
             else
             {
@@ -683,30 +750,32 @@ namespace Skies_Scattered.States
                 switch (_pendingAction)
                 {
                     case PendingAction.FireBeta:
-                        damage = 15;
+                        damage = CombatRules.SpellPower(CurrentHero, 15);
                         break;
 
                     case PendingAction.FireGamma:
-                        damage = 25;
+                        damage = CombatRules.SpellPower(CurrentHero, 25);
                         break;
 
                     case PendingAction.FreezeAlpha:
-                        damage = 15;
+                        damage = CombatRules.SpellPower(CurrentHero, 15);
                         break;
 
                     case PendingAction.FreezeOmega:
-                        damage = 25;
+                        damage = CombatRules.SpellPower(CurrentHero, 25);
                         break;
 
                     case PendingAction.DefenseDownOmega:
                         _defenseDownEnemies.Add(target);
+                        TriggerAttackFeedback("DefenseDownOmega");
+                        target.TriggerImpact(0, ScreenFlashColor);
                         _battleState.TopMessage =
                             $"¡La defensa de {target.Name} disminuyó!";
                         FinishPlayerAction();
                         return;
 
                     default:
-                        damage = 10;
+                        damage = CombatRules.BasicPower(CurrentHero);
                         break;
                 }
             }
@@ -714,7 +783,7 @@ namespace Skies_Scattered.States
             if (_pendingAction == PendingAction.FireBeta || _pendingAction == PendingAction.FireGamma)
             {
                 foreach (var enemy in _currentBattleEnemies)
-                    enemy.HP = Math.Max(0, enemy.HP - damage);
+                    DamageEnemy(enemy, damage);
                 _currentBattleEnemies.RemoveAll(enemy => enemy.HP <= 0);
                 _defenseDownEnemies.RemoveWhere(enemy => enemy.HP <= 0);
                 _battleState.SelectedEnemyIndex = 0;
@@ -722,13 +791,13 @@ namespace Skies_Scattered.States
                     EndBattle("¡Todos los enemigos han sido derrotados!");
                 else
                 {
-                    _battleState.TopMessage = $"¡{CurrentHero.Name} usó {spell} contra todos los enemigos!";
+                    _battleState.TopMessage = $"¡{CurrentHero.Name} usó {SpellNames.Display(spell)} contra todos los enemigos!";
                     FinishPlayerAction();
                 }
                 return;
             }
 
-            target.HP = Math.Max(0, target.HP - damage);
+            DamageEnemy(target, damage);
 
             if (target.HP <= 0)
             {
@@ -755,7 +824,7 @@ namespace Skies_Scattered.States
             else
             {
                 _battleState.TopMessage =
-                    $"¡{CurrentHero.Name} usó {spell}!";
+                    $"¡{CurrentHero.Name} usó {SpellNames.Display(spell)}!";
             }
 
             FinishPlayerAction();
@@ -763,9 +832,13 @@ namespace Skies_Scattered.States
 
         private void AnimateSelectedAction(Enemy target)
         {
+            if (_pendingAction == PendingAction.Spare)
+            {
+                TrySpare(target);
+                return;
+            }
             if (_pendingAction == PendingAction.BasicAttack)
             {
-                _screenShake.Trigger("BasicAttack");
                 ExecuteSelectedAction(target);
                 return;
             }
@@ -776,28 +849,49 @@ namespace Skies_Scattered.States
                 _battleState.TopMessage = "¡No hay suficientes PP!";
                 return;
             }
-            _battleState.TopMessage = $"¡{CurrentHero.Name} usó {spell}!";
+            _battleState.TopMessage = $"¡{CurrentHero.Name} usó {SpellNames.Display(spell)}!";
             bool affectsAll = _pendingAction == PendingAction.FireBeta || _pendingAction == PendingAction.FireGamma;
             StartSpellAnimation(spell, () => ExecuteSelectedAction(target), affectsAll ? null : target);
         }
 
         private void StartSpellAnimation(string spell, Action resolve, Enemy effectTarget = null)
         {
-            _screenShake.Trigger(spell, 0.15f);
-            if (_spellEffect == null) { resolve(); return; }
+            Action finish = () =>
+            {
+                if (spell == "ShieldBeta") TriggerAttackFeedback(spell);
+                resolve();
+            };
+            if (_spellEffect == null) { finish(); return; }
             _battleState.IsActionMenuOpen = false;
             _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
             _battleState.IsSelectingTarget = false;
             _spellEffect.Play(spell);
             _effectTarget = effectTarget;
-            _afterSpell = resolve;
+            _afterSpell = finish;
             _currentPhase = BattlePhase.SpellAnimation;
+        }
+
+        private void TriggerAttackFeedback(string attack)
+        {
+            _screenShake.Trigger(attack);
+            ScreenFlashColor = attack == "BasicAttack" || _effectLibrary == null
+                ? new Color(255, 245, 220) : _effectLibrary.GetFlashColor(attack);
+            _flashStrength = attack switch
+            {
+                "FireGamma" => 0.16f, "FireBeta" => 0.13f,
+                "FreezeOmega" => 0.13f, "FreezeAlpha" => 0.10f,
+                "EnemyBeam" => 0.12f, "ShieldBeta" => 0.08f,
+                "DefenseDownOmega" => 0.09f, _ => 0.06f
+            };
+            _flashRemaining = FlashDuration;
         }
 
         private void ReturnToActionMenu()
         {
             _spellEffect?.Stop();
             _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
             _battleState.IsSelectingTarget = false;
             _battleState.IsActionMenuOpen = true;
             _battleState.SelectedOptionIndex = 0;
@@ -811,6 +905,7 @@ namespace Skies_Scattered.States
         {
             _battleState.IsActionMenuOpen = false;
             _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
             _battleState.IsSelectingTarget = false;
 
             _timer = 0f;
@@ -834,6 +929,7 @@ namespace Skies_Scattered.States
                 _battleState.SelectedOptionIndex = 0;
                 _battleState.IsActionMenuOpen = true;
                 _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
                 _battleState.IsSelectingTarget = false;
 
                 _battleState.TopMessage =
@@ -878,17 +974,12 @@ namespace Skies_Scattered.States
 
                 int damage = _random.Next(5, 12);
 
-                // DefenseDownOmega aumenta el daño recibido por el enemigo
-                // en el siguiente ataque de ese enemigo.
-                if (_defenseDownEnemies.Contains(enemy))
-                    damage += 0;
-
-                if (_defending.Contains(target))
-                    damage = Math.Max(1, damage / 2);
+                damage = CombatRules.DamageToHero(damage, target, _defending.Contains(target));
 
                 _battleState.TopMessage = $"¡{enemy.Name} ataca a {target.Name}!";
                 StartSpellAnimation("EnemyBeam", () =>
                 {
+                    TriggerAttackFeedback("EnemyBeam");
                     target.HP = Math.Max(0, target.HP - damage);
                     _battleState.TopMessage = $"¡{enemy.Name} atacó a {target.Name} y le hizo {damage} de daño!";
                     _timer = 0f;
@@ -910,6 +1001,7 @@ namespace Skies_Scattered.States
             _battleState.TopMessage = message;
             _battleState.IsActionMenuOpen = false;
             _battleState.IsSpellMenuOpen = false;
+            _battleState.IsActMenuOpen = false;
             _battleState.IsSelectingTarget = false;
 
             _currentPhase = BattlePhase.BattleEnded;

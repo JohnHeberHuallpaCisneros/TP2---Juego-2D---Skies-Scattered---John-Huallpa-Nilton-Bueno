@@ -12,16 +12,21 @@ public class MainMenuState : IGameState
     private readonly SpriteFont _font;
     private readonly Texture2D _hudTexture;
     private Texture2D _pixel;
-    private readonly List<string> _options = new List<string> { "Jugar", "Salir" };
+    private readonly List<string> _options = new List<string> { "Nueva partida", "Continuar", "Salir" };
+    private readonly Func<bool> _canContinue;
+    public string StatusMessage { get; set; } = "";
     private int _selected = 0;
 
     public event Action OnStartGame;
     public event Action OnExitGame;
+    public event Action OnContinueGame;
 
-    public MainMenuState(SpriteFont font, Texture2D hudTexture)
+    public MainMenuState(SpriteFont font, Texture2D hudTexture, Func<bool> canContinue = null)
     {
         _font = font;
         _hudTexture = hudTexture;
+        _canContinue = canContinue ?? (() => false);
+        _selected = _canContinue() ? 1 : 0;
     }
 
     public void Initialize() { }
@@ -39,7 +44,8 @@ public class MainMenuState : IGameState
         {
             switch (_options[_selected])
             {
-                case "Jugar": OnStartGame?.Invoke(); break;
+                case "Nueva partida": StatusMessage = ""; OnStartGame?.Invoke(); break;
+                case "Continuar": if (_canContinue()) { StatusMessage = ""; OnContinueGame?.Invoke(); } break;
                 case "Salir": OnExitGame?.Invoke(); break;
             }
         }
@@ -88,8 +94,10 @@ public class MainMenuState : IGameState
                                       box.Y + (box.Height - size.Y) / 2f);
 
         spriteBatch.DrawString(_font, text, textPos,
-            isSelected ? Color.Cyan : Color.White,
+            _options[i] == "Continuar" && !_canContinue() ? Color.Gray : isSelected ? Color.Cyan : Color.White,
             0f, Vector2.Zero, textScale, SpriteEffects.None, 0f);
     }
+    if (!string.IsNullOrEmpty(StatusMessage))
+        spriteBatch.DrawString(_font, StatusMessage, new Vector2(16, h - 22), Color.IndianRed);
 }
 }

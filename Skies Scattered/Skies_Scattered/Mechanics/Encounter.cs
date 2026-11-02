@@ -4,24 +4,53 @@ namespace Skies_Scattered.Mechanics;
 
 public class Encounter
 {
-    private readonly Random _rng = new Random();
-    private float _distanciaAcumulada = 0f;
-    private int _pasosRestantes = 0;
+    private readonly Random _rng;
+    private float _distanciaAcumulada;
+    private int _pasosRecorridos;
+    private int _tiradasFallidas;
+    private float _pixelesPorPaso = 32f;
+    private int _pasosSeguros = 15;
+    private float _probabilidadInicial = 0.03f;
+    private float _incrementoPorPaso = 0.005f;
+    private float _probabilidadMaxima = 0.20f;
     
-    public float PixelesPorPaso { get; set; } = 32f;
+    public float PixelesPorPaso
+    {
+        get => _pixelesPorPaso;
+        set { if (!float.IsFinite(value) || value <= 0) throw new ArgumentOutOfRangeException(nameof(value)); _pixelesPorPaso = value; }
+    }
+    public int PasosSeguros
+    {
+        get => _pasosSeguros;
+        set { if (value < 0) throw new ArgumentOutOfRangeException(nameof(value)); _pasosSeguros = value; }
+    }
+    public float ProbabilidadInicial
+    {
+        get => _probabilidadInicial;
+        set { ValidateProbability(value); _probabilidadInicial = value; }
+    }
+    public float IncrementoPorPaso
+    {
+        get => _incrementoPorPaso;
+        set { ValidateProbability(value); _incrementoPorPaso = value; }
+    }
+    public float ProbabilidadMaxima
+    {
+        get => _probabilidadMaxima;
+        set { ValidateProbability(value); _probabilidadMaxima = value; }
+    }
     public bool Activo { get; private set; } = false;
 
-    // Propiedad pública para ver los pasos restantes en la ventana (ideal para depurar)
-    public int PasosRestantes => _pasosRestantes;
+    public int PasosSegurosRestantes => Math.Max(0, PasosSeguros - _pasosRecorridos);
+    // Probabilidad de la próxima tirada; no hay un número fijo de pasos hasta pelear.
+    public float ProbabilidadActual => PasosSegurosRestantes > 0 ? 0f :
+        Math.Min(ProbabilidadMaxima, ProbabilidadInicial + _tiradasFallidas * IncrementoPorPaso);
 
-    public Encounter()
-    {
-        GenerarNuevosPasosObjetivo();
-    }
+    public Encounter(Random random = null) { _rng = random ?? new Random(); }
 
-    public void Update(float distanciaRecorrida)
+    public void Update(float distanciaRecorrida, bool encountersAllowed = true)
     {
-        if (Activo || distanciaRecorrida <= 0f)
+        if (!encountersAllowed || Activo || !float.IsFinite(distanciaRecorrida) || distanciaRecorrida <= 0f)
             return;
 
         _distanciaAcumulada += distanciaRecorrida;
@@ -29,26 +58,32 @@ public class Encounter
         while (_distanciaAcumulada >= PixelesPorPaso)
         {
             _distanciaAcumulada -= PixelesPorPaso;
-            _pasosRestantes--;
-
-            if (_pasosRestantes <= 0)
+            if (PasosSegurosRestantes > 0)
+            {
+                _pasosRecorridos++;
+                continue;
+            }
+            // Una sola tirada por paso real, independientemente de los FPS.
+            if (_rng.NextDouble() < ProbabilidadActual)
             {
                 Activo = true;
+                _distanciaAcumulada = 0f;
                 break;
             }
+            if (_tiradasFallidas < int.MaxValue) _tiradasFallidas++;
         }
-    }
-
-    private void GenerarNuevosPasosObjetivo()
-    {
-        // Rango de pasos más largo (ej. entre 25 y 45 pasos)
-        _pasosRestantes = _rng.Next(25, 46);
     }
 
     public void Reiniciar()
     {
         Activo = false;
         _distanciaAcumulada = 0f;
-        GenerarNuevosPasosObjetivo();
+        _pasosRecorridos = 0;
+        _tiradasFallidas = 0;
+    }
+
+    private static void ValidateProbability(float value)
+    {
+        if (!float.IsFinite(value) || value < 0 || value > 1) throw new ArgumentOutOfRangeException(nameof(value));
     }
 }

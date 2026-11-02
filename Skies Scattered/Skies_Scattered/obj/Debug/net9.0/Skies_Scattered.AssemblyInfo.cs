@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Skies_Scattered")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+647f52f2c16932556a0397a7aa64c3effa1481c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5ed097e02fab7c0911148ae9e9a0e4173bf51b3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Skies_Scattered")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Skies_Scattered")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -335,3 +335,4 @@ C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Hual
 C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\FreezeOmega-2.png
 C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\ShieldBeta-0.png
 C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Maps\EarthboundMapLilliputSteps2x.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\CrtFilter.xnb

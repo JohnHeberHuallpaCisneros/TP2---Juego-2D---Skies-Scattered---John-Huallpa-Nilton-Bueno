@@ -8,6 +8,32 @@ namespace Skies_Scattered.Mechanics;
 
 public class ChoiceSystem
 {
+    public sealed class Snapshot
+    {
+        public int Round { get; set; }
+        public bool FirstB { get; set; }
+        public bool SecondB { get; set; }
+        public bool ThirdB { get; set; }
+        public bool Finished { get; set; }
+        public uint[] Colors { get; set; }
+        public bool IsValid() => Round >= 0 && Round <= 3 && (!Finished || Round == 3) && Colors != null && Colors.Length == 3;
+    }
+
+    public Snapshot Capture() => new Snapshot { Round = _ronda, FirstB = _eligio1B,
+        SecondB = _eligio2B, ThirdB = _eligio3B, Finished = IsFinished,
+        Colors = new[] { _colores[0].PackedValue, _colores[1].PackedValue, _colores[2].PackedValue } };
+
+    public void Restore(Snapshot state)
+    {
+        if (state == null || !state.IsValid()) throw new ArgumentException("Estado de elecciones inválido.");
+        _ronda = state.Round;
+        _eligio1B = state.FirstB; _eligio2B = state.SecondB; _eligio3B = state.ThirdB;
+        IsFinished = state.Finished;
+        _menuAbierto = false; _opcionB = false;
+        for (int i = 0; i < 3; i++) _colores[i] = new Color(state.Colors[i]);
+        CalcularColorFinal();
+    }
+    public Color FinalColor => _colorFinal;
     // =========================================
     // CONFIGURACIÓN: las 3 posiciones EXACTAS (coordenadas del mundo)
     // Rectangle(x, y, ancho, alto). Cambiá estos números a tu gusto.

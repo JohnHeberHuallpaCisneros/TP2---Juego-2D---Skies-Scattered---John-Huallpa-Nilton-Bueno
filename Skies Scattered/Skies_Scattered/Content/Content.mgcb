@@ -21,6 +21,12 @@
 /processorParam:Version=3.8.5.1
 /build:BattleBackground.fx
 
+#begin CrtFilter.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:CrtFilter.fx
+
 #begin Fonts/earthbound-beginnings.ttf
 /importer:FontImporter
 /processor:FontDescriptionProcessor

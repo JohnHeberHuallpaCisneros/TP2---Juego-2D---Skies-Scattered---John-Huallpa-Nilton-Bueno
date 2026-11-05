@@ -246,28 +246,15 @@ namespace Skies_Scattered.States
 
             float dt =
                 (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _screenShake.Update(dt);
-            _partyShake.Update(dt);
-            _battleState.PartyImpactOffset = _partyShake.Offset;
-            _flashRemaining = Math.Max(0, _flashRemaining - dt);
-            foreach (var enemy in _currentBattleEnemies) enemy.UpdateImpact(dt);
-            _battleState.Message.Update(dt);
+            UpdateVisualEffects(dt);
             var previousPhase = _currentPhase;
             int previousOption = _battleState.SelectedOptionIndex;
             int previousSpell = _battleState.SelectedSpellIndex;
             int previousTarget = _battleState.SelectedEnemyIndex;
             int previousItem = _battleState.SelectedItemIndex;
-            if (!_battleState.Message.IsComplete)
-            {
-                if (Input.IsKeyPressed(Keys.X)) { _battleState.Message.Reveal(); return; }
-                if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) ||
-                    Input.IsKeyPressed(Keys.Space) || Input.IsKeyPressed(Keys.Back)) return;
-            }
+            if (HandleTypingInput()) return;
 
-            bool menuPhase = _currentPhase == BattlePhase.PlayerTurn || _currentPhase == BattlePhase.SpellSelection ||
-                _currentPhase == BattlePhase.SelectingTarget || _currentPhase == BattlePhase.ItemsSelection ||
-                _currentPhase == BattlePhase.ActSelection || _currentPhase == BattlePhase.EnemyIntro ||
-                _currentPhase == BattlePhase.BattleEnded || _currentPhase == BattlePhase.BattleRewards;
+            bool menuPhase = IsMenuPhase(_currentPhase);
             switch (_currentPhase)
             {
                 case BattlePhase.EnemyIntro:
@@ -287,23 +274,11 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.ActSelection:
-                    if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back))
-                        ReturnToActionMenu();
-                    else if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
-                    {
-                        _pendingAction = PendingAction.Spare;
-                        OpenTargetSelection();
-                    }
+                    UpdateActSelection();
                     break;
 
                 case BattlePhase.SpellAnimation:
-                    _spellEffect.Update(dt);
-                    if (!_spellEffect.IsPlaying)
-                    {
-                        var resolve = _afterSpell;
-                        _afterSpell = null;
-                        resolve?.Invoke();
-                    }
+                    UpdateSpellAnimation(dt);
                     break;
 
                 case BattlePhase.ItemsSelection:
@@ -315,26 +290,11 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.PlayerActionResult:
-                    if (!_battleState.Message.IsComplete) break;
-                    _timer += dt;
-
-                    if (_timer >= MessageDelay)
-                    {
-                        _timer = 0f;
-                        AdvanceToNextHero();
-                    }
+                    UpdatePlayerActionResult(dt);
                     break;
 
                 case BattlePhase.ArrowDefense:
-                    _arrowDefense.Update(dt, Mechanics.ArrowDefense.ReadDirection());
-                    if (_arrowDefense.Done)
-                    {
-                        var resolveDefense = _afterDefense;
-                        _afterDefense = null;
-                        resolveDefense?.Invoke();
-                        _arrowDefense.Dispose();
-                        _arrowDefense = null;
-                    }
+                    UpdateArrowDefense(dt);
                     break;
 
                 case BattlePhase.EnemyTurn:
@@ -342,15 +302,7 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.BattleEnded:
-                    if (Input.IsKeyPressed(Keys.Z))
-                    {
-                        if (_battleState.PartyMembers.TrueForAll(hero => hero.HP <= 0)) CompleteBattle();
-                        else
-                        {
-                            _rewardHeroIndex = 0;
-                            ShowHeroRewards();
-                        }
-                    }
+                    UpdateBattleEnd();
                     break;
 
                 case BattlePhase.BattleRewards:
@@ -363,13 +315,131 @@ namespace Skies_Scattered.States
                     break;
             }
             if (menuPhase && (_currentPhase != previousPhase || _battleClosed) &&
-                (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) ||
-                 Input.IsKeyPressed(Keys.Space) || Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back)))
+                (ConfirmPressed() || CancelPressed()))
                 SoundEffects.Play(SoundCue.Select);
             if (menuPhase && _currentPhase == previousPhase &&
                 (previousOption != _battleState.SelectedOptionIndex || previousSpell != _battleState.SelectedSpellIndex ||
                  previousTarget != _battleState.SelectedEnemyIndex || previousItem != _battleState.SelectedItemIndex))
                 SoundEffects.Play(SoundCue.Move);
+        }
+
+        private void UpdateActSelection()
+        {
+            if (CancelPressed())
+                ReturnToActionMenu();
+            else if (ConfirmPressed())
+            {
+                _pendingAction = PendingAction.Spare;
+                OpenTargetSelection();
+            }
+        }
+
+        private void UpdateSpellAnimation(float dt)
+        {
+            _spellEffect.Update(dt);
+            if (!_spellEffect.IsPlaying)
+            {
+                var resolve = _afterSpell;
+                _afterSpell = null;
+                resolve?.Invoke();
+            }
+        }
+
+        private void UpdatePlayerActionResult(float dt)
+        {
+            if (!_battleState.Message.IsComplete) return;
+            _timer += dt;
+
+            if (_timer >= MessageDelay)
+            {
+                _timer = 0f;
+                AdvanceToNextHero();
+            }
+        }
+
+        private void UpdateArrowDefense(float dt)
+        {
+            _arrowDefense.Update(dt, Mechanics.ArrowDefense.ReadDirection());
+            if (_arrowDefense.Done)
+            {
+                var resolveDefense = _afterDefense;
+                _afterDefense = null;
+                resolveDefense?.Invoke();
+                _arrowDefense.Dispose();
+                _arrowDefense = null;
+            }
+        }
+
+        private void UpdateBattleEnd()
+        {
+            if (Input.IsKeyPressed(Keys.Z))
+            {
+                if (IsPartyDefeated()) CompleteBattle();
+                else
+                {
+                    _rewardHeroIndex = 0;
+                    ShowHeroRewards();
+                }
+            }
+        }
+
+        private void UpdateVisualEffects(float dt)
+        {
+            _screenShake.Update(dt);
+            _partyShake.Update(dt);
+            _battleState.PartyImpactOffset = _partyShake.Offset;
+            _flashRemaining = Math.Max(0, _flashRemaining - dt);
+            foreach (var enemy in _currentBattleEnemies) enemy.UpdateImpact(dt);
+            _battleState.Message.Update(dt);
+        }
+
+        private bool HandleTypingInput()
+        {
+            if (_battleState.Message.IsComplete) return false;
+            if (Input.IsKeyPressed(Keys.X))
+            {
+                _battleState.Message.Reveal();
+                return true;
+            }
+            return ConfirmPressed() || Input.IsKeyPressed(Keys.Back);
+        }
+
+        private static bool ConfirmPressed()
+        {
+            return Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) ||
+                Input.IsKeyPressed(Keys.Space);
+        }
+
+        private static bool CancelPressed()
+        {
+            return Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back);
+        }
+
+        private bool IsPartyDefeated()
+        {
+            foreach (CharacterStats hero in _battleState.PartyMembers)
+            {
+                if (hero.HP > 0) return false;
+            }
+            return true;
+        }
+
+        private static bool IsMenuPhase(BattlePhase phase)
+        {
+            switch (phase)
+            {
+                case BattlePhase.PlayerTurn:
+                case BattlePhase.SpellSelection:
+                case BattlePhase.SelectingTarget:
+                case BattlePhase.ItemsSelection:
+                case BattlePhase.ActSelection:
+                case BattlePhase.EnemyIntro:
+                case BattlePhase.BattleEnded:
+                case BattlePhase.BattleRewards:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         private CharacterStats CurrentHero
@@ -456,9 +526,7 @@ namespace Skies_Scattered.States
                         _battleState.SelectedOptionIndex + 2);
             }
 
-            if (Input.IsKeyPressed(Keys.Z) ||
-                Input.IsKeyPressed(Keys.Enter) ||
-                Input.IsKeyPressed(Keys.Space))
+            if (ConfirmPressed())
             {
                 int selected = Math.Clamp(
                     _battleState.SelectedOptionIndex,
@@ -529,7 +597,7 @@ namespace Skies_Scattered.States
 
         private void UpdateItemsSelection()
         {
-            if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back))
+            if (CancelPressed())
             {
                 _battleState.IsItemMenuOpen = false;
                 ReturnToActionMenu(); return;
@@ -631,16 +699,13 @@ namespace Skies_Scattered.States
                     % count;
             }
 
-            if (Input.IsKeyPressed(Keys.X) ||
-                Input.IsKeyPressed(Keys.Back))
+            if (CancelPressed())
             {
                 ReturnToActionMenu();
                 return;
             }
 
-            if (Input.IsKeyPressed(Keys.Z) ||
-                Input.IsKeyPressed(Keys.Enter) ||
-                Input.IsKeyPressed(Keys.Space))
+            if (ConfirmPressed())
             {
                 string spell = spells[
                     _battleState.SelectedSpellIndex];
@@ -750,8 +815,7 @@ namespace Skies_Scattered.States
                 ? $"¿A quién perdonará {CurrentHero.Name}? {target.Name}" + (CombatRules.CanSpare(target) ? " - Listo" : " - Aún no")
                 : $"¿A quién atacará {CurrentHero.Name}? {target.Name}";
 
-            if (Input.IsKeyPressed(Keys.X) ||
-                Input.IsKeyPressed(Keys.Back))
+            if (CancelPressed())
             {
                 _battleState.IsSelectingTarget = false;
 
@@ -773,9 +837,7 @@ namespace Skies_Scattered.States
                 return;
             }
 
-            if (Input.IsKeyPressed(Keys.Z) ||
-                Input.IsKeyPressed(Keys.Enter) ||
-                Input.IsKeyPressed(Keys.Space))
+            if (ConfirmPressed())
             {
                 AnimateSelectedAction(target);
             }
@@ -1088,7 +1150,7 @@ namespace Skies_Scattered.States
                         target.HP = Math.Max(0, target.HP - finalDamage);
                         _battleState.TopMessage = $"¡{enemy.Name} atacó a {target.Name} y le hizo {finalDamage} de daño!";
                         _timer = 0f;
-                        if (_battleState.PartyMembers.TrueForAll(p => p.HP <= 0))
+                        if (IsPartyDefeated())
                             EndBattle("Tu grupo ha caído...");
                         else
                             _currentPhase = BattlePhase.EnemyTurn;

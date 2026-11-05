@@ -472,11 +472,27 @@ public class Game1 : Core
             ActualizarExploracion(gameTime);
         }
 
-        Window.Title = _mapId == "mapa3" ? "Skies Scattered" :
-            (CurrentZone.RemainingEnemies == 0 ? "No quedan enemigos en esta zona" :
-                _encuentros.PasosSegurosRestantes > 0 ? $"Pasos seguros: {_encuentros.PasosSegurosRestantes}" :
-                $"Probabilidad de encuentro por paso: {_encuentros.ProbabilidadActual:P1}") +
-            (_colorFinal.HasValue ? $" | Color final: {_colorFinal.Value}" : "");
+        ActualizarTituloVentana();
+    }
+
+    private void ActualizarTituloVentana()
+    {
+        if (_mapId == "mapa3")
+        {
+            Window.Title = "Skies Scattered";
+            return;
+        }
+
+        string titulo;
+        if (CurrentZone.RemainingEnemies == 0)
+            titulo = "No quedan enemigos en esta zona";
+        else if (_encuentros.PasosSegurosRestantes > 0)
+            titulo = $"Pasos seguros: {_encuentros.PasosSegurosRestantes}";
+        else
+            titulo = $"Probabilidad de encuentro por paso: {_encuentros.ProbabilidadActual:P1}";
+
+        if (_colorFinal.HasValue) titulo += $" | Color final: {_colorFinal.Value}";
+        Window.Title = titulo;
     }
 
     private void ActualizarPantalla()
@@ -509,18 +525,7 @@ public class Game1 : Core
         }
         if (_saveDialogOpen)
         {
-            if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape))
-            { SoundEffects.Play(SoundCue.Select); _saveDialogOpen = false; }
-            else if (Input.IsKeyPressed(Keys.Z))
-            {
-                SoundEffects.Play(SoundCue.Select);
-                var data = new SaveGameData { Yoko = new SavedPosition(_yoko.Position),
-                    Kyoko = new SavedPosition(_kyoko.Position), Party = _party, Choices = _choices.Capture(),
-                    EndingIntroSeen = _endingIntroSeen, OpenedGifts = _openedGifts, MapId = _mapId, SavePointId = "menu-overworld", SavedAt = DateTimeOffset.UtcNow, Zones = _zones };
-                bool saved = _saveGame.TrySave(data);
-                MostrarDialogo(saved ? "Partida guardada." : _saveGame.LastError);
-                if (saved) _saveDialogOpen = false;
-            }
+            ActualizarConfirmacionGuardado();
             return;
         }
         if (!_choices.IsChoosing && Input.IsKeyPressed(Keys.C))
@@ -543,10 +548,48 @@ public class Game1 : Core
 
         if (Input.IsKeyPressed(Keys.Z) && InteractuarRegalo()) return;
 
-        // CAMBIO: guardamos las posiciones de los dos personajes
+        ActualizarMovimientoExploracion(gameTime);
+    }
+
+    private void ActualizarConfirmacionGuardado()
+    {
+        if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape))
+        {
+            SoundEffects.Play(SoundCue.Select);
+            _saveDialogOpen = false;
+        }
+        else if (Input.IsKeyPressed(Keys.Z))
+        {
+            SoundEffects.Play(SoundCue.Select);
+            SaveGameData data = CrearDatosGuardado();
+            bool saved = _saveGame.TrySave(data);
+            MostrarDialogo(saved ? "Partida guardada." : _saveGame.LastError);
+            if (saved) _saveDialogOpen = false;
+        }
+    }
+
+    private SaveGameData CrearDatosGuardado()
+    {
+        return new SaveGameData
+        {
+            Yoko = new SavedPosition(_yoko.Position),
+            Kyoko = new SavedPosition(_kyoko.Position),
+            Party = _party,
+            Choices = _choices.Capture(),
+            EndingIntroSeen = _endingIntroSeen,
+            OpenedGifts = _openedGifts,
+            MapId = _mapId,
+            SavePointId = "menu-overworld",
+            SavedAt = DateTimeOffset.UtcNow,
+            Zones = _zones
+        };
+    }
+
+    private void ActualizarMovimientoExploracion(GameTime gameTime)
+    {
         Vector2 yokoAntes = _yoko.Position;
 
-        // Yoko se controla con WASD y choca con las paredes.
+        // Primero se mueve Yoko; después Kyo sigue el camino aceptado.
         _yoko.Update(gameTime);
         ResolverColision(_yoko, yokoAntes);
         if (_overworldDialogue.IsOpen) return;

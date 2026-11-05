@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -129,6 +129,16 @@ public void Seguir(Vector2 objetivo, GameTime gameTime)
 
     ActualizarAnimacion(distance);
 }
+
+    public void AplicarSeguimiento(Vector2 destino)
+    {
+        Vector2 delta = destino - Position;
+        float distance = delta.Length();
+        if (distance <= .001f) { DetenerAnimacion(); return; }
+        SeleccionarAnimacion(delta / distance);
+        Position = destino;
+        ActualizarAnimacion(distance);
+    }
 
     // =========================================
     // SELECCIÓN DE DIRECCIÓN

@@ -1,3 +1,4 @@
+using Skies_Scattered.Audio;
 
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,17 @@ namespace Skies_Scattered.States
         private const float FlashDuration = 0.22f;
         public Color ScreenFlashColor { get; private set; } = Color.White;
         public float ScreenFlashOpacity => _flashStrength * MathHelper.Clamp(_flashRemaining / FlashDuration, 0, 1);
+        private ArrowDefense _arrowDefense;
+        private Action _afterDefense;
         private Action _afterSpell;
         private Enemy _effectTarget;
         private readonly ZoneProgress _zone;
         private readonly BattleShake _screenShake = new BattleShake();
+        private readonly BattleShake _partyShake = new BattleShake();
         public Vector2 ShakeOffset => _screenShake.Offset;
 
         public event Action OnBattleEnded;
+        public event Action OnBattleResolved;
 
         private enum BattlePhase
         {
@@ -43,7 +48,9 @@ namespace Skies_Scattered.States
             SelectingTarget,
             PlayerActionResult,
             EnemyTurn,
-            BattleEnded
+            ArrowDefense,
+            BattleEnded,
+            BattleRewards
         }
 
         private enum PendingAction
@@ -66,20 +73,27 @@ namespace Skies_Scattered.States
 
         private int _currentPartyMemberIndex = 0;
         private int _enemyIndex = 0;
+        private readonly List<int> _initialAP = new List<int>();
+        private readonly List<int> _initialCT = new List<int>();
+        private int _rewardHeroIndex;
+        private bool _battleClosed;
 
+        private readonly Dictionary<CharacterStats, DefenseStance> _stances = new();
+        private DefenseStance Stance(CharacterStats hero)
+        {
+            if (!_stances.TryGetValue(hero, out var stance))
+                _stances.Add(hero, stance = new DefenseStance());
+            return stance;
+        }
+
+        // Shield Beta conserva su protección propia durante una ronda.
         private readonly HashSet<CharacterStats> _defending =
             new HashSet<CharacterStats>();
 
         private readonly HashSet<Enemy> _defenseDownEnemies =
             new HashSet<Enemy>();
 
-        // Costes provisionales: se pueden cambiar aquí.
-        private const int FireBetaCost = 5;
-        private const int FireGammaCost = 10;
-        private const int FreezeAlphaCost = 5;
-        private const int FreezeOmegaCost = 10;
-        private const int DefenseDownOmegaCost = 8;
-        private const int ShieldBetaCost = 8;
+        // Los costes compartidos con la interfaz se definen en SpellRules.
 
         public class EnemyTemplate
         {
@@ -87,6 +101,8 @@ namespace Skies_Scattered.States
             public string Name { get; set; }
             public Texture2D Texture { get; set; }
             public int HP { get; set; }
+            public int Attack { get; set; } = 8;
+            public int Defense { get; set; }
         }
 
         public BattleState(
@@ -126,6 +142,8 @@ namespace Skies_Scattered.States
                     Texture = template.Texture,
                     HP = template.HP,
                     MaxHP = template.HP,
+                    Attack = template.Attack,
+                    Defense = template.Defense,
                     Floats = template.Floats,
                     Position = new Vector2(
                         startX + (i * 120f), 180f)
@@ -154,13 +172,18 @@ namespace Skies_Scattered.States
                 IsSelectingTarget = false,
                 IsSpellMenuOpen = false
             };
-            if (_currentBattleEnemies.Count == 0) _currentPhase = BattlePhase.BattleEnded;
+            foreach (CharacterStats hero in _battleState.PartyMembers)
+            {
+                _initialAP.Add(hero.AP);
+                _initialCT.Add(hero.CT);
+            }
+            if (_currentBattleEnemies.Count == 0) EndBattle("No quedan enemigos en esta zona.");
         }
 
         // Se crea una vez por partida; cada batalla comparte estas estadísticas.
         public static List<CharacterStats> CreateParty()
         {
-            return new List<CharacterStats>
+            var party = new List<CharacterStats>
                 {
                     new CharacterStats
                     {
@@ -196,6 +219,8 @@ namespace Skies_Scattered.States
                         }
                     }
                 };
+            GameItem.ShareInventory(party);
+            return party;
         }
 
         private string BuildEnemyIntroMessage()
@@ -215,20 +240,34 @@ namespace Skies_Scattered.States
 
         public void Update(GameTime gameTime)
         {
+            if (_battleClosed) return;
+            _battleState.DefendCooldown = Stance(CurrentHero).CooldownRounds;
             _battleUI.Update(gameTime);
 
             float dt =
                 (float)gameTime.ElapsedGameTime.TotalSeconds;
             _screenShake.Update(dt);
+            _partyShake.Update(dt);
+            _battleState.PartyImpactOffset = _partyShake.Offset;
             _flashRemaining = Math.Max(0, _flashRemaining - dt);
             foreach (var enemy in _currentBattleEnemies) enemy.UpdateImpact(dt);
             _battleState.Message.Update(dt);
-            if (Input.IsKeyPressed(Keys.Z) && !_battleState.Message.IsComplete)
+            var previousPhase = _currentPhase;
+            int previousOption = _battleState.SelectedOptionIndex;
+            int previousSpell = _battleState.SelectedSpellIndex;
+            int previousTarget = _battleState.SelectedEnemyIndex;
+            int previousItem = _battleState.SelectedItemIndex;
+            if (!_battleState.Message.IsComplete)
             {
-                _battleState.Message.Reveal();
-                return;
+                if (Input.IsKeyPressed(Keys.X)) { _battleState.Message.Reveal(); return; }
+                if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) ||
+                    Input.IsKeyPressed(Keys.Space) || Input.IsKeyPressed(Keys.Back)) return;
             }
 
+            bool menuPhase = _currentPhase == BattlePhase.PlayerTurn || _currentPhase == BattlePhase.SpellSelection ||
+                _currentPhase == BattlePhase.SelectingTarget || _currentPhase == BattlePhase.ItemsSelection ||
+                _currentPhase == BattlePhase.ActSelection || _currentPhase == BattlePhase.EnemyIntro ||
+                _currentPhase == BattlePhase.BattleEnded || _currentPhase == BattlePhase.BattleRewards;
             switch (_currentPhase)
             {
                 case BattlePhase.EnemyIntro:
@@ -268,13 +307,7 @@ namespace Skies_Scattered.States
                     break;
 
                 case BattlePhase.ItemsSelection:
-                    if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back) ||
-                        Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Z) ||
-                        Input.IsKeyPressed(Keys.Space))
-                    {
-                        _battleState.IsItemMenuOpen = false;
-                        ReturnToActionMenu();
-                    }
+                    UpdateItemsSelection();
                     break;
 
                 case BattlePhase.SelectingTarget:
@@ -292,22 +325,51 @@ namespace Skies_Scattered.States
                     }
                     break;
 
+                case BattlePhase.ArrowDefense:
+                    _arrowDefense.Update(dt, Mechanics.ArrowDefense.ReadDirection());
+                    if (_arrowDefense.Done)
+                    {
+                        var resolveDefense = _afterDefense;
+                        _afterDefense = null;
+                        resolveDefense?.Invoke();
+                        _arrowDefense.Dispose();
+                        _arrowDefense = null;
+                    }
+                    break;
+
                 case BattlePhase.EnemyTurn:
                     UpdateEnemyTurn(dt);
                     break;
 
                 case BattlePhase.BattleEnded:
-                    if (!_battleState.Message.IsComplete) break;
-                    _timer += dt;
-                    if (_timer >= MessageDelay)
+                    if (Input.IsKeyPressed(Keys.Z))
                     {
-                        var ended = OnBattleEnded;
-                        OnBattleEnded = null;
-                        _battleUI.Dispose();
-                        ended?.Invoke();
+                        if (_battleState.PartyMembers.TrueForAll(hero => hero.HP <= 0)) CompleteBattle();
+                        else
+                        {
+                            _rewardHeroIndex = 0;
+                            ShowHeroRewards();
+                        }
+                    }
+                    break;
+
+                case BattlePhase.BattleRewards:
+                    if (Input.IsKeyPressed(Keys.Z))
+                    {
+                        _rewardHeroIndex++;
+                        if (_rewardHeroIndex >= _battleState.PartyMembers.Count) CompleteBattle();
+                        else ShowHeroRewards();
                     }
                     break;
             }
+            if (menuPhase && (_currentPhase != previousPhase || _battleClosed) &&
+                (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) ||
+                 Input.IsKeyPressed(Keys.Space) || Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back)))
+                SoundEffects.Play(SoundCue.Select);
+            if (menuPhase && _currentPhase == previousPhase &&
+                (previousOption != _battleState.SelectedOptionIndex || previousSpell != _battleState.SelectedSpellIndex ||
+                 previousTarget != _battleState.SelectedEnemyIndex || previousItem != _battleState.SelectedItemIndex))
+                SoundEffects.Play(SoundCue.Move);
         }
 
         private CharacterStats CurrentHero
@@ -422,10 +484,15 @@ namespace Skies_Scattered.States
                         break;
 
                     case "DEFEND":
-                        _defending.Add(CurrentHero);
-
+                        if (!Stance(CurrentHero).TryActivate())
+                        {
+                            _battleState.TopMessage = $"DEFEND se recarga en {Stance(CurrentHero).CooldownRounds} turnos.";
+                            return;
+                        }
+                        SoundEffects.Play(SoundCue.Defend);
+                        _battleState.DefendCooldown = Stance(CurrentHero).CooldownRounds;
                         _battleState.TopMessage =
-                            $"¡{CurrentHero.Name} se defendió!";
+                            $"¡{CurrentHero.Name}: CT +{DefenseStance.BonusCT} durante 3 turnos!";
 
                         FinishPlayerAction();
                         break;
@@ -433,15 +500,55 @@ namespace Skies_Scattered.States
                     case "ITEMS":
                         _battleState.IsActionMenuOpen = false;
                         _battleState.IsItemMenuOpen = true;
-                        _battleState.TopMessage = "No tienes objetos";
+                        _battleState.SelectedItemIndex = 0;
+                        _battleState.TopMessage = CurrentHero.Items.Count == 0 ? "No tienes objetos" : "Elige un objeto para usar.";
                         _currentPhase = BattlePhase.ItemsSelection;
                         break;
 
                     case "RUN":
-                        EndBattle(
-                            "¡El grupo escapó de la batalla!");
+                        AttemptEscape();
                         break;
                 }
+            }
+        }
+
+        private void AttemptEscape()
+        {
+            const double chance = .65;
+            if (_random.NextDouble() < chance)
+            {
+                SoundEffects.Play(SoundCue.Escape);
+                EndBattle("¡El grupo escapó de la batalla!");
+            }
+            else
+            {
+                _battleState.TopMessage = "¡No pudieron escapar!";
+                FinishPlayerAction();
+            }
+        }
+
+        private void UpdateItemsSelection()
+        {
+            if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Back))
+            {
+                _battleState.IsItemMenuOpen = false;
+                ReturnToActionMenu(); return;
+            }
+            int count = CurrentHero.Items.Count;
+            if (count == 0)
+            {
+                if (Input.IsKeyPressed(Keys.Z)) { _battleState.IsItemMenuOpen = false; ReturnToActionMenu(); }
+                return;
+            }
+            if (Input.IsKeyPressed(Keys.Up) || Input.IsKeyPressed(Keys.W))
+                _battleState.SelectedItemIndex = (_battleState.SelectedItemIndex - 1 + count) % count;
+            if (Input.IsKeyPressed(Keys.Down) || Input.IsKeyPressed(Keys.S))
+                _battleState.SelectedItemIndex = (_battleState.SelectedItemIndex + 1) % count;
+            if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter))
+            {
+                bool used = GameItem.TryUse(CurrentHero, _battleState.SelectedItemIndex, out string message);
+                _battleState.TopMessage = message;
+                if (used) { _battleState.IsItemMenuOpen = false; FinishPlayerAction(); }
             }
         }
 
@@ -461,7 +568,7 @@ namespace Skies_Scattered.States
                 FinishPlayerAction();
                 return;
             }
-            bool gained = _zone.RecordSpare(CurrentHero);
+            _zone.RecordSpare(CurrentHero);
             _currentBattleEnemies.Remove(target);
             _defenseDownEnemies.Remove(target);
             _battleState.SelectedEnemyIndex = 0;
@@ -469,7 +576,7 @@ namespace Skies_Scattered.States
                 EndBattle($"¡{CurrentHero.Name} perdonó a {target.Name}! La batalla terminó.");
             else
             {
-                _battleState.TopMessage = $"¡{CurrentHero.Name} perdonó a {target.Name}!" + (gained ? " CT +1" : "");
+                _battleState.TopMessage = $"¡{CurrentHero.Name} perdonó a {target.Name}!";
                 FinishPlayerAction();
             }
         }
@@ -481,7 +588,7 @@ namespace Skies_Scattered.States
             target.HP = Math.Max(0, target.HP - damage);
             string attack = _pendingAction == PendingAction.BasicAttack ? "BasicAttack" : GetSpellName(_pendingAction);
             TriggerAttackFeedback(attack);
-            target.TriggerImpact(damage, ScreenFlashColor);
+            target.TriggerImpact(damage, ScreenFlashColor, attack);
             if (target.HP == 0)
             {
                 _zone.RecordDefeat(CurrentHero);
@@ -538,7 +645,7 @@ namespace Skies_Scattered.States
                 string spell = spells[
                     _battleState.SelectedSpellIndex];
 
-                int cost = GetSpellCost(spell);
+                int cost = SpellRules.GetCost(spell);
 
                 if (CurrentHero.PP < cost)
                 {
@@ -597,32 +704,7 @@ namespace Skies_Scattered.States
             }
         }
 
-        private int GetSpellCost(string spell)
-        {
-            switch (spell)
-            {
-                case "FireBeta":
-                    return FireBetaCost;
 
-                case "FireGamma":
-                    return FireGammaCost;
-
-                case "FreezeAlpha":
-                    return FreezeAlphaCost;
-
-                case "FreezeOmega":
-                    return FreezeOmegaCost;
-
-                case "DefenseDownOmega":
-                    return DefenseDownOmegaCost;
-
-                case "ShieldBeta":
-                    return ShieldBetaCost;
-
-                default:
-                    return 0;
-            }
-        }
 
         private void OpenTargetSelection()
         {
@@ -734,7 +816,7 @@ namespace Skies_Scattered.States
             }
             else
             {
-                int cost = GetSpellCost(spell);
+                int cost = SpellRules.GetCost(spell);
 
                 if (CurrentHero.PP < cost)
                 {
@@ -768,7 +850,7 @@ namespace Skies_Scattered.States
                     case PendingAction.DefenseDownOmega:
                         _defenseDownEnemies.Add(target);
                         TriggerAttackFeedback("DefenseDownOmega");
-                        target.TriggerImpact(0, ScreenFlashColor);
+                        target.TriggerImpact(0, ScreenFlashColor, "DefenseDownOmega");
                         _battleState.TopMessage =
                             $"¡La defensa de {target.Name} disminuyó!";
                         FinishPlayerAction();
@@ -839,11 +921,13 @@ namespace Skies_Scattered.States
             }
             if (_pendingAction == PendingAction.BasicAttack)
             {
+                SoundEffects.Play(SoundCue.BasicAttack);
+                SoundEffects.Play(SoundCue.Damage);
                 ExecuteSelectedAction(target);
                 return;
             }
             string spell = GetSpellName(_pendingAction);
-            if (CurrentHero.PP < GetSpellCost(spell))
+            if (CurrentHero.PP < SpellRules.GetCost(spell))
             {
                 ReturnToActionMenu();
                 _battleState.TopMessage = "¡No hay suficientes PP!";
@@ -856,9 +940,15 @@ namespace Skies_Scattered.States
 
         private void StartSpellAnimation(string spell, Action resolve, Enemy effectTarget = null)
         {
+            SoundEffects.PlaySpell(spell, _spellEffect == null ? 0 : _spellEffect.DurationFor(spell));
             Action finish = () =>
             {
                 if (spell == "ShieldBeta") TriggerAttackFeedback(spell);
+                if (spell == "FireGamma" || spell == "FreezeOmega")
+                    SoundEffects.Play(SoundCue.FireBeta, -.45f);
+                if (spell == "FireBeta" || spell == "FireGamma" ||
+                    spell == "FreezeAlpha" || spell == "FreezeOmega")
+                    SoundEffects.Play(SoundCue.Damage);
                 resolve();
             };
             if (_spellEffect == null) { finish(); return; }
@@ -872,9 +962,9 @@ namespace Skies_Scattered.States
             _currentPhase = BattlePhase.SpellAnimation;
         }
 
-        private void TriggerAttackFeedback(string attack)
+        private void TriggerAttackFeedback(string attack, float intensity = 1f)
         {
-            _screenShake.Trigger(attack);
+            _screenShake.Trigger(attack, intensity: intensity);
             ScreenFlashColor = attack == "BasicAttack" || _effectLibrary == null
                 ? new Color(255, 245, 220) : _effectLibrary.GetFlashColor(attack);
             _flashStrength = attack switch
@@ -972,33 +1062,52 @@ namespace Skies_Scattered.States
                 CharacterStats target =
                     aliveHeroes[_random.Next(aliveHeroes.Count)];
 
-                int damage = _random.Next(5, 12);
+                int damage = Math.Max(1, enemy.Attack + _random.Next(-2, 3));
 
-                damage = CombatRules.DamageToHero(damage, target, _defending.Contains(target));
+                damage = CombatRules.DamageToHero(damage, target, _defending.Contains(target), Stance(target).CurrentBonusCT);
 
-                _battleState.TopMessage = $"¡{enemy.Name} ataca a {target.Name}!";
-                StartSpellAnimation("EnemyBeam", () =>
+                _battleState.TopMessage = $"¡{enemy.Name} apunta a {target.Name}! Sigue las flechas.";
+                _battleState.Message.Reveal();
+                _arrowDefense = new ArrowDefense(_random);
+                _currentPhase = BattlePhase.ArrowDefense;
+                _afterDefense = () =>
                 {
-                    TriggerAttackFeedback("EnemyBeam");
-                    target.HP = Math.Max(0, target.HP - damage);
-                    _battleState.TopMessage = $"¡{enemy.Name} atacó a {target.Name} y le hizo {damage} de daño!";
-                    _timer = 0f;
-                    if (_battleState.PartyMembers.TrueForAll(p => p.HP <= 0))
-                        EndBattle("Tu grupo ha caído...");
-                    else
-                        _currentPhase = BattlePhase.EnemyTurn;
-                });
+                    int correct = _arrowDefense.Correct;
+                    int pp = Math.Min(_arrowDefense.RecoveredPP, Math.Max(0, target.MaxPP - target.PP));
+                    target.PP += pp;
+                    int finalDamage = Math.Max(1, (int)Math.Round(damage * _arrowDefense.DamageMultiplier,
+                        MidpointRounding.AwayFromZero));
+                    _battleState.TopMessage = $"{correct}/6 aciertos. {target.Name}: PP +{pp}.";
+                    StartSpellAnimation("EnemyBeam", () =>
+                    {
+                        float impact = MathHelper.Clamp(finalDamage / 8f, .25f, 1.6f);
+                        TriggerAttackFeedback("EnemyBeam", impact);
+                        _battleState.ImpactedPartyIndex = _battleState.PartyMembers.IndexOf(target);
+                        _partyShake.Trigger("EnemyBeam", intensity: impact * 1.5f);
+                        SoundEffects.Play(SoundCue.Damage);
+                        target.HP = Math.Max(0, target.HP - finalDamage);
+                        _battleState.TopMessage = $"¡{enemy.Name} atacó a {target.Name} y le hizo {finalDamage} de daño!";
+                        _timer = 0f;
+                        if (_battleState.PartyMembers.TrueForAll(p => p.HP <= 0))
+                            EndBattle("Tu grupo ha caído...");
+                        else
+                            _currentPhase = BattlePhase.EnemyTurn;
+                    });
+                };
             }
             else
             {
                 _defending.Clear();
+                foreach (var stance in _stances.Values) stance.EndEnemyRound();
                 OpenPlayerTurn();
             }
         }
 
         private void EndBattle(string message)
         {
-            _battleState.TopMessage = message;
+            _battleState.TopMessage = "¡El combate finalizó!\n" + message;
+            _battleState.IsAwaitingBattleEnd = true;
+            _battleState.IsItemMenuOpen = false;
             _battleState.IsActionMenuOpen = false;
             _battleState.IsSpellMenuOpen = false;
             _battleState.IsActMenuOpen = false;
@@ -1006,6 +1115,27 @@ namespace Skies_Scattered.States
 
             _currentPhase = BattlePhase.BattleEnded;
             _timer = 0f;
+            OnBattleResolved?.Invoke();
+        }
+
+        private void ShowHeroRewards()
+        {
+            CharacterStats hero = _battleState.PartyMembers[_rewardHeroIndex];
+            int gainedAP = Math.Max(0, hero.AP - _initialAP[_rewardHeroIndex]);
+            int gainedCT = Math.Max(0, hero.CT - _initialCT[_rewardHeroIndex]);
+            if (gainedAP > 0 || gainedCT > 0) SoundEffects.Play(SoundCue.StatGain);
+            _battleState.TopMessage = $"{hero.Name} ganó en este combate:\nAP +{gainedAP}    CT +{gainedCT}";
+            _currentPhase = BattlePhase.BattleRewards;
+        }
+
+        private void CompleteBattle()
+        {
+            if (_battleClosed) return;
+            _battleClosed = true;
+            var ended = OnBattleEnded;
+            OnBattleEnded = null;
+            _battleUI.Dispose();
+            ended?.Invoke();
         }
 
         public void Draw(
@@ -1021,6 +1151,10 @@ namespace Skies_Scattered.States
                 _battleState,
                 _currentBattleEnemies,
                 screenSize);
+            if (_currentPhase == BattlePhase.ArrowDefense)
+                _arrowDefense?.Draw(spriteBatch, graphicsDevice,
+                    new Rectangle(0, BattleUI.TopBandHeight, (int)screenSize.X,
+                        (int)screenSize.Y - BattleUI.TopBandHeight - BattleUI.BottomBandHeight));
             if (_currentPhase == BattlePhase.SpellAnimation)
             {
                 Rectangle arena = new Rectangle(0, BattleUI.TopBandHeight, (int)screenSize.X,
@@ -1038,4 +1172,5 @@ namespace Skies_Scattered.States
         }
     }
 }
+
 

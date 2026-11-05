@@ -88,10 +88,6 @@ public class TextureAtlas
             fileName
         );
 
-        Console.WriteLine(
-            $"ATLAS CARGADO DESDE: {Path.GetFullPath(filePath)}"
-        );
-
         using Stream stream = TitleContainer.OpenStream(filePath);
         using XmlReader reader = XmlReader.Create(stream);
 
@@ -161,10 +157,6 @@ public class TextureAtlas
             );
         }
 
-        Console.WriteLine(
-            $"REGIONES CARGADAS: {atlas._regions.Count}"
-        );
-
         // CARGAR ANIMACIONES
         XElement animationsElement = root.Element("Animations")
             ?? throw new InvalidDataException(
@@ -225,15 +217,6 @@ public class TextureAtlas
 
             atlas.AddAnimation(name, animation);
         }
-
-        Console.WriteLine(
-            $"ANIMACIONES CARGADAS: {atlas._animations.Count}"
-        );
-
-        Console.WriteLine(
-            "NOMBRES DE ANIMACIONES: " +
-            string.Join(", ", atlas._animations.Keys)
-        );
 
         return atlas;
     }

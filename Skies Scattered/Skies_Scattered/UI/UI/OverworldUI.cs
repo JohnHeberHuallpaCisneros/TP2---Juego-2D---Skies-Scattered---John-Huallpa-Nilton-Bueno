@@ -1,9 +1,11 @@
+using Skies_Scattered.Audio;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
+using Skies_Scattered.Mechanics;
 
 namespace Skies_Scattered.UI;
 
@@ -13,6 +15,8 @@ public class OverworldUI
     private int _heroIndex;
     private int _option = 1;
     private bool _details;
+    private int _itemIndex;
+    private string _itemNotice = "";
     public event Action OnSaveRequested;
 
     public void Toggle()
@@ -23,6 +27,8 @@ public class OverworldUI
             _heroIndex = 0;
             _option = 1;
             _details = false;
+            _itemIndex = 0;
+            _itemNotice = "";
         }
     }
 
@@ -31,29 +37,50 @@ public class OverworldUI
         if (!IsOpen || party.Count == 0) return;
         if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape))
         {
+            SoundEffects.Play(SoundCue.Select);
             if (_details) _details = false;
             else IsOpen = false;
             return;
         }
+        int previousHero = _heroIndex;
         if (Input.IsKeyPressed(Keys.Right))
             _heroIndex = (_heroIndex + 1) % party.Count;
         if (Input.IsKeyPressed(Keys.Left))
             _heroIndex = (_heroIndex - 1 + party.Count) % party.Count;
 
+        if (_heroIndex != previousHero) SoundEffects.Play(SoundCue.Move);
         CharacterStats hero = party[_heroIndex];
+        if (_details && _option == 0)
+        {
+            int count = hero.Items.Count;
+            if (count > 0)
+            {
+                int previousItem = _itemIndex;
+                if (Input.IsKeyPressed(Keys.Up)) _itemIndex = (_itemIndex - 1 + count) % count;
+                if (Input.IsKeyPressed(Keys.Down)) _itemIndex = (_itemIndex + 1) % count;
+                _itemIndex = Math.Clamp(_itemIndex, 0, count - 1);
+                if (_itemIndex != previousItem) SoundEffects.Play(SoundCue.Move);
+                if (Input.IsKeyPressed(Keys.Z))
+                { if (GameItem.TryUse(hero, _itemIndex, out _itemNotice)) SoundEffects.Play(SoundCue.Select); }
+            }
+            return;
+        }
         if (!_details)
         {
             int direction = Input.IsKeyPressed(Keys.Up) ? -1 : Input.IsKeyPressed(Keys.Down) ? 1 : 0;
+            int previousOption = _option;
             if (direction != 0)
             {
                 do { _option = (_option + direction + 3) % 3; }
                 while (_option == 0 && hero.Items.Count == 0);
             }
             if (_option == 0 && hero.Items.Count == 0) _option = 1;
+            if (_option != previousOption) SoundEffects.Play(SoundCue.Move);
             if (Input.IsKeyPressed(Keys.Z))
             {
-                if (_option == 2) OnSaveRequested?.Invoke();
-                else if (_option == 1 || hero.Items.Count > 0) _details = true;
+                if (_option == 2) { SoundEffects.Play(SoundCue.Select); OnSaveRequested?.Invoke(); }
+                else if (_option == 1 || hero.Items.Count > 0)
+                { SoundEffects.Play(SoundCue.Select); _details = true; }
             }
         }
     }
@@ -102,7 +129,7 @@ public class OverworldUI
             new Vector2(x + 18, actions.Y + 106), 130, 28,
             _option == 2 ? Color.Cyan : Color.White);
 
-        Text(batch, font, "C: Cerrar   X: Volver   Z: Abrir   Izq / Der: Personaje",
+        Text(batch, font, "C: Cerrar   X: Volver   Z: Abrir/Usar   Izq/Der: Personaje",
             new Vector2(x, y + 368), 576, 24, Color.White);
         if (!_details) return;
 
@@ -117,8 +144,16 @@ public class OverworldUI
             if (hero.Items.Count == 0)
                 Text(batch, font, "No tienes objetos", new Vector2(dx, y + 112), 356, 26, Color.Gray);
             else
-                for (int i = 0; i < Math.Min(hero.Items.Count, 6); i++)
-                    Text(batch, font, hero.Items[i], new Vector2(dx, y + 108 + i * 30), 356, 26, Color.White);
+            {
+                int first = Math.Clamp(_itemIndex - 2, 0, Math.Max(0, hero.Items.Count - 6));
+                for (int row = 0; row < Math.Min(hero.Items.Count, 6); row++)
+                {
+                    int i = first + row;
+                    Text(batch, font, (i == _itemIndex ? "> " : "  ") + GameItem.Description(hero.Items[i]),
+                        new Vector2(dx, y + 108 + row * 27), 356, 24, i == _itemIndex ? Color.Cyan : Color.White);
+                }
+            }
+            Text(batch, font, _itemNotice, new Vector2(dx, y + 282), 356, 24, Color.White);
         }
         else if (_details)
         {

@@ -1,3 +1,4 @@
+﻿using Skies_Scattered.Audio;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -34,14 +35,17 @@ public class MainMenuState : IGameState
 
     public void Update(GameTime gameTime)
     {
+        int before = _selected;
         if (Input.IsKeyPressed(Keys.Up) || Input.IsKeyPressed(Keys.W))
             _selected = (_selected - 1 + _options.Count) % _options.Count;
 
         if (Input.IsKeyPressed(Keys.Down) || Input.IsKeyPressed(Keys.S))
             _selected = (_selected + 1) % _options.Count;
 
+        if (_selected != before) SoundEffects.Play(SoundCue.Move);
         if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
         {
+            if (_options[_selected] != "Continuar" || _canContinue()) SoundEffects.Play(SoundCue.Select);
             switch (_options[_selected])
             {
                 case "Nueva partida": StatusMessage = ""; OnStartGame?.Invoke(); break;

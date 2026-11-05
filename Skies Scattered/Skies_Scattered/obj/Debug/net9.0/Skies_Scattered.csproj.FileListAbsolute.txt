@@ -269,16 +269,8 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Skies_Scattered.runtimeconfig.json
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Skies_Scattered.dll
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Skies_Scattered.pdb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\BrotliSharpLib.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\CsvHelper.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\GumCommon.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\FlatRedBall.InterpolationCore.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\MonoGameGum.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\MonoGame.Framework.dll
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\NVorbis.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\SharpCompress.dll
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\TextCopy.dll
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
@@ -336,3 +328,22 @@ C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Hual
 C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\SpellEffects\ShieldBeta-0.png
 C:\Users\pc\Desktop\chamba\Poo game\TP2---Juego-2D---Skies-Scattered---John-Huallpa-Nilton-Bueno\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Maps\EarthboundMapLilliputSteps2x.png
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\CrtFilter.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Defense\arrow.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Maps\EarthboundMapCaveToThePast2X.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\OurWill.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\BasicAttack.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Damage.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Defend.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\DefenseDownOmega.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Encounter.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Escape.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\FireBeta.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\FreezeAlpha.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\FreezeOmega.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Item.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Move.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Select.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\ShieldBeta.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\StatGain.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Text.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\FireGamma.xnb

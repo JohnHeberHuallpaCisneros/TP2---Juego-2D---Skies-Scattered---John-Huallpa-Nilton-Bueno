@@ -136,10 +136,6 @@
           "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
-            "Gum.MonoGame": {
-              "target": "Package",
-              "version": "[2026.10.1.1, )"
-            },
             "MonoGame.Content.Builder.Task": {
               "target": "Package",
               "version": "[3.8.*, )"

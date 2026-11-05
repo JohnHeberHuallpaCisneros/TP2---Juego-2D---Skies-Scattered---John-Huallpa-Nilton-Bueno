@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Skies_Scattered.Entities;
+using Skies_Scattered.Mechanics;
 
 namespace Skies_Scattered.UI
 {
@@ -350,10 +351,20 @@ namespace Skies_Scattered.UI
                 {
                     DrawFittedText(spriteBatch, "ITEMS", new Vector2(26, bottom + 10),
                         menuBox.Width - 28, 18, Color.Cyan);
-                    DrawFittedText(spriteBatch, "No tienes objetos", new Vector2(26, bottom + 38),
-                        menuBox.Width - 28, 22, Color.White);
-                    DrawFittedText(spriteBatch, "X / Z: Volver", new Vector2(26, bottom + 76),
-                        menuBox.Width - 28, 16, Color.LightGray);
+                    if (hero.Items.Count == 0)
+                        DrawFittedText(spriteBatch, "No tienes objetos", new Vector2(26, bottom + 38), menuBox.Width - 28, 22, Color.White);
+                    else
+                    {
+                        int first = Math.Clamp(state.SelectedItemIndex - 1, 0, Math.Max(0, hero.Items.Count - 3));
+                        for (int row = 0; row < Math.Min(3, hero.Items.Count); row++)
+                        {
+                            int i = first + row;
+                            DrawFittedText(spriteBatch, (i == state.SelectedItemIndex ? "> " : "  ") + GameItem.Description(hero.Items[i]),
+                                new Vector2(26, bottom + 30 + row * 20), menuBox.Width - 28, 18,
+                                i == state.SelectedItemIndex ? Color.Cyan : Color.White);
+                        }
+                    }
+                    DrawFittedText(spriteBatch, "Z: Usar   X: Volver", new Vector2(26, bottom + 90), menuBox.Width - 28, 12, Color.LightGray);
                 }
                 else if (state.IsSpellMenuOpen)
                 {
@@ -366,9 +377,9 @@ namespace Skies_Scattered.UI
                         string text = (i == state.SelectedSpellIndex ? "> " : "  ") + SpellNames.Display(spell);
                         DrawFittedText(spriteBatch, text, new Vector2(26, bottom + 30 + i * 22),
                             menuBox.Width - 100, 20, color);
-                        DrawFittedText(spriteBatch, $"{GetSpellCost(spell)} PP",
+                        DrawFittedText(spriteBatch, $"{SpellRules.GetCost(spell)} PP",
                             new Vector2(menuBox.Right - 70, bottom + 30 + i * 22),
-                            58, 20, hero.PP >= GetSpellCost(spell) ? color : Color.Gray);
+                            58, 20, hero.PP >= SpellRules.GetCost(spell) ? color : Color.Gray);
                     }
                 }
                 else if (state.IsActionMenuOpen)
@@ -377,17 +388,21 @@ namespace Skies_Scattered.UI
                     {
                         float cellWidth = (menuBox.Width - 24) / 2f;
                         bool selected = i == state.SelectedOptionIndex;
+                        bool cooling = state.CurrentMenuOptions[i] == "DEFEND" && state.DefendCooldown > 0;
+                        string label = state.CurrentMenuOptions[i] + (cooling ? $" ({state.DefendCooldown})" : "");
                         DrawFittedText(spriteBatch,
-                            (selected ? "> " : "  ") + state.CurrentMenuOptions[i],
+                            (selected ? "> " : "  ") + label,
                             new Vector2(menuBox.X + 12 + (i % 2) * cellWidth,
                                 bottom + 12 + (i / 2) * 28),
-                            cellWidth - 8, 24, selected ? Color.Cyan : Color.White);
+                            cellWidth - 8, 24, cooling ? Color.Gray : selected ? Color.Cyan : Color.White);
                     }
                 }
                 else
                 {
                     DrawFittedText(spriteBatch,
-                        state.IsSelectingTarget ? "A / D: Elegir objetivo" :
+                        !state.Message.IsComplete ? "X: Mostrar texto" :
+                        state.IsAwaitingBattleEnd ? "Z: Continuar" :
+                            state.IsSelectingTarget ? "A / D: Elegir objetivo" :
                             state.IsAwaitingIntro ? "Z: Continuar" : "Combate en curso",
                         new Vector2(26, bottom + 22), menuBox.Width - 28, 22, Color.LightGray);
                     if (state.IsSelectingTarget)
@@ -402,6 +417,7 @@ namespace Skies_Scattered.UI
                 CharacterStats p = state.PartyMembers[i];
                 // El panel original se adapta a la franja inferior sin cubrir enemigos.
                 Vector2 statusPos = new Vector2(statusStart + i * statusWidth + 9, bottom + 4);
+                if (i == state.ImpactedPartyIndex) statusPos += state.PartyImpactOffset;
                 // Cuadro original de EarthBound.
                 if (_earthboundHudTexture != null)
                 {
@@ -722,32 +738,7 @@ namespace Skies_Scattered.UI
         // 12. COSTOS DE LOS HECHIZOS
         // ========================================
 
-        private int GetSpellCost(string spell)
-        {
-            switch (spell)
-            {
-                case "FireBeta":
-                    return 5;
 
-                case "FireGamma":
-                    return 10;
-
-                case "FreezeAlpha":
-                    return 5;
-
-                case "FreezeOmega":
-                    return 10;
-
-                case "DefenseDownOmega":
-                    return 8;
-
-                case "ShieldBeta":
-                    return 8;
-
-                default:
-                    return 0;
-            }
-        }
 
         // ========================================
         // 13. CUADROS ESTILO EARTHBOUND

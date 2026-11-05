@@ -1,3 +1,4 @@
+﻿using Skies_Scattered.Audio;
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -119,14 +120,17 @@ public class ChoiceSystem
 
     private void ActualizarMenu()
     {
+        bool before = _opcionB;
         if (Input.IsKeyPressed(Keys.Left) || Input.IsKeyPressed(Keys.A))
             _opcionB = false;
 
         if (Input.IsKeyPressed(Keys.Right) || Input.IsKeyPressed(Keys.D))
             _opcionB = true;
 
+        if (_opcionB != before) SoundEffects.Play(SoundCue.Move);
         if (Input.IsKeyPressed(Keys.Z) || Input.IsKeyPressed(Keys.Enter) || Input.IsKeyPressed(Keys.Space))
         {
+            SoundEffects.Play(SoundCue.Select);
             // Guardar la elección según la ronda actual
             if (_ronda == 0) _eligio1B = _opcionB;
             else if (_ronda == 1) _eligio2B = _opcionB;

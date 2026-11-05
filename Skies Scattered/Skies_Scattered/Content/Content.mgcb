@@ -316,3 +316,105 @@
 /processorParam:Version=3.8.5.1
 /build:Image/Player/together.png
 
+
+#begin Audio/OurWill.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/OurWill.wav
+
+#begin Audio/Sfx/Defend.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Defend.wav
+
+#begin Audio/Sfx/FreezeAlpha.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/FreezeAlpha.wav
+
+#begin Audio/Sfx/FireBeta.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/FireBeta.wav
+
+#begin Audio/Sfx/FreezeOmega.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/FreezeOmega.wav
+
+#begin Audio/Sfx/Encounter.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Encounter.wav
+
+#begin Audio/Sfx/Damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Damage.wav
+
+#begin Audio/Sfx/Escape.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Escape.wav
+
+#begin Audio/Sfx/Item.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Item.wav
+
+#begin Audio/Sfx/StatGain.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/StatGain.wav
+
+#begin Audio/Sfx/BasicAttack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/BasicAttack.wav
+
+#begin Audio/Sfx/DefenseDownOmega.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/DefenseDownOmega.wav
+
+#begin Audio/Sfx/Select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Select.wav
+
+#begin Audio/Sfx/ShieldBeta.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/ShieldBeta.wav
+
+#begin Audio/Sfx/Text.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Text.wav
+
+#begin Audio/Sfx/Move.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/Move.wav
+
+#begin Audio/Sfx/FireGamma.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sfx/FireGamma.wav

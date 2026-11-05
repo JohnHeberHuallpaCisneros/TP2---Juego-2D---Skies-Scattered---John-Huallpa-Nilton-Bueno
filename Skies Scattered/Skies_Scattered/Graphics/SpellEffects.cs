@@ -1,3 +1,4 @@
+﻿using Skies_Scattered.Audio;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -87,6 +88,13 @@ public sealed class SpellEffectPlayer
     }
 
     public SpellEffectPlayer(SpellEffectLibrary library) { _library = library; }
+
+    public float DurationFor(string name)
+    {
+        float seconds = 0;
+        foreach (var frame in _library.GetFrames(name)) seconds += frame.Seconds;
+        return seconds / (PlaybackSpeed * (name == "EnemyBeam" ? .8f : 1f));
+    }
 
     public void Play(string name)
     {

@@ -1,3 +1,4 @@
+﻿using Skies_Scattered.Audio;
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,8 +31,8 @@ public class GameOverState : IGameState
 
     public void Update(GameTime gameTime)
     {
-        if (Input.IsKeyPressed(Keys.Z)) OnRetry?.Invoke();
-        else if (Input.IsKeyPressed(Keys.Escape)) OnMainMenu?.Invoke();
+        if (Input.IsKeyPressed(Keys.Z)) { SoundEffects.Play(SoundCue.Select); OnRetry?.Invoke(); }
+        else if (Input.IsKeyPressed(Keys.Escape)) { SoundEffects.Play(SoundCue.Select); OnMainMenu?.Invoke(); }
     }
 
     public void Draw(SpriteBatch batch, GraphicsDevice graphics)

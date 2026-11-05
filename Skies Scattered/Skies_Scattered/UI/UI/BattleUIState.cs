@@ -6,6 +6,7 @@ namespace Skies_Scattered.UI
     public class BattleUIState
     {
         public bool IsAwaitingIntro { get; set; } = true;
+        public bool IsAwaitingBattleEnd { get; set; }
 
         public TypewriterText Message { get; } = new TypewriterText { Text = "Here They Are" };
         public string TopMessage { get => Message.Text; set => Message.Text = value; }
@@ -24,6 +25,10 @@ namespace Skies_Scattered.UI
                 "RUN"
             };
 
+        public int DefendCooldown { get; set; }
+        public int ImpactedPartyIndex { get; set; } = -1;
+        public Microsoft.Xna.Framework.Vector2 PartyImpactOffset { get; set; }
+
         public int SelectedOptionIndex { get; set; } = 0;
 
         public int CurrentPartyMemberIndex { get; set; } = 0;
@@ -36,6 +41,8 @@ namespace Skies_Scattered.UI
         public bool IsActMenuOpen { get; set; }
 
         public bool IsSpellMenuOpen { get; set; } = false;
+
+        public int SelectedItemIndex { get; set; }
 
         public int SelectedSpellIndex { get; set; } = 0;
 

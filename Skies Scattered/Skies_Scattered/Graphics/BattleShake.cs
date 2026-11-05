@@ -9,7 +9,7 @@ public sealed class BattleShake
     private bool _vertical, _diagonal;
     public Vector2 Offset { get; private set; }
 
-    public void Trigger(string attack, float delay = 0f)
+    public void Trigger(string attack, float delay = 0f, float intensity = 1f)
     {
         (_strength, _duration) = attack switch
         {
@@ -22,6 +22,7 @@ public sealed class BattleShake
             "EnemyBeam" => (2f, .20f),
             _ => (1.5f, .16f)
         };
+        _strength *= MathHelper.Clamp(intensity, 0f, 2f);
         _vertical = attack.StartsWith("Freeze", StringComparison.Ordinal);
         _diagonal = attack == "FireGamma" || attack == "ShieldBeta";
         _elapsed = -Math.Max(0, delay);

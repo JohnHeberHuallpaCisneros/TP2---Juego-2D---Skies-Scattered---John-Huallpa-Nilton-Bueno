@@ -15,7 +15,11 @@ public static class CombatRules
     }
     public static int DamageToHero(int power, CharacterStats hero, bool defending)
     {
-        int damage = Math.Max(1, power - Math.Max(0, hero.CT) / 2);
+        return DamageToHero(power, hero, defending, 0);
+    }
+    public static int DamageToHero(int power, CharacterStats hero, bool defending, int bonusCT)
+    {
+        int damage = Math.Max(1, power - (Math.Max(0, hero.CT) + Math.Max(0, bonusCT)) / 2);
         return defending ? Math.Max(1, damage / 2) : damage;
     }
     public static bool CanSpare(Enemy enemy) => enemy.HP > 0 && (long)enemy.HP * 4 <= enemy.MaxHP;

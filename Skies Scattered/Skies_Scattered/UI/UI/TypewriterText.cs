@@ -1,3 +1,4 @@
+﻿using Skies_Scattered.Audio;
 using System;
 
 namespace Skies_Scattered.UI;
@@ -34,6 +35,7 @@ public sealed class TypewriterText
         {
             _elapsed -= _delay;
             char c = _text[VisibleCharacters++];
+            if (!char.IsWhiteSpace(c)) SoundEffects.Play(SoundCue.Text);
             _delay = 1f / Math.Max(1f, CharactersPerSecond);
             if (c == '.' || c == '!' || c == '?' || c == ',' || c == ':' || c == ';')
                 _delay += 0.08f;

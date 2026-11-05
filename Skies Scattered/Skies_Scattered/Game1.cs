@@ -10,6 +10,8 @@ using Skies_Scattered.Graphics;
 using Skies_Scattered.Mechanics;
 using Skies_Scattered.States;
 using Skies_Scattered.UI;
+using Skies_Scattered.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Skies_Scattered;
 
@@ -21,6 +23,8 @@ public class Game1 : Core
 
     private Player _yoko;
     private Player _kyoko;
+    private readonly PartyTrail _partyTrail = new PartyTrail();
+    private readonly CaveLighting _caveLighting = new CaveLighting();
 
     // Animaciones de Yoko
     private AnimatedSprite _yokoAtras;
@@ -87,14 +91,22 @@ public class Game1 : Core
     private IGameState _currentState;
     private GameOverState _gameOver;
     private readonly SaveGameService _saveGame = new SaveGameService();
-    private Vector2? _savePointPosition = new Vector2(1440, 1700);
     private Dictionary<string, ZoneProgress> _zones = new() { ["mapa2"] = new ZoneProgress() };
-    private ZoneProgress CurrentZone => _zones["mapa2"];
+    private string _mapId = "mapa2";
+    private HashSet<string> _openedGifts = new();
+    private MapExit _pendingExit;
+    private ZoneProgress CurrentZone
+    {
+        get
+        {
+            if (!_zones.TryGetValue(_mapId, out var zone)) _zones.Add(_mapId, zone = new ZoneProgress());
+            return zone;
+        }
+    }
     private bool _saveDialogOpen;
-    private bool _saveFromMenu;
-    private string _saveNotice = "";
-    private float _saveNoticeTime;
-    private const string SavePointId = "inicio-mapa2";
+    private readonly OverworldDialogue _overworldDialogue = new OverworldDialogue();
+    private BattleMusic _battleMusic;
+    private bool _endingIntroSeen;
     private MainMenuState _mainMenu;
 
     private bool _enMenu = true;
@@ -139,29 +151,38 @@ public class Game1 : Core
     // NUEVO
     private void CargarMapa()
     {
-        _colisiones = new TileCollision(
-            System.IO.Path.Combine(
-                AppContext.BaseDirectory,
-                "Content", "Image", "Maps", "mapa2.tmx"));
+        string folder = System.IO.Path.Combine(AppContext.BaseDirectory, "Content", "Image", "Maps");
+        var collision = new TileCollision(System.IO.Path.Combine(folder, _mapId + ".tmx"));
+        string image = _mapId == "mapa3" ? "EarthboundMapCaveToThePast2X.png" : "EarthboundMapLilliputSteps2x.png";
+        using var stream = System.IO.File.OpenRead(System.IO.Path.Combine(folder, image));
+        var texture = Texture2D.FromStream(GraphicsDevice, stream);
+        _mapaTextura?.Dispose();
+        _mapaTextura = texture;
+        _colisiones = collision;
+        _worldSize = collision.TamanoMundo;
+    }
 
-        _worldSize = _colisiones.TamanoMundo;
-
-        string rutaMapa = System.IO.Path.Combine(
-    AppContext.BaseDirectory,
-    "Content",
-    "Image",
-    "Maps",
-    "EarthboundMapLilliputSteps2x.png"
-);
-
-using (var archivo = System.IO.File.OpenRead(rutaMapa))
-{
-    _mapaTextura = Texture2D.FromStream(GraphicsDevice, archivo);
-}
+    private void CambiarMapa(string destination)
+    {
+        _mapId = destination;
+        CargarMapa();
+        _yoko.Position = new Vector2(1344, 716);
+        _kyoko.Position = new Vector2(1296, 716);
+        _yoko.CurrentAnimation = _yokoFrente;
+        _kyoko.CurrentAnimation = _kyokoFrente;
+        ReiniciarSeguimiento();
+        _pendingExit = null;
+        _encuentros.Reiniciar();
+        _overworldDialogue.Close();
+        _ = CurrentZone;
+        _camera.Follow(_yoko.Position, TamanoVista(), _worldSize);
+        if (_mapId == "mapa3" && !_endingIntroSeen) IniciarEscenaFinal();
     }
 
     private void CargarRecursos()
     {
+        SoundEffects.Load(Content);
+        _battleMusic = new BattleMusic(Content.Load<SoundEffect>("Audio/OurWill"));
         _crtFilter = Content.Load<Effect>("CrtFilter");
         _spellEffects = new SpellEffectLibrary(GraphicsDevice);
         _earthboundHudTexture =
@@ -191,7 +212,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Floats = false,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/black_eye"),
-                    HP = 40
+                    HP = 40,
+                    Attack = 9,
+                    Defense = 0
                 },
 
                 new BattleState.EnemyTemplate
@@ -199,7 +222,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Name = "Caged",
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/caged"),
-                    HP = 55
+                    HP = 55,
+                    Attack = 7,
+                    Defense = 2
                 },
 
                 new BattleState.EnemyTemplate
@@ -207,7 +232,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Name = "Crypted",
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/crypted"),
-                    HP = 50
+                    HP = 90,
+                    Attack = 12,
+                    Defense = 1
                 },
 
                 new BattleState.EnemyTemplate
@@ -216,7 +243,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/mantle"),
-                    HP = 70
+                    HP = 70,
+                    Attack = 8,
+                    Defense = 3
                 },
 
                 new BattleState.EnemyTemplate
@@ -225,7 +254,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/mothshum"),
-                    HP = 35
+                    HP = 35,
+                    Attack = 7,
+                    Defense = 0
                 },
 
                 new BattleState.EnemyTemplate
@@ -233,7 +264,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Name = "Reaper Blossom",
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/reaper_blossom"),
-                    HP = 60
+                    HP = 60,
+                    Attack = 11,
+                    Defense = 1
                 },
 
                 new BattleState.EnemyTemplate
@@ -242,7 +275,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                     Floats = true,
                     Texture = Content.Load<Texture2D>(
                         "Image/Enemies/snow_twins"),
-                    HP = 45
+                    HP = 45,
+                    Attack = 10,
+                    Defense = 0
                 }
             };
     }
@@ -308,14 +343,13 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void CrearPersonajes()
     {
-        // CAMBIO: posiciones iniciales nuevas (zona de pasto).
-        // Si caen en pared, ajustalas mirando con F3.
+        // Abertura lateral del extremo izquierdo de la cueva, indicada por el jugador.
         _yoko = new Player(
             Keys.W,
             Keys.S,
             Keys.A,
             Keys.D,
-            new Vector2(1500, 1700))
+            new Vector2(144, 1744))
         {
             AnimFrente = _yokoFrente,
             AllowArrowKeys = true,
@@ -336,7 +370,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             Keys.Down,
             Keys.Left,
             Keys.Right,
-            new Vector2(1550, 1700))
+            new Vector2(192, 1744))
         {
             AnimFrente = _kyokoFrente,
             AnimAtras = _kyokoAtras,
@@ -351,8 +385,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             AnimAbajoIzquierda = _kyokoIzquierdaAbajo
         };
 
-        _yoko.CurrentAnimation = _yokoFrente;
-        _kyoko.CurrentAnimation = _kyokoFrente;
+        _yoko.CurrentAnimation = _yoko.AnimDerecha;
+        _kyoko.CurrentAnimation = _kyoko.AnimDerecha;
+        ReiniciarSeguimiento();
     }
 
     // =========================================
@@ -405,13 +440,14 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     protected override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        SoundEffects.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+        _battleMusic?.Update((float)gameTime.ElapsedGameTime.TotalSeconds, CurrentZone.RemainingEnemies);
 
-        ActualizarPantalla();
-        _saveNoticeTime = Math.Max(0, _saveNoticeTime - (float)gameTime.ElapsedGameTime.TotalSeconds);
-
-        //F3 muestra/oculta las colisiones
-        if (Input.IsKeyPressed(Keys.F3))
-            _verColisiones = !_verColisiones;
+        if (!_overworldDialogue.IsOpen)
+        {
+            ActualizarPantalla();
+            if (Input.IsKeyPressed(Keys.F3)) _verColisiones = !_verColisiones;
+        }
 
         if (_enMenu)
         {
@@ -436,7 +472,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             ActualizarExploracion(gameTime);
         }
 
-        Window.Title =
+        Window.Title = _mapId == "mapa3" ? "Skies Scattered" :
             (CurrentZone.RemainingEnemies == 0 ? "No quedan enemigos en esta zona" :
                 _encuentros.PasosSegurosRestantes > 0 ? $"Pasos seguros: {_encuentros.PasosSegurosRestantes}" :
                 $"Probabilidad de encuentro por paso: {_encuentros.ProbabilidadActual:P1}") +
@@ -461,31 +497,35 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void ActualizarExploracion(GameTime gameTime)
     {
+        if (_overworldDialogue.IsOpen)
+        {
+            _overworldDialogue.Update((float)gameTime.ElapsedGameTime.TotalSeconds, Input.IsKeyPressed(Keys.Z), Input.IsKeyPressed(Keys.X));
+            return;
+        }
+        if (_mapId == "mapa3" && !_endingIntroSeen)
+        {
+            IniciarEscenaFinal();
+            return;
+        }
         if (_saveDialogOpen)
         {
-            if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape)) _saveDialogOpen = false;
+            if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape))
+            { SoundEffects.Play(SoundCue.Select); _saveDialogOpen = false; }
             else if (Input.IsKeyPressed(Keys.Z))
             {
+                SoundEffects.Play(SoundCue.Select);
                 var data = new SaveGameData { Yoko = new SavedPosition(_yoko.Position),
                     Kyoko = new SavedPosition(_kyoko.Position), Party = _party, Choices = _choices.Capture(),
-                    SavePointId = _saveFromMenu ? "menu-overworld" : SavePointId, SavedAt = DateTimeOffset.UtcNow, Zones = _zones };
+                    EndingIntroSeen = _endingIntroSeen, OpenedGifts = _openedGifts, MapId = _mapId, SavePointId = "menu-overworld", SavedAt = DateTimeOffset.UtcNow, Zones = _zones };
                 bool saved = _saveGame.TrySave(data);
-                _saveNotice = saved ? "Partida guardada." : _saveGame.LastError;
-                _saveNoticeTime = 4f;
+                MostrarDialogo(saved ? "Partida guardada." : _saveGame.LastError);
                 if (saved) _saveDialogOpen = false;
             }
             return;
         }
-        if (!_overworldUI.IsOpen && !_choices.IsChoosing && NearSavePoint() && Input.IsKeyPressed(Keys.Z))
-        {
-            _saveDialogOpen = true;
-            _saveFromMenu = false;
-            _saveNoticeTime = 0;
-            return;
-        }
-
         if (!_choices.IsChoosing && Input.IsKeyPressed(Keys.C))
         {
+            SoundEffects.Play(SoundCue.Select);
             _overworldUI.Toggle();
             return;
         }
@@ -501,16 +541,23 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             return;
         }
 
+        if (Input.IsKeyPressed(Keys.Z) && InteractuarRegalo()) return;
+
         // CAMBIO: guardamos las posiciones de los dos personajes
         Vector2 yokoAntes = _yoko.Position;
-        Vector2 kyokoAntes = _kyoko.Position;
 
         // Yoko se controla con WASD y choca con las paredes.
         _yoko.Update(gameTime);
         ResolverColision(_yoko, yokoAntes);
+        if (_overworldDialogue.IsOpen) return;
+        if (_pendingExit != null)
+        {
+            CambiarMapa(_pendingExit.Destination);
+            return;
+        }
 
-        
-     _kyoko.Seguir(_yoko.Position, gameTime);
+        _kyoko.AplicarSeguimiento(_partyTrail.Advance(
+            (float)gameTime.ElapsedGameTime.TotalSeconds, _kyoko.Speed * 60f, PuedeOcuparKyoko));
 
         _yoko.Position = LimitarPosicion(
             _yoko.Position,
@@ -530,7 +577,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 yokoAntes,
                 _yoko.Position);
 
-        _encuentros.Update(distanciaRecorrida, CurrentZone.RemainingEnemies > 0);
+        _encuentros.Update(distanciaRecorrida, _mapId == "mapa2" && CurrentZone.RemainingEnemies > 0);
 
         _choices.Update(ObtenerHitbox(_yoko), _worldSize);
     }
@@ -538,36 +585,89 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     // NUEVO: mueve por ejes separados para deslizar contra las paredes
     private void ResolverColision(Player p, Vector2 anterior)
     {
-        Vector2 destino = p.Position;
-        Vector2 final = anterior;
+        Vector2 delta = p.Position - anterior;
+        p.Position = anterior;
+        // Pasos pequeños evitan atravesar paredes durante un cuadro largo.
+        int steps = Math.Max(1, (int)Math.Ceiling(Math.Max(Math.Abs(delta.X), Math.Abs(delta.Y)) / 4f));
+        Vector2 step = delta / steps;
+        for (int i = 0; i < steps; i++)
+        {
+            Vector2 previous = p.Position;
+            p.Position += new Vector2(step.X, 0);
+            if (!PuedeMoverse(p)) p.Position = previous;
+            Vector2 corner = p.Position;
+            if (_pendingExit != null || _overworldDialogue.IsOpen) return;
+            previous = p.Position;
+            p.Position += new Vector2(0, step.Y);
+            if (!PuedeMoverse(p)) p.Position = previous;
+            if (p == _yoko) _partyTrail.RecordStep(corner, p.Position, PuedeOcuparKyoko);
+            if (_pendingExit != null || _overworldDialogue.IsOpen) return;
+        }
+    }
 
-        p.Position = new Vector2(destino.X, anterior.Y);
-        if (!_colisiones.Choca(HitboxPies(p)))
-            final.X = destino.X;
+    private bool PuedeOcuparKyoko(Vector2 position) => !_colisiones.Choca(HitboxPiesEn(_kyoko, position));
 
-        p.Position = new Vector2(final.X, destino.Y);
-        if (!_colisiones.Choca(HitboxPies(p)))
-            final.Y = destino.Y;
+    private bool AjustarASuelo(Player player)
+    {
+        Vector2 original = player.Position;
+        if (!_colisiones.Choca(HitboxPies(player))) return true;
+        for (int radius = 8; radius <= 96; radius += 8)
+            for (int y = -radius; y <= radius; y += 8)
+                for (int x = -radius; x <= radius; x += 8)
+                {
+                    if (Math.Abs(x) != radius && Math.Abs(y) != radius) continue;
+                    Vector2 candidate = original + new Vector2(x, y);
+                    if (!_colisiones.Choca(HitboxPiesEn(player, candidate)))
+                    { player.Position = candidate; return true; }
+                }
+        return false;
+    }
 
-        p.Position = final;
+    private void ReiniciarSeguimiento()
+    {
+        AjustarASuelo(_kyoko);
+        if (!_partyTrail.Reset(_kyoko.Position, _yoko.Position, PuedeOcuparKyoko))
+        {
+            // Recuperación al cargar un acompañante aislado por colisiones antiguas.
+            _kyoko.Position = _yoko.Position;
+            _partyTrail.Reset(_kyoko.Position, _yoko.Position, PuedeOcuparKyoko);
+        }
+    }
+
+    private bool PuedeMoverse(Player p)
+    {
+        Rectangle feet = HitboxPies(p);
+        var exit = _colisiones.ExitAt(feet);
+        if (p == _yoko && exit != null)
+        {
+            if (exit.IsBlocked)
+            {
+                MostrarDialogo("No puedes retroceder");
+            }
+            else _pendingExit = exit;
+            return false;
+        }
+        return !_colisiones.Choca(feet);
     }
 
     // NUEVO: hitbox de los pies (la parte baja del sprite)
-    private Rectangle HitboxPies(Player p)
+    private Rectangle HitboxPies(Player p) => HitboxPiesEn(p, p.Position);
+
+    private Rectangle HitboxPiesEn(Player p, Vector2 position)
     {
         var a = p.CurrentAnimation;
 
         if (a == null)
-            return new Rectangle((int)p.Position.X - 8, (int)p.Position.Y - 8, 16, 16);
+            return new Rectangle((int)position.X - 8, (int)position.Y - 8, 16, 16);
 
-        int izq = (int)(p.Position.X - a.Origin.X * a.Scale.X);
-        int arr = (int)(p.Position.Y - a.Origin.Y * a.Scale.Y);
+        int izq = (int)(position.X - a.Origin.X * a.Scale.X);
+        int arr = (int)(position.Y - a.Origin.Y * a.Scale.Y);
 
         return new Rectangle(
-            izq + (int)a.Width / 4,
-            arr + (int)a.Height - 14,
-            (int)a.Width / 2,
-            12);
+            izq + (int)a.Width / 2 - 8,
+            arr + (int)a.Height - 8,
+            16,
+            6);
     }
 
     private Rectangle ObtenerHitbox(Player p)
@@ -593,6 +693,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void ActualizarBatalla(GameTime gameTime)
     {
+        if (_mapId != "mapa2") { _encuentros.Reiniciar(); _battleMusic.Stop(); _currentState = null; return; }
         if (_currentState is not BattleState)
         {
             if (CurrentZone.RemainingEnemies <= 0) { _encuentros.Reiniciar(); return; }
@@ -606,8 +707,11 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
                 CurrentZone);
 
             batalla.OnBattleEnded += FinalizarBatalla;
+            batalla.OnBattleResolved += () => _battleMusic.FadeOut();
 
             _currentState = batalla;
+            SoundEffects.Play(SoundCue.Encounter);
+            _battleMusic.Start(CurrentZone.RemainingEnemies);
         }
 
         _currentState.Update(gameTime);
@@ -615,7 +719,10 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     protected override void UnloadContent()
     {
+        SoundEffects.Unload();
+        _battleMusic?.Dispose();
         _spellEffects?.Dispose();
+        _caveLighting.Dispose();
         _battleFrame?.Dispose();
         _sceneFrame?.Dispose();
         base.UnloadContent();
@@ -623,6 +730,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void FinalizarBatalla()
     {
+        _battleMusic.FadeOut();
         _encuentros.Reiniciar();
         _currentState = null;
         if (_party.TrueForAll(hero => hero.HP <= 0))
@@ -636,16 +744,14 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
     private void AbrirGuardadoDesdeMenu()
     {
         if (_enMenu || _gameOver != null || _encuentros.Activo || _choices.IsChoosing || !_overworldUI.IsOpen) return;
-        _saveFromMenu = true;
         _saveDialogOpen = true;
-        _saveNoticeTime = 0;
+        _overworldDialogue.Close();
     }
-
-    private bool NearSavePoint() => _savePointPosition.HasValue &&
-        Vector2.Distance(_yoko.Position, _savePointPosition.Value) <= 72f;
 
     private void ContinuarPartida()
     {
+        _battleMusic.Stop();
+        _overworldDialogue.Close();
         if (!_saveGame.TryLoad(out var saved))
         {
             _mainMenu.StatusMessage = _saveGame.LastError;
@@ -654,46 +760,102 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         }
         // Validar las posiciones contra las colisiones antes de cambiar la partida.
         Vector2 oldYoko = _yoko.Position, oldKyoko = _kyoko.Position;
+        string oldMap = _mapId;
+        if (_mapId != saved.MapId) { _mapId = saved.MapId; CargarMapa(); }
         _yoko.Position = saved.Yoko.ToVector();
         _kyoko.Position = saved.Kyoko.ToVector();
-        bool blocked = _colisiones.Choca(HitboxPies(_yoko));
+        bool blocked = !AjustarASuelo(_yoko);
         if (blocked)
         {
             _yoko.Position = oldYoko; _kyoko.Position = oldKyoko;
+            if (_mapId != oldMap) { _mapId = oldMap; CargarMapa(); }
             _mainMenu.StatusMessage = "La posición del guardado no es válida.";
             if (_gameOver != null) _gameOver.StatusMessage = _mainMenu.StatusMessage;
             return;
         }
+        ReiniciarSeguimiento();
         _party.Clear(); _party.AddRange(saved.Party);
         _zones = saved.Zones;
+        _openedGifts = new HashSet<string>(saved.OpenedGifts);
+        _endingIntroSeen = saved.EndingIntroSeen;
         _choices.Restore(saved.Choices);
         _colorFinal = saved.Choices.Finished ? _choices.FinalColor : null;
         _encuentros.Reiniciar();
         _currentState = null; _gameOver = null; _saveDialogOpen = false;
-        _saveNotice = "Partida cargada."; _saveNoticeTime = 3f;
+        MostrarDialogo("Partida cargada.");
         if (_overworldUI.IsOpen) _overworldUI.Toggle();
         IniciarJuego();
     }
 
-    private void DrawSavePoint()
+    private bool InteractuarRegalo()
     {
-        if (!_savePointPosition.HasValue) return;
-        Vector2 point = _savePointPosition.Value;
-        Color color = Color.Gold;
-        SpriteBatch.Draw(_pixel, new Rectangle((int)point.X - 3, (int)point.Y - 16, 6, 32), color);
-        SpriteBatch.Draw(_pixel, new Rectangle((int)point.X - 13, (int)point.Y - 3, 26, 6), color);
-        SpriteBatch.Draw(_pixel, new Rectangle((int)point.X - 7, (int)point.Y - 7, 14, 14), Color.LightYellow);
+        MapGift nearest = null;
+        float distance = 49f;
+        var feet = HitboxPies(_yoko).Center.ToVector2();
+        foreach (var gift in _colisiones.Gifts)
+        {
+            float candidate = gift.DistanceTo(feet);
+            if (candidate < distance) { nearest = gift; distance = candidate; }
+        }
+        if (nearest == null) return false;
+        if (_openedGifts.Contains(nearest.Id)) MostrarDialogo("Este regalo ya está vacío.");
+        else if (_party[0].Items.Count >= 200) MostrarDialogo("No tienes espacio para más objetos.");
+        else
+        {
+            _party[0].Items.Add(nearest.Item);
+            _openedGifts.Add(nearest.Id);
+            MostrarDialogo($"Encontraste {GameItem.Description(nearest.Item)}.\nGuardado en el inventario compartido.");
+        }
+        return true;
+    }
+
+    private void DibujarRegalosAbiertos()
+    {
+        foreach (var gift in _colisiones.Gifts)
+        {
+            if (!_openedGifts.Contains(gift.Id)) continue;
+            var box = gift.Bounds;
+            // Tapa levantada y hueco oscuro sobre el regalo dibujado en el mapa.
+            SpriteBatch.Draw(_mapaTextura, new Vector2(box.X, box.Y - 6),
+                new Rectangle(box.X, box.Y, box.Width, 12), Color.White);
+            SpriteBatch.Draw(_pixel, new Rectangle(box.X + 6, box.Y + 8, box.Width - 12, 8),
+                new Color(48, 32, 24));
+        }
+    }
+
+    private void MostrarDialogo(string text)
+    {
+        _yoko.AplicarSeguimiento(_yoko.Position);
+        _kyoko.AplicarSeguimiento(_kyoko.Position);
+        _overworldDialogue.Show(false, text);
+    }
+
+    private void IniciarEscenaFinal()
+    {
+        _endingIntroSeen = true;
+        _yoko.AplicarSeguimiento(_yoko.Position);
+        _kyoko.AplicarSeguimiento(_kyoko.Position);
+        _yoko.CurrentAnimation = _yoko.AnimIzquierda;
+        _kyoko.CurrentAnimation = _kyoko.AnimDerecha;
+        _overworldDialogue.Show(true,
+            "Kyo: Por fin salimos... Ya estamos cerca, ¿no?",
+            "Kyo: Cuando lleguemos al prado podremos descansar y mirar el cielo juntas.",
+            "Yoko: ...Podemos quedarnos un rato más aquí.",
+            "Kyo: ¿Aquí? Pero vinimos hasta tan lejos...",
+            "Yoko: Lo sé. Es que, si seguimos... llegaremos al final.",
+            "Kyo: Yoko... ¿Eso es lo que te preocupa?",
+            "Yoko: Cuando todo termine, ¿qué va a quedar de nosotras?",
+            "Kyo: Llegar al final no borra lo que vivimos juntas.",
+            "Yoko: No quiero volver a perderte.");
     }
 
     private void DrawSavePanel()
     {
-        if (!_saveDialogOpen && _saveNoticeTime <= 0 && !NearSavePoint()) return;
+        if (!_saveDialogOpen) return;
         var view = TamanoVista();
         Rectangle box = new Rectangle(20, (int)view.Y - 102, (int)view.X - 40, 82);
         EarthboundBox.Draw(SpriteBatch, _earthboundHudTexture, _pixel, box);
-        string text = _saveNoticeTime > 0 ? _saveNotice : _saveDialogOpen
-            ? (_saveGame.HasSave ? "¿Sobrescribir la partida guardada?" : "¿Guardar la partida?") + "\nZ: Confirmar    X: Volver"
-            : "Punto de guardado - Z: Interactuar";
+        string text = (_saveGame.HasSave ? "¿Sobrescribir la partida guardada?" : "¿Guardar la partida?") + "\nZ: Confirmar    X: Volver";
         Vector2 size = _retroFont.MeasureString(text);
         float scale = Math.Min(1f, (box.Width - 28) / Math.Max(1f, size.X));
         SpriteBatch.DrawString(_retroFont, text, new Vector2(box.X + 14, box.Y + 18), Color.White,
@@ -702,12 +864,17 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
     private void ReiniciarPartida(bool volverAlMenu)
     {
+        _battleMusic.Stop();
+        _endingIntroSeen = false;
         _gameOver = null;
         _saveDialogOpen = false;
-        _saveNoticeTime = 0;
+        _overworldDialogue.Close();
         _party.Clear();
         _party.AddRange(BattleState.CreateParty());
         _zones = new Dictionary<string, ZoneProgress> { ["mapa2"] = new ZoneProgress() };
+        if (_mapId != "mapa2") { _mapId = "mapa2"; CargarMapa(); }
+        _pendingExit = null;
+        _openedGifts.Clear();
         _encuentros.Reiniciar();
         _choices.Reiniciar();
         _colorFinal = null;
@@ -842,6 +1009,7 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
 
         
         SpriteBatch.Draw(_mapaTextura, Vector2.Zero, Color.White);
+        DibujarRegalosAbiertos();
 
         // NUEVO: capa de depuración (F3)
         if (_verColisiones)
@@ -857,7 +1025,6 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         }
 
         _choices.DrawSquares(SpriteBatch, _pixel);
-        DrawSavePoint();
 
         _yoko.CurrentAnimation?.Draw(
             SpriteBatch,
@@ -872,6 +1039,10 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         SpriteBatch.Begin(
             samplerState: SamplerState.PointClamp);
 
+        if (_mapId == "mapa2")
+            _caveLighting.Draw(SpriteBatch, GraphicsDevice, _pixel,
+                _yoko.Position - _camera.Position + new Vector2(32, 32));
+
         _choices.DrawMenu(
             SpriteBatch,
             _pixel,
@@ -879,7 +1050,8 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
             TamanoVista());
 
         _overworldUI.Draw(SpriteBatch, _pixel, _earthboundHudTexture, _retroFont, _party, TamanoVista());
-        if (!_choices.IsChoosing && (_saveDialogOpen || _saveNoticeTime > 0 || !_overworldUI.IsOpen)) DrawSavePanel();
+        if (!_choices.IsChoosing && _saveDialogOpen) DrawSavePanel();
+        _overworldDialogue.Draw(SpriteBatch, _earthboundHudTexture, _pixel, _retroFont, TamanoVista());
         SpriteBatch.End();
     }
 
@@ -926,3 +1098,9 @@ using (var archivo = System.IO.File.OpenRead(rutaMapa))
         return posicion;
     }
 }
+
+
+
+
+
+

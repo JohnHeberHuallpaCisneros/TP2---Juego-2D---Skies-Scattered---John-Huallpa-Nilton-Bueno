@@ -237,19 +237,12 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Fonts\earthbound-beginnings.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Fonts\RetroFont.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\atlas-definition.xml
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\geometry\lines02.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\geometry\squares01.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\geometry\triangles01.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\ondulate\lines01.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\ondulate\sea02.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\ondulate\tiles05.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\psycho\Degrade01transparent.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\psycho\kaleidoscope03.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\psycho\weird03.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\pyscho\Degrade01transparent.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\pyscho\kaleidoscope03.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\backgrounds_battle\pyscho\weird03.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Boxes_UI\Pxiel Art UI borders.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Boxes_UI\SNES - EarthBound - Miscellaneous - Battle HUD.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Enemies\black_eye.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Enemies\caged.xnb
@@ -258,8 +251,6 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Enemies\mothshum.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Enemies\reaper_blossom.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Enemies\snow_twins.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Maps\EarthboundMapCaveToThePast2X.xnb
-C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Maps\EarthboundMapLilliputSteps2x.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\Player\together.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Image\together.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Skies_Scattered.exe
@@ -347,3 +338,11 @@ C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debu
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\StatGain.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\Text.xnb
 C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Sfx\FireGamma.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Transitions\EncounterSwirls.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\UI\EnemyHealthBar.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\UI\TitleBackground.png
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\UI\TitleBackground.xnb
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Scenes\Cave.ogg
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Scenes\Final.ogg
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Scenes\Menu.ogg
+C:\Users\John\OneDrive\Desktop\sicseben\Skies Scattered\Skies_Scattered\bin\Debug\net9.0\Content\Audio\Scenes\GameOver.ogg

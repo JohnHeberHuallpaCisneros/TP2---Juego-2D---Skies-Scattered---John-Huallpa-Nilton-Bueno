@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 
 namespace Skies_Scattered.Graphics;
-
 public sealed class BattleShake
 {
     private float _elapsed, _duration, _strength;
@@ -11,17 +10,42 @@ public sealed class BattleShake
 
     public void Trigger(string attack, float delay = 0f, float intensity = 1f)
     {
-        (_strength, _duration) = attack switch
+        switch (attack)
         {
-            "FireGamma" => (6f, .42f),
-            "FireBeta" => (4f, .32f),
-            "FreezeOmega" => (4f, .30f),
-            "FreezeAlpha" => (3f, .24f),
-            "ShieldBeta" => (1.5f, .28f),
-            "DefenseDownOmega" => (2.5f, .35f),
-            "EnemyBeam" => (2f, .20f),
-            _ => (1.5f, .16f)
-        };
+            case "FireGamma":
+                _strength = 6f;
+                _duration = .42f;
+                break;
+            case "FireBeta":
+                _strength = 4f;
+                _duration = .32f;
+                break;
+            case "FreezeOmega":
+                _strength = 4f;
+                _duration = .30f;
+                break;
+            case "FreezeAlpha":
+                _strength = 3f;
+                _duration = .24f;
+                break;
+            case "ShieldBeta":
+                _strength = 1.5f;
+                _duration = .28f;
+                break;
+            case "DefenseDownOmega":
+                _strength = 2.5f;
+                _duration = .35f;
+                break;
+            case "EnemyBeam":
+                _strength = 2f;
+                _duration = .20f;
+                break;
+            default:
+                _strength = 1.5f;
+                _duration = .16f;
+                break;
+        }
+
         _strength *= MathHelper.Clamp(intensity, 0f, 2f);
         _vertical = attack.StartsWith("Freeze", StringComparison.Ordinal);
         _diagonal = attack == "FireGamma" || attack == "ShieldBeta";
@@ -37,12 +61,11 @@ public sealed class BattleShake
             Offset = Vector2.Zero;
             return;
         }
+
         float fade = 1f - _elapsed / _duration;
         float amount = _strength * fade;
         float primary = (float)Math.Sin(_elapsed * 95f) * amount;
         float secondary = _diagonal ? (float)Math.Sin(_elapsed * 127f) * amount * .65f : 0;
-        Offset = _vertical
-            ? new Vector2(0, (float)Math.Round(primary))
-            : new Vector2((float)Math.Round(primary), (float)Math.Round(secondary));
+        Offset = _vertical ? new Vector2(0, (float)Math.Round(primary)) : new Vector2((float)Math.Round(primary), (float)Math.Round(secondary));
     }
 }

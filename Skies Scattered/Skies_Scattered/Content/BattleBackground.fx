@@ -1,4 +1,5 @@
 
+
 #if OPENGL
     #define SV_POSITION POSITION
     #define VS_SHADERMODEL vs_3_0
@@ -43,7 +44,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
     float4 original = tex2D(SpriteTextureSampler, uv);
 
-float brightness = dot(original.rgb, float3(0.299, 0.587, 0.114));
+    float brightness = dot(original.rgb, float3(0.299, 0.587, 0.114));
 
     float3 paletteColor = lerp(
         PaletteDark.rgb,

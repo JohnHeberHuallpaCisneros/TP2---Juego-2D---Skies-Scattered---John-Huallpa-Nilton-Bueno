@@ -8,17 +8,16 @@ using MonoGameLibrary;
 using Skies_Scattered.Mechanics;
 
 namespace Skies_Scattered.UI;
-
 public class OverworldUI
 {
     public bool IsOpen { get; private set; }
+
     private int _heroIndex;
     private int _option = 1;
     private bool _details;
     private int _itemIndex;
     private string _itemNotice = "";
-    public event Action OnSaveRequested;
-
+    public event Action OnOptionsRequested;
     public void Toggle()
     {
         IsOpen = !IsOpen;
@@ -34,21 +33,25 @@ public class OverworldUI
 
     public void Update(List<CharacterStats> party)
     {
-        if (!IsOpen || party.Count == 0) return;
+        if (!IsOpen || party.Count == 0)
+            return;
         if (Input.IsKeyPressed(Keys.X) || Input.IsKeyPressed(Keys.Escape))
         {
             SoundEffects.Play(SoundCue.Select);
-            if (_details) _details = false;
-            else IsOpen = false;
+            if (_details)
+                _details = false;
+            else
+                IsOpen = false;
             return;
         }
+
         int previousHero = _heroIndex;
         if (Input.IsKeyPressed(Keys.Right))
             _heroIndex = (_heroIndex + 1) % party.Count;
         if (Input.IsKeyPressed(Keys.Left))
             _heroIndex = (_heroIndex - 1 + party.Count) % party.Count;
-
-        if (_heroIndex != previousHero) SoundEffects.Play(SoundCue.Move);
+        if (_heroIndex != previousHero)
+            SoundEffects.Play(SoundCue.Move);
         CharacterStats hero = party[_heroIndex];
         if (_details && _option == 0)
         {
@@ -56,31 +59,52 @@ public class OverworldUI
             if (count > 0)
             {
                 int previousItem = _itemIndex;
-                if (Input.IsKeyPressed(Keys.Up)) _itemIndex = (_itemIndex - 1 + count) % count;
-                if (Input.IsKeyPressed(Keys.Down)) _itemIndex = (_itemIndex + 1) % count;
+                if (Input.IsKeyPressed(Keys.Up))
+                    _itemIndex = (_itemIndex - 1 + count) % count;
+                if (Input.IsKeyPressed(Keys.Down))
+                    _itemIndex = (_itemIndex + 1) % count;
                 _itemIndex = Math.Clamp(_itemIndex, 0, count - 1);
-                if (_itemIndex != previousItem) SoundEffects.Play(SoundCue.Move);
+                if (_itemIndex != previousItem)
+                    SoundEffects.Play(SoundCue.Move);
                 if (Input.IsKeyPressed(Keys.Z))
-                { if (GameItem.TryUse(hero, _itemIndex, out _itemNotice)) SoundEffects.Play(SoundCue.Select); }
+                {
+                    if (GameItem.TryUse(hero, _itemIndex, out _itemNotice))
+                        SoundEffects.Play(SoundCue.Select);
+                }
             }
+
             return;
         }
+
         if (!_details)
         {
             int direction = Input.IsKeyPressed(Keys.Up) ? -1 : Input.IsKeyPressed(Keys.Down) ? 1 : 0;
             int previousOption = _option;
             if (direction != 0)
             {
-                do { _option = (_option + direction + 3) % 3; }
+                do
+                {
+                    _option = (_option + direction + 3) % 3;
+                }
                 while (_option == 0 && hero.Items.Count == 0);
             }
-            if (_option == 0 && hero.Items.Count == 0) _option = 1;
-            if (_option != previousOption) SoundEffects.Play(SoundCue.Move);
+
+            if (_option == 0 && hero.Items.Count == 0)
+                _option = 1;
+            if (_option != previousOption)
+                SoundEffects.Play(SoundCue.Move);
             if (Input.IsKeyPressed(Keys.Z))
             {
-                if (_option == 2) { SoundEffects.Play(SoundCue.Select); OnSaveRequested?.Invoke(); }
+                if (_option == 2)
+                {
+                    SoundEffects.Play(SoundCue.Select);
+                    OnOptionsRequested?.Invoke();
+                }
                 else if (_option == 1 || hero.Items.Count > 0)
-                { SoundEffects.Play(SoundCue.Select); _details = true; }
+                {
+                    SoundEffects.Play(SoundCue.Select);
+                    _details = true;
+                }
             }
         }
     }
@@ -90,23 +114,19 @@ public class OverworldUI
         EarthboundBox.Draw(batch, hud, pixel, box);
     }
 
-    private static void Text(SpriteBatch batch, SpriteFont font, string text,
-        Vector2 position, float width, float height, Color color, float preferred = 1f)
+    private static void Text(SpriteBatch batch, SpriteFont font, string text, Vector2 position, float width, float height, Color color, float preferred = 1f)
     {
         Vector2 size = font.MeasureString(text);
-        float scale = Math.Min(preferred, Math.Min(width / Math.Max(1, size.X),
-            height / Math.Max(1, size.Y)));
-        batch.DrawString(font, text, position, color, 0, Vector2.Zero, scale,
-            SpriteEffects.None, 0);
+        float scale = Math.Min(preferred, Math.Min(width / Math.Max(1, size.X), height / Math.Max(1, size.Y)));
+        batch.DrawString(font, text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
     }
 
-    public void Draw(SpriteBatch batch, Texture2D pixel, Texture2D hud, SpriteFont font,
-        List<CharacterStats> party, Vector2 screen)
+    public void Draw(SpriteBatch batch, Texture2D pixel, Texture2D hud, SpriteFont font, List<CharacterStats> party, Vector2 screen)
     {
-        if (!IsOpen || party.Count == 0 || font == null) return;
+        if (!IsOpen || party.Count == 0 || font == null)
+            return;
         CharacterStats hero = party[_heroIndex];
         batch.Draw(pixel, new Rectangle(0, 0, (int)screen.X, (int)screen.Y), Color.Black * 0.65f);
-
         int x = ((int)screen.X - 576) / 2;
         int y = ((int)screen.Y - 392) / 2;
         Rectangle summary = new Rectangle(x, y, 164, 150);
@@ -114,33 +134,23 @@ public class OverworldUI
         Rectangle detail = new Rectangle(x + 180, y, 396, 352);
         Box(batch, pixel, hud, summary);
         Box(batch, pixel, hud, actions);
-
         Text(batch, font, hero.Name, new Vector2(x + 14, y + 14), 136, 28, Color.White);
         Text(batch, font, $"HP {hero.HP}/{hero.MaxHP}", new Vector2(x + 14, y + 62), 136, 25, Color.White);
         Text(batch, font, $"PP {hero.PP}/{hero.MaxPP}", new Vector2(x + 14, y + 98), 136, 25, Color.White);
         bool itemsEnabled = hero.Items.Count > 0;
-        Text(batch, font, (_option == 0 ? "> " : "  ") + "ITEM",
-            new Vector2(x + 18, actions.Y + 18), 130, 28,
-            itemsEnabled ? (_option == 0 ? Color.Cyan : Color.White) : Color.Gray);
-        Text(batch, font, (_option == 1 ? "> " : "  ") + "STAT",
-            new Vector2(x + 18, actions.Y + 62), 130, 28,
-            _option == 1 ? Color.Cyan : Color.White);
-        Text(batch, font, (_option == 2 ? "> " : "  ") + "GUARDAR",
-            new Vector2(x + 18, actions.Y + 106), 130, 28,
-            _option == 2 ? Color.Cyan : Color.White);
-
-        Text(batch, font, "C: Cerrar   X: Volver   Z: Abrir/Usar   Izq/Der: Personaje",
-            new Vector2(x, y + 368), 576, 24, Color.White);
-        if (!_details) return;
-
-        // El panel de información se abre al confirmar STAT, no al abrir el menú.
-        if (_option == 0) detail = new Rectangle(detail.X, detail.Y, 396, 320);
+        Text(batch, font, (_option == 0 ? "> " : "  ") + "ITEM", new Vector2(x + 18, actions.Y + 18), 130, 28, itemsEnabled ? (Color.White) : Color.Gray);
+        Text(batch, font, (_option == 1 ? "> " : "  ") + "STAT", new Vector2(x + 18, actions.Y + 62), 130, 28, Color.White);
+        Text(batch, font, (_option == 2 ? "> " : "  ") + "OPCIONES", new Vector2(x + 18, actions.Y + 106), 130, 28, Color.White);
+        if (!_details)
+            return;
+        if (_option == 0)
+            detail = new Rectangle(detail.X, detail.Y, 396, 320);
         Box(batch, pixel, hud, detail);
         int dx = detail.X + 20;
         Text(batch, font, $"<  {hero.Name}  >", new Vector2(dx, y + 18), 356, 30, Color.White);
         if (_details && _option == 0)
         {
-            Text(batch, font, "ITEM", new Vector2(dx, y + 66), 356, 28, Color.Cyan);
+            Text(batch, font, "ITEM", new Vector2(dx, y + 66), 356, 28, Color.White);
             if (hero.Items.Count == 0)
                 Text(batch, font, "No tienes objetos", new Vector2(dx, y + 112), 356, 26, Color.Gray);
             else
@@ -149,19 +159,17 @@ public class OverworldUI
                 for (int row = 0; row < Math.Min(hero.Items.Count, 6); row++)
                 {
                     int i = first + row;
-                    Text(batch, font, (i == _itemIndex ? "> " : "  ") + GameItem.Description(hero.Items[i]),
-                        new Vector2(dx, y + 108 + row * 27), 356, 24, i == _itemIndex ? Color.Cyan : Color.White);
+                    Text(batch, font, (i == _itemIndex ? "> " : "  ") + GameItem.Description(hero.Items[i]), new Vector2(dx, y + 108 + row * 27), 356, 24, Color.White);
                 }
             }
+
             Text(batch, font, _itemNotice, new Vector2(dx, y + 282), 356, 24, Color.White);
         }
         else if (_details)
         {
-            Text(batch, font, $"HP {hero.HP} / {hero.MaxHP}    PP {hero.PP} / {hero.MaxPP}",
-                new Vector2(dx, y + 70), 356, 26, Color.White);
-            Text(batch, font, $"Attack Power {hero.AP}   Concentration {hero.CT}",
-                new Vector2(dx, y + 116), 356, 28, Color.White);
-            Text(batch, font, "HECHIZOS", new Vector2(dx, y + 170), 356, 25, Color.Cyan);
+            Text(batch, font, $"HP {hero.HP} / {hero.MaxHP}    PP {hero.PP} / {hero.MaxPP}", new Vector2(dx, y + 70), 356, 26, Color.White);
+            Text(batch, font, $"Attack Power {hero.AP}   Concentration {hero.CT}", new Vector2(dx, y + 116), 356, 28, Color.White);
+            Text(batch, font, "HECHIZOS", new Vector2(dx, y + 170), 356, 25, Color.White);
             for (int i = 0; i < Math.Min(hero.Spells.Count, 4); i++)
                 Text(batch, font, SpellNames.Display(hero.Spells[i]), new Vector2(dx, y + 207 + i * 30), 356, 26, Color.White);
         }

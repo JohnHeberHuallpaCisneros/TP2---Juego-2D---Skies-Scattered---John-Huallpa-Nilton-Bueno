@@ -43,32 +43,6 @@
 /processorParam:Version=3.8.5.1
 /build:Fonts/RetroFont.spritefont
 
-#begin Image/backgrounds_battle/geometry/lines02.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/backgrounds_battle/geometry/lines02.png
-
-#begin Image/backgrounds_battle/geometry/squares01.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/backgrounds_battle/geometry/squares01.png
-
 #begin Image/backgrounds_battle/geometry/triangles01.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -81,19 +55,6 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/geometry/triangles01.png
-
-#begin Image/backgrounds_battle/ondulate/lines01.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/backgrounds_battle/ondulate/lines01.png
 
 #begin Image/backgrounds_battle/ondulate/sea02.png
 /importer:TextureImporter
@@ -108,32 +69,6 @@
 /processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/ondulate/sea02.png
 
-#begin Image/backgrounds_battle/ondulate/tiles05.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/backgrounds_battle/ondulate/tiles05.png
-
-#begin Image/backgrounds_battle/psycho/Degrade01transparent.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/backgrounds_battle/psycho/Degrade01transparent.png
-
 #begin Image/backgrounds_battle/psycho/kaleidoscope03.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -146,32 +81,6 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.1
 /build:Image/backgrounds_battle/psycho/kaleidoscope03.png
-
-#begin Image/backgrounds_battle/psycho/weird03.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/backgrounds_battle/psycho/weird03.png
-
-#begin Image/Boxes_UI/Pxiel Art UI borders.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/Boxes_UI/Pxiel Art UI borders.png
 
 #begin Image/Boxes_UI/SNES - EarthBound - Miscellaneous - Battle HUD.png
 /importer:TextureImporter
@@ -276,32 +185,6 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.1
 /build:Image/Enemies/snow_twins.png
-
-#begin Image/Maps/EarthboundMapCaveToThePast2X.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/Maps/EarthboundMapCaveToThePast2X.png
-
-#begin Image/Maps/EarthboundMapLilliputSteps2x.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.1
-/build:Image/Maps/EarthboundMapLilliputSteps2x.png
 
 #begin Image/Player/together.png
 /importer:TextureImporter
@@ -418,3 +301,13 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sfx/FireGamma.wav
+
+#begin UI/TitleBackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyEnabled=False
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:UI/TitleBackground.png

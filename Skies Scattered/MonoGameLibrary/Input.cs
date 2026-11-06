@@ -1,13 +1,10 @@
-
 using Microsoft.Xna.Framework.Input;
 
 namespace MonoGameLibrary;
-
 public static class Input
 {
     private static KeyboardState _tecladoActual;
     private static KeyboardState _tecladoAnterior;
-
     public static void Update()
     {
         _tecladoAnterior = _tecladoActual;
@@ -21,7 +18,6 @@ public static class Input
 
     public static bool IsKeyPressed(Keys tecla)
     {
-        return _tecladoActual.IsKeyDown(tecla) &&
-            _tecladoAnterior.IsKeyUp(tecla);
+        return _tecladoActual.IsKeyDown(tecla) && _tecladoAnterior.IsKeyUp(tecla);
     }
 }

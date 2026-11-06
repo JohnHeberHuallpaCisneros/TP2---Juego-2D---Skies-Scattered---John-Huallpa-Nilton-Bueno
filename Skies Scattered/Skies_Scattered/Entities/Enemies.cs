@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Skies_Scattered.Entities;
-
 public class Enemy
 {
     public string Name { get; set; }
@@ -14,6 +13,7 @@ public class Enemy
     public int Defense { get; set; }
     public Vector2 Position { get; set; }
     public bool Floats { get; set; }
+
     private float _impactElapsed = 1f;
     private float _impactStrength;
     private float _impactDuration = .30f;
@@ -26,8 +26,22 @@ public class Enemy
     {
         ImpactTint = tint ?? Color.White;
         _impactElapsed = 0f;
-        float weight = attack switch { "FireGamma" => 1.25f, "FreezeOmega" => 1.1f, "DefenseDownOmega" => .55f, _ => 1f };
-        _impactDuration = attack switch { "FireGamma" => .42f, "FireBeta" => .32f, "FreezeOmega" => .30f, "FreezeAlpha" => .24f, "DefenseDownOmega" => .35f, _ => .30f };
+        float weight = attack switch
+        {
+            "FireGamma" => 1.25f,
+            "FreezeOmega" => 1.1f,
+            "DefenseDownOmega" => .55f,
+            _ => 1f
+        };
+        _impactDuration = attack switch
+        {
+            "FireGamma" => .42f,
+            "FireBeta" => .32f,
+            "FreezeOmega" => .30f,
+            "FreezeAlpha" => .24f,
+            "DefenseDownOmega" => .35f,
+            _ => .30f
+        };
         _impactVertical = attack.StartsWith("Freeze", StringComparison.Ordinal);
         _impactDiagonal = attack == "FireGamma";
         _impactStrength = MathHelper.Clamp((4f + Math.Max(0, damage) * .12f) * weight, 2f, 10f);
@@ -37,7 +51,12 @@ public class Enemy
     public void UpdateImpact(float seconds)
     {
         _impactElapsed += Math.Max(0, seconds);
-        if (_impactElapsed >= _impactDuration) { ImpactOffset = Vector2.Zero; return; }
+        if (_impactElapsed >= _impactDuration)
+        {
+            ImpactOffset = Vector2.Zero;
+            return;
+        }
+
         float fade = 1f - _impactElapsed / _impactDuration;
         float primary = (float)Math.Round(Math.Cos(_impactElapsed * 95f) * _impactStrength * fade);
         float secondary = _impactDiagonal ? (float)Math.Round(Math.Sin(_impactElapsed * 127f) * _impactStrength * fade * .65f) : 0;

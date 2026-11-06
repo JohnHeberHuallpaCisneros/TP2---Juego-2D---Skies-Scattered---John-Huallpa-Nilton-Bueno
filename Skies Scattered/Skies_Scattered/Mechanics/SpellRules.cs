@@ -1,6 +1,4 @@
 namespace Skies_Scattered.Mechanics;
-
-// La lógica de combate y la interfaz consultan la misma regla de coste.
 public static class SpellRules
 {
     public static int GetCost(string spell)

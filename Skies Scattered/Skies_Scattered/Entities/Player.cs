@@ -1,4 +1,3 @@
-﻿
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -6,37 +5,31 @@ using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 
 namespace Skies_Scattered.Entities;
-
 public class Player
 {
     public Vector2 Position { get; set; }
-
-    // Píxeles por tick de referencia de 60 Hz: 2 equivale a 120 px/segundo.
     public float Speed { get; set; } = 2f;
     public bool AllowArrowKeys { get; set; }
+
     private float _walkingPixelsPerFrame = 32f;
     private float _walkingDistance;
     private int _walkingFrame;
-    // Dos casillas de 16x16 por cambio de pose; independiente de los FPS.
     public float WalkingPixelsPerFrame
     {
         get => _walkingPixelsPerFrame;
         set
         {
-            if (!float.IsFinite(value) || value <= 0f) throw new ArgumentOutOfRangeException(nameof(value));
+            if (!float.IsFinite(value) || value <= 0f)
+                throw new ArgumentOutOfRangeException(nameof(value));
             _walkingPixelsPerFrame = value;
         }
     }
 
     public AnimatedSprite CurrentAnimation { get; set; }
-
-    // Animaciones principales
     public AnimatedSprite AnimFrente { get; set; }
     public AnimatedSprite AnimAtras { get; set; }
     public AnimatedSprite AnimIzquierda { get; set; }
     public AnimatedSprite AnimDerecha { get; set; }
-
-    // Animaciones diagonales
     public AnimatedSprite AnimArribaDerecha { get; set; }
     public AnimatedSprite AnimArribaIzquierda { get; set; }
     public AnimatedSprite AnimAbajoDerecha { get; set; }
@@ -46,44 +39,27 @@ public class Player
     private readonly Keys _keyDown;
     private readonly Keys _keyLeft;
     private readonly Keys _keyRight;
-
     private bool _estabaMoviendose;
-
-    public Player(
-        Keys up,
-        Keys down,
-        Keys left,
-        Keys right,
-        Vector2 startPosition)
+    public Player(Keys up, Keys down, Keys left, Keys right, Vector2 startPosition)
     {
         _keyUp = up;
         _keyDown = down;
         _keyLeft = left;
         _keyRight = right;
-
         Position = startPosition;
     }
-
-    // =========================================
-    // MOVIMIENTO DEL JUGADOR
-    // =========================================
 
     public void Update(GameTime gameTime)
     {
         Vector2 direccion = Vector2.Zero;
-
         if (Input.IsKeyDown(_keyUp) || AllowArrowKeys && Input.IsKeyDown(Keys.Up))
             direccion.Y -= 1;
-
         if (Input.IsKeyDown(_keyDown) || AllowArrowKeys && Input.IsKeyDown(Keys.Down))
             direccion.Y += 1;
-
         if (Input.IsKeyDown(_keyLeft) || AllowArrowKeys && Input.IsKeyDown(Keys.Left))
             direccion.X -= 1;
-
         if (Input.IsKeyDown(_keyRight) || AllowArrowKeys && Input.IsKeyDown(Keys.Right))
             direccion.X += 1;
-
         if (direccion == Vector2.Zero)
         {
             DetenerAnimacion();
@@ -91,107 +67,62 @@ public class Player
         }
 
         direccion.Normalize();
-
         SeleccionarAnimacion(direccion);
-
         float distance = Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
         Position += direccion * distance;
-
         ActualizarAnimacion(distance);
     }
-
-    // =========================================
-    // SEGUIMIENTO DE KYOKO
-    // =========================================
-
-
-public void Seguir(Vector2 objetivo, GameTime gameTime)
-{
-    Vector2 direccion = objetivo - Position;
-    float distancia = direccion.Length();
-
-    // Kyoko se detiene al acercarse a Yoko.
-    if (distancia <= 48f)
-    {
-        DetenerAnimacion();
-        return;
-    }
-
-    direccion.Normalize();
-
-    SeleccionarAnimacion(direccion);
-
-    // Movimiento basado en segundos.
-    float velocidad = Speed * 60f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-    float distance = Math.Min(velocidad, distancia - 48f);
-    Position += direccion * distance;
-
-    ActualizarAnimacion(distance);
-}
 
     public void AplicarSeguimiento(Vector2 destino)
     {
         Vector2 delta = destino - Position;
         float distance = delta.Length();
-        if (distance <= .001f) { DetenerAnimacion(); return; }
+        if (distance <= .001f)
+        {
+            DetenerAnimacion();
+            return;
+        }
+
         SeleccionarAnimacion(delta / distance);
         Position = destino;
         ActualizarAnimacion(distance);
     }
 
-    // =========================================
-    // SELECCIÓN DE DIRECCIÓN
-    // =========================================
-
     private void SeleccionarAnimacion(Vector2 direccion)
     {
         bool diagonalX = Math.Abs(direccion.X) > 0.1f;
         bool diagonalY = Math.Abs(direccion.Y) > 0.1f;
-
         if (diagonalX && diagonalY)
         {
             if (direccion.Y < 0)
             {
-                CurrentAnimation = direccion.X > 0
-                    ? AnimArribaDerecha
-                    : AnimArribaIzquierda;
+                CurrentAnimation = direccion.X > 0 ? AnimArribaDerecha : AnimArribaIzquierda;
             }
             else
             {
-                CurrentAnimation = direccion.X > 0
-                    ? AnimAbajoDerecha
-                    : AnimAbajoIzquierda;
+                CurrentAnimation = direccion.X > 0 ? AnimAbajoDerecha : AnimAbajoIzquierda;
             }
         }
         else if (diagonalX)
         {
-            CurrentAnimation = direccion.X > 0
-                ? AnimDerecha
-                : AnimIzquierda;
+            CurrentAnimation = direccion.X > 0 ? AnimDerecha : AnimIzquierda;
         }
         else
         {
-            CurrentAnimation = direccion.Y < 0
-                ? AnimAtras
-                : AnimFrente;
+            CurrentAnimation = direccion.Y < 0 ? AnimAtras : AnimFrente;
         }
     }
-
-    // =========================================
-    // ACTUALIZACIÓN DE LA ANIMACIÓN
-    // =========================================
 
     private void ActualizarAnimacion(float distance)
     {
         if (CurrentAnimation == null)
             return;
-
         if (!_estabaMoviendose)
         {
             _walkingDistance = 0f;
             _walkingFrame = 0;
         }
+
         _walkingDistance += Math.Max(0, distance);
         var frames = CurrentAnimation.Animation.Frames;
         while (_walkingDistance >= WalkingPixelsPerFrame)
@@ -199,15 +130,15 @@ public void Seguir(Vector2 objetivo, GameTime gameTime)
             _walkingDistance -= WalkingPixelsPerFrame;
             _walkingFrame = (_walkingFrame + 1) % frames.Count;
         }
-        // Conservar la fase del paso al cambiar de dirección evita el parpadeo de pies.
-        CurrentAnimation.Region = frames[_walkingFrame % frames.Count];
 
+        CurrentAnimation.Region = frames[_walkingFrame % frames.Count];
         _estabaMoviendose = true;
     }
 
     private void DetenerAnimacion()
     {
-        if (_estabaMoviendose) CurrentAnimation?.Reset();
+        if (_estabaMoviendose)
+            CurrentAnimation?.Reset();
         _walkingDistance = 0f;
         _walkingFrame = 0;
         _estabaMoviendose = false;

@@ -1,3 +1,4 @@
+
 #if OPENGL
     #define SV_POSITION POSITION
     #define PS_SHADERMODEL ps_3_0
@@ -31,7 +32,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float2 uv = input.TextureCoordinates;
     float4 color = tex2D(SpriteTextureSampler, uv) * input.Color;
-    // Líneas estáticas: no parpadeo ni mezcla de píxeles vecinos.
     float scanline = 0.5 + 0.5 * sin(uv.y * OutputSize.y * 3.14159265);
     float2 centered = uv * 2.0 - 1.0;
     float edge = saturate(dot(centered, centered) * 0.5);

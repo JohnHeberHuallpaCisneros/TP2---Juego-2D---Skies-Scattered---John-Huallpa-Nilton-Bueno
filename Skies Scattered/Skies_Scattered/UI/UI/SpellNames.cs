@@ -1,5 +1,4 @@
 namespace Skies_Scattered.UI;
-
 public static class SpellNames
 {
     public static string Display(string id) => id switch
